@@ -1,0 +1,32 @@
+package com.sliit.chatApplication.controller;
+
+import com.sliit.chatApplication.model.ItemDTO;
+import com.sliit.chatApplication.service.ItemService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/item")
+public class ItemController {
+
+    ItemService itemService;
+
+    @Autowired
+    public ItemController(ItemService itemService) {
+        this.itemService = itemService;
+    }
+
+    @PostMapping("/addItem")
+    ItemDTO addItem(@RequestBody ItemDTO itemDTO) {
+        return itemService.addItem(itemDTO);
+    }
+
+    @GetMapping("/getItemList")
+    List<ItemDTO> getItemList() {
+        return itemService.getItemList();
+    }
+
+
+}
