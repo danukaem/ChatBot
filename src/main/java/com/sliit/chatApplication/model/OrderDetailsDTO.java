@@ -23,4 +23,5 @@ public class OrderDetailsDTO extends SuperDTO {
     User user;
     List<CartItem> cartItems;
 
+
 }
