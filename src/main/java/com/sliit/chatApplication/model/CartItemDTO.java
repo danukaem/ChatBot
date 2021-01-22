@@ -10,16 +10,16 @@ import java.util.List;
 public class CartItemDTO extends SuperDTO {
 
     private long cartItemId;
-    private List<Item> items;
+    Item item;
     private long quantity;
     private OrderDetails orderDetails;
 
     public CartItemDTO() {
     }
 
-    public CartItemDTO(long cartItemId, List<Item> items, long quantity, OrderDetails orderDetails) {
+    public CartItemDTO(long cartItemId, Item item, long quantity, OrderDetails orderDetails) {
         this.cartItemId = cartItemId;
-        this.items = items;
+        this.item = item;
         this.quantity = quantity;
         this.orderDetails = orderDetails;
     }
@@ -32,12 +32,12 @@ public class CartItemDTO extends SuperDTO {
         this.cartItemId = cartItemId;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public Item getItem() {
+        return item;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public long getQuantity() {
@@ -60,7 +60,7 @@ public class CartItemDTO extends SuperDTO {
     public String toString() {
         return "CartItemDTO{" +
                 "cartItemId=" + cartItemId +
-                ", items=" + items +
+                ", item=" + item +
                 ", quantity=" + quantity +
                 ", orderDetails=" + orderDetails +
                 '}';

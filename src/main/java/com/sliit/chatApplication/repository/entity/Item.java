@@ -11,23 +11,12 @@ public class Item extends SuperEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private
     long itemId;
-    private String itemName;
-    private String itemCode;
-    private String description;
-    private long price;
-    @ManyToMany(mappedBy = "items")
-    List<CartItem> cartItems;
-
-
-    public Item() {
-    }
-
-    public Item(String itemName, String itemCode, String description, long price) {
-        this.itemName = itemName;
-        this.itemCode = itemCode;
-        this.description = description;
-        this.price = price;
-    }
+    String itemName;
+    String itemCode;
+    String description;
+    long price;
+//    @OneToMany(mappedBy = "item", fetch = FetchType.EAGER)
+//    List<CartItem> cartItems;
 
     public long getItemId() {
         return itemId;
