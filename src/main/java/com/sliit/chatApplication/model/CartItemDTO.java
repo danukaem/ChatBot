@@ -2,28 +2,24 @@ package com.sliit.chatApplication.model;
 
 import com.sliit.chatApplication.repository.entity.Item;
 import com.sliit.chatApplication.repository.entity.OrderDetails;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-//@Setter
-//@Getter
-//@NoArgsConstructor
-//@AllArgsConstructor
+
+import java.util.List;
+
+
 public class CartItemDTO extends SuperDTO {
 
-    long cartItemId;
-    Item item;
-    long quantity;
-    OrderDetails orderDetails;
+    private long cartItemId;
+    private List<Item> items;
+    private long quantity;
+    private OrderDetails orderDetails;
 
     public CartItemDTO() {
     }
 
-    public CartItemDTO(long cartItemId, Item item, long quantity, OrderDetails orderDetails) {
+    public CartItemDTO(long cartItemId, List<Item> items, long quantity, OrderDetails orderDetails) {
         this.cartItemId = cartItemId;
-        this.item = item;
+        this.items = items;
         this.quantity = quantity;
         this.orderDetails = orderDetails;
     }
@@ -36,12 +32,12 @@ public class CartItemDTO extends SuperDTO {
         this.cartItemId = cartItemId;
     }
 
-    public Item getItem() {
-        return item;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
     public long getQuantity() {
@@ -64,7 +60,7 @@ public class CartItemDTO extends SuperDTO {
     public String toString() {
         return "CartItemDTO{" +
                 "cartItemId=" + cartItemId +
-                ", item=" + item +
+                ", items=" + items +
                 ", quantity=" + quantity +
                 ", orderDetails=" + orderDetails +
                 '}';

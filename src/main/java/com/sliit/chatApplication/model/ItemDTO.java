@@ -1,22 +1,13 @@
 package com.sliit.chatApplication.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@Setter
-//@Getter
 public class ItemDTO extends SuperDTO {
 
 
-    long itemId;
-    String itemName;
-    String itemCode;
-    String Description;
-    long price;
+    private long itemId;
+    private String itemName;
+    private String itemCode;
+    private String Description;
+    private long price;
 
     public ItemDTO() {
     }

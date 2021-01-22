@@ -1,29 +1,22 @@
 package com.sliit.chatApplication.repository.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
-//
+
 @Entity
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@Setter
-//@Getter
 public class Item extends SuperEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private
     long itemId;
-    String itemName;
-    String itemCode;
-    String description;
-    long price;
-//    @OneToMany(mappedBy = "item", fetch = FetchType.EAGER)
-//    List<CartItem> cartItems;
+    private String itemName;
+    private String itemCode;
+    private String description;
+    private long price;
+    @ManyToMany(mappedBy = "items")
+    List<CartItem> cartItems;
 
 
     public Item() {

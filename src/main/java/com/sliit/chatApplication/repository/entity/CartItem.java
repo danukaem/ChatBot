@@ -1,35 +1,34 @@
 package com.sliit.chatApplication.repository.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-//@Setter
-//@Getter
-//@NoArgsConstructor
-//@AllArgsConstructor
 public class CartItem extends SuperEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private
     long cartItemId;
-    @ManyToOne
-    @JoinColumn(name = "itemId", referencedColumnName = "itemId")
-    Item item;
-    long quantity;
+    @ManyToMany
+    @JoinTable(
+            name = "cart_item_item",
+            joinColumns = @JoinColumn(name = "cartItemId"),
+            inverseJoinColumns = @JoinColumn(name = "itemId")
+    )
+    private
+    List<Item> items;
+    private long quantity;
     @ManyToOne
     @JoinColumn(name = "orderDetailId", referencedColumnName = "orderId")
+    private
     OrderDetails orderDetails;
 
     public CartItem() {
     }
 
-    public CartItem(Item item, long quantity, OrderDetails orderDetails) {
-        this.item = item;
+    public CartItem(List<Item> items, long quantity, OrderDetails orderDetails) {
+        this.items = items;
         this.quantity = quantity;
         this.orderDetails = orderDetails;
     }
@@ -42,12 +41,12 @@ public class CartItem extends SuperEntity {
         this.cartItemId = cartItemId;
     }
 
-    public Item getItem() {
-        return item;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
     public long getQuantity() {
