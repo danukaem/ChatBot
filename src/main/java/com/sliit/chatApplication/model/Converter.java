@@ -41,6 +41,19 @@ public class Converter {
             orderDetails.setPurchaseDate(orderDetailsDTO.getPurchaseDate());
             orderDetails.setCartItems(orderDetailsDTO.getCartItems());
             return (T) orderDetails;
+        }else if (superDTO instanceof ChatMessageDTO) {
+            ChatMessageDTO chatMessageDTO = (ChatMessageDTO) superDTO;
+            ChatMessage chatMessage = new ChatMessage();
+            chatMessage.setChatId(chatMessageDTO.getChatId());
+            chatMessage.setUserId(chatMessageDTO.getUserId());
+            chatMessage.setChatSessionId(chatMessageDTO.getChatSessionId());
+            chatMessage.setIpAddress(chatMessageDTO.getIpAddress());
+            chatMessage.setChatMember(chatMessageDTO.getChatMember());
+            chatMessage.setChatMessage(chatMessageDTO.getChatMessage());
+            chatMessage.setCartId(chatMessageDTO.getCartId());
+            chatMessage.setOrderId(chatMessageDTO.getOrderId());
+            chatMessage.setStateOfOrder(chatMessageDTO.getStateOfOrder());
+            return (T) chatMessage;
         } else {
             throw new RuntimeException("This entity can't be converted to a DTO");
         }
@@ -59,6 +72,9 @@ public class Converter {
         } else if (superEntity instanceof OrderDetails) {
             OrderDetails orderDetails = (OrderDetails) superEntity;
             return (T) new OrderDetailsDTO(orderDetails.getOrderId(), orderDetails.getOrderAmount(), orderDetails.getOrderDate(), orderDetails.getPurchaseDate(), orderDetails.getUser(), orderDetails.getCartItems());
+        }else if (superEntity instanceof ChatMessage) {
+            ChatMessage chatMessage = (ChatMessage) superEntity;
+            return (T) new ChatMessageDTO(chatMessage.getChatId(),chatMessage.getChatSessionId(),chatMessage.getUserId(),chatMessage.getIpAddress(),chatMessage.getChatMember(),chatMessage.getChatMessage(),chatMessage.getCartId(),chatMessage.getOrderId(),chatMessage.getStateOfOrder());
         } else {
             throw new RuntimeException("This entity can't be converted to a DTO");
         }
