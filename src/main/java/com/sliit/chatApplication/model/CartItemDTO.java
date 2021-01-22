@@ -59,4 +59,14 @@ public class CartItemDTO extends SuperDTO {
     public void setOrderDetails(OrderDetails orderDetails) {
         this.orderDetails = orderDetails;
     }
+
+    @Override
+    public String toString() {
+        return "CartItemDTO{" +
+                "cartItemId=" + cartItemId +
+                ", item=" + item +
+                ", quantity=" + quantity +
+                ", orderDetails=" + orderDetails +
+                '}';
+    }
 }

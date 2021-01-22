@@ -100,6 +100,20 @@ public class ChatMessageDTO extends SuperDTO{
         this.stateOfOrder = stateOfOrder;
     }
 
+    @Override
+    public String toString() {
+        return "ChatMessageDTO{" +
+                "chatId=" + chatId +
+                ", chatSessionId='" + chatSessionId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", ipAddress='" + ipAddress + '\'' +
+                ", chatMember=" + chatMember +
+                ", chatMessage='" + chatMessage + '\'' +
+                ", cartId='" + cartId + '\'' +
+                ", orderId='" + orderId + '\'' +
+                ", stateOfOrder=" + stateOfOrder +
+                '}';
+    }
 
     public enum ChatMember {
         ROBOT, USER

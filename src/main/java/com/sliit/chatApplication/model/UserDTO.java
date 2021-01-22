@@ -9,15 +9,15 @@ import java.util.Date;
 //@NoArgsConstructor
 //@Getter
 //@Setter
-public class UserDTO  extends SuperDTO{
-    long userId;
-    String userName;
-    String email;
-    String password;
-    Gender gender;
-    Date birthDay;
-    String country;
-    String city;
+public class UserDTO extends SuperDTO {
+    private long userId;
+    private String userName;
+    private String email;
+    private String password;
+    private Gender gender;
+    private Date birthDay;
+    private String country;
+    private String city;
 
 
     public UserDTO() {
@@ -98,7 +98,21 @@ public class UserDTO  extends SuperDTO{
         this.city = city;
     }
 
-    public enum Gender{
-        MALE,FEMALE
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", gender=" + gender +
+                ", birthDay=" + birthDay +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                '}';
+    }
+
+    public enum Gender {
+        MALE, FEMALE
     }
 }

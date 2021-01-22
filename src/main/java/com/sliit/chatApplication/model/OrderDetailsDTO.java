@@ -82,4 +82,16 @@ public class OrderDetailsDTO extends SuperDTO {
     public void setCartItems(List<CartItem> cartItems) {
         this.cartItems = cartItems;
     }
+
+    @Override
+    public String toString() {
+        return "OrderDetailsDTO{" +
+                "orderId=" + orderId +
+                ", orderAmount=" + orderAmount +
+                ", orderDate=" + orderDate +
+                ", purchaseDate=" + purchaseDate +
+                ", user=" + user +
+                ", cartItems=" + cartItems +
+                '}';
+    }
 }

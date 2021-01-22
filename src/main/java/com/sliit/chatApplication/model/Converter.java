@@ -13,6 +13,12 @@ public class Converter {
             User user = new User();
             user.setUserId(userDTO.getUserId());
             user.setUserName(userDTO.getUserName());
+            user.setEmail(userDTO.getEmail());
+            user.setPassword(userDTO.getPassword());
+            user.setGender(userDTO.getGender());
+            user.setBirthDay(userDTO.getBirthDay());
+            user.setCountry(userDTO.getCountry());
+            user.setCity(userDTO.getCity());
             return (T) user;
         } else if (superDTO instanceof ItemDTO) {
             ItemDTO itemDTO = (ItemDTO) superDTO;

@@ -68,4 +68,15 @@ public class ItemDTO extends SuperDTO {
     public void setPrice(long price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "ItemDTO{" +
+                "itemId=" + itemId +
+                ", itemName='" + itemName + '\'' +
+                ", itemCode='" + itemCode + '\'' +
+                ", Description='" + Description + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

@@ -19,10 +19,17 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/addUser")
-    UserDTO addUser(@RequestBody UserDTO userDTO) {
+    @PostMapping("/signUp")
+    UserDTO signUp(@RequestBody UserDTO userDTO) {
         return userService.addUser(userDTO);
     }
+
+    @PostMapping("/signIn")
+    UserDTO signIn(@RequestBody UserDTO userDTO) {
+        System.out.println(userService.signInUser(userDTO));
+        return userService.signInUser(userDTO);
+    }
+
 
     @GetMapping("/getUserList")
     List<UserDTO> getUserList() {
