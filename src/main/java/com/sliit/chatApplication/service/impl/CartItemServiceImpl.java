@@ -44,7 +44,7 @@ class CartItemServiceImpl implements CartItemService {
 
     @Override
     public List<CartItemDTO> getCartItemListByUserId(long userId) {
-        List<CartItem> cartItems = cartItemRepository.findByUserId(userId);
+        List<CartItem> cartItems = cartItemRepository.findAllByUserId(userId);
         if (cartItems.size() > 0) {
             return Converter.getDTOList(cartItems);
         } else {

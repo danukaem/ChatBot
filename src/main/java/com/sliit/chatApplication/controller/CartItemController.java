@@ -39,6 +39,7 @@ public class CartItemController {
     @GetMapping("/getCartItemListByUserId/{userId}")
     List<CartItemDTO> getCartItemListByUserId(@PathVariable long userId) {
         System.out.println(userId);
-        return cartItemService.getCartItemListByUserId(userId);
+        List<CartItemDTO> cartItemDTOS = cartItemService.getCartItemListByUserId(userId);
+        return cartItemDTOS;
     }
 }

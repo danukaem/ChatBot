@@ -45,4 +45,9 @@ public class UserServiceImpl implements UserService {
     public List<UserDTO> getUserList() {
         return Converter.getDTOList(userRepository.findAll());
     }
+
+    @Override
+    public UserDTO getUserByUserId(long userId) {
+        return Converter.getDTO(userRepository.findByUserId(userId));
+    }
 }
