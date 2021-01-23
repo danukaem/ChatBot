@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 class CartItemServiceImpl implements CartItemService {
 
-    CartItemRepository cartItemRepository;
+    private CartItemRepository cartItemRepository;
 
     CartItemServiceImpl() {
     }
@@ -30,7 +30,26 @@ class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
+    public List<CartItemDTO> addCartItems(List<CartItemDTO> userDTOs) {
+        List<CartItem> cartItems = cartItemRepository.saveAll(Converter.getEntityList(userDTOs));
+
+        return Converter.getDTOList(cartItems);
+    }
+
+    @Override
     public List<CartItemDTO> getCartItemList() {
         return Converter.getDTOList(cartItemRepository.findAll());
+    }
+
+    @Override
+    public List<CartItemDTO> getCartItemListByUserId(long userId) {
+        List<CartItem> cartItems = cartItemRepository.findByUserIdOrIpAddress(userId,userId);
+        if (cartItems.size() > 0) {
+            return Converter.getDTOList(cartItems);
+
+        } else {
+            return null;
+
+        }
     }
 }

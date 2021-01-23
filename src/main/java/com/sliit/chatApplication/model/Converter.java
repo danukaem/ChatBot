@@ -36,6 +36,8 @@ public class Converter {
             cartItem.setItem(cartItemDTO.getItem());
             cartItem.setQuantity(cartItemDTO.getQuantity());
             cartItem.setOrderDetails(cartItemDTO.getOrderDetails());
+            cartItem.setUserId(cartItemDTO.getUserId());
+            cartItem.setIpAddress(cartItemDTO.getIpAddress());
             return (T) cartItem;
         } else if (superDTO instanceof OrderDetailsDTO) {
             OrderDetailsDTO orderDetailsDTO = (OrderDetailsDTO) superDTO;
@@ -74,7 +76,7 @@ public class Converter {
             return (T) new ItemDTO(item.getItemId(), item.getItemName(), item.getItemCode(), item.getDescription(), item.getPrice());
         } else if (superEntity instanceof CartItem) {
             CartItem cartItem = (CartItem) superEntity;
-            return (T) new CartItemDTO(cartItem.getCartItemId(),cartItem.getItem(),cartItem.getQuantity(),cartItem.getOrderDetails());
+            return (T) new CartItemDTO(cartItem.getCartItemId(),cartItem.getItem(),cartItem.getQuantity(),cartItem.getOrderDetails(),cartItem.getUserId(),cartItem.getIpAddress());
         } else if (superEntity instanceof OrderDetails) {
             OrderDetails orderDetails = (OrderDetails) superEntity;
             return (T) new OrderDetailsDTO(orderDetails.getOrderId(), orderDetails.getOrderAmount(), orderDetails.getOrderDate(), orderDetails.getPurchaseDate(), orderDetails.getUser(), orderDetails.getCartItems());

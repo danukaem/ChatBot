@@ -12,20 +12,39 @@ public class CartItem extends SuperEntity {
     long cartItemId;
     @ManyToOne
     @JoinColumn(name = "itemId", referencedColumnName = "itemId")
-    Item item;
+    private Item item;
     private long quantity;
     @ManyToOne
     @JoinColumn(name = "orderDetailId", referencedColumnName = "orderId")
-    private
-    OrderDetails orderDetails;
+    private OrderDetails orderDetails;
+    private long userId;
+    private String ipAddress;
 
     public CartItem() {
     }
 
-    public CartItem(Item item, long quantity, OrderDetails orderDetails) {
+    public CartItem(Item item, long quantity, OrderDetails orderDetails, long userId, String ipAddress) {
         this.item = item;
         this.quantity = quantity;
         this.orderDetails = orderDetails;
+        this.userId = userId;
+        this.ipAddress = ipAddress;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public long getCartItemId() {

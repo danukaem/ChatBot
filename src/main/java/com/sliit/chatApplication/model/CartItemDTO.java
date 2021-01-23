@@ -13,15 +13,35 @@ public class CartItemDTO extends SuperDTO {
     Item item;
     private long quantity;
     private OrderDetails orderDetails;
+    private long userId;
+    private String ipAddress;
 
     public CartItemDTO() {
     }
 
-    public CartItemDTO(long cartItemId, Item item, long quantity, OrderDetails orderDetails) {
+    public CartItemDTO(long cartItemId, Item item, long quantity, OrderDetails orderDetails, long userId, String ipAddress) {
         this.cartItemId = cartItemId;
         this.item = item;
         this.quantity = quantity;
         this.orderDetails = orderDetails;
+        this.userId = userId;
+        this.ipAddress = ipAddress;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public long getCartItemId() {
@@ -63,6 +83,8 @@ public class CartItemDTO extends SuperDTO {
                 ", item=" + item +
                 ", quantity=" + quantity +
                 ", orderDetails=" + orderDetails +
+                ", userId=" + userId +
+                ", ipAddress='" + ipAddress + '\'' +
                 '}';
     }
 }
