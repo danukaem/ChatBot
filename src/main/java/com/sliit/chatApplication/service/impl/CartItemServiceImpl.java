@@ -47,25 +47,18 @@ class CartItemServiceImpl implements CartItemService {
         List<CartItem> cartItems = cartItemRepository.findByUserId(userId);
         if (cartItems.size() > 0) {
             return Converter.getDTOList(cartItems);
-
         } else {
             return null;
-
         }
     }
 
     @Override
     public List<CartItemDTO> getCartItemListByIp(String ip) {
         List<CartItem> itemList = cartItemRepository.findByIpAddress(ip);
-        System.out.println("1 " +itemList);
         if (itemList.size() > 0) {
-            System.out.println("2  "+Converter.getDTOList(itemList));
             return Converter.getDTOList(itemList);
-
         } else {
-            System.out.println("3 ");
             return null;
-
         }
     }
 }
