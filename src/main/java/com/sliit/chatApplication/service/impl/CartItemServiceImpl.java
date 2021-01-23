@@ -2,6 +2,7 @@ package com.sliit.chatApplication.service.impl;
 
 import com.sliit.chatApplication.model.CartItemDTO;
 import com.sliit.chatApplication.model.Converter;
+import com.sliit.chatApplication.model.SuperDTO;
 import com.sliit.chatApplication.repository.CartItemRepository;
 import com.sliit.chatApplication.repository.entity.CartItem;
 import com.sliit.chatApplication.service.CartItemService;
@@ -43,11 +44,26 @@ class CartItemServiceImpl implements CartItemService {
 
     @Override
     public List<CartItemDTO> getCartItemListByUserId(long userId) {
-        List<CartItem> cartItems = cartItemRepository.findByUserIdOrIpAddress(userId,userId);
+        List<CartItem> cartItems = cartItemRepository.findByUserId(userId);
         if (cartItems.size() > 0) {
             return Converter.getDTOList(cartItems);
 
         } else {
+            return null;
+
+        }
+    }
+
+    @Override
+    public List<CartItemDTO> getCartItemListByIp(String ip) {
+        List<CartItem> itemList = cartItemRepository.findByIpAddress(ip);
+        System.out.println("1 " +itemList);
+        if (itemList.size() > 0) {
+            System.out.println("2  "+Converter.getDTOList(itemList));
+            return Converter.getDTOList(itemList);
+
+        } else {
+            System.out.println("3 ");
             return null;
 
         }

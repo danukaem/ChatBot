@@ -30,13 +30,14 @@ public class CartItemController {
         return cartItemService.addCartItems(cartItemDTOs);
     }
 
-    @GetMapping("/getCartItemList")
-    List<CartItemDTO> getCartItemList() {
-        return cartItemService.getCartItemList();
+    @GetMapping("/getCartItemListByIp/{ip}")
+    List<CartItemDTO> getCartItemList(@PathVariable String ip) {
+        System.out.println(ip);
+        return cartItemService.getCartItemListByIp(ip);
     }
 
-    @PostMapping("/getCartItemList")
-    List<CartItemDTO> getCartItemListByUserId(@PathVariable("userId") long userId) {
+    @GetMapping("/getCartItemListByUserId/{userId}")
+    List<CartItemDTO> getCartItemListByUserId(@PathVariable long userId) {
         System.out.println(userId);
         return cartItemService.getCartItemListByUserId(userId);
     }

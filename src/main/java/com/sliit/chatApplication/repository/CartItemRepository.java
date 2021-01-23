@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
-    List<CartItem> findByUserIdOrIpAddress(long userId, long ipAddress);
+    List<CartItem> findByUserId(long userId);
+    List<CartItem> findByIpAddress(String ip);
 }

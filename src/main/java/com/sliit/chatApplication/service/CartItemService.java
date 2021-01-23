@@ -9,5 +9,6 @@ public interface CartItemService {
     List<CartItemDTO> addCartItems(List<CartItemDTO> userDTOs);
     List<CartItemDTO> getCartItemList();
     List<CartItemDTO> getCartItemListByUserId(long userId);
+    List<CartItemDTO> getCartItemListByIp(String ip);
 
 }
