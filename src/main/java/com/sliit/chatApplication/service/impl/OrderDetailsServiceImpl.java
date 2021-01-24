@@ -35,7 +35,6 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
             cartItemRepository.save(item);
         });
 
-//        OrderDetails orderDetails = orderDetailsRepository.save(Converter.getEntity(orderDetailsDTO));
         return Converter.getDTO(orderDetails);
     }
 
