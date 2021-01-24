@@ -15,8 +15,7 @@ public class Item extends SuperEntity {
     String itemCode;
     String description;
     long price;
-//    @OneToMany(mappedBy = "item", fetch = FetchType.EAGER)
-//    List<CartItem> cartItems;
+
 
     public long getItemId() {
         return itemId;

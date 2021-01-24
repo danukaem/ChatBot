@@ -4,6 +4,7 @@ import com.sliit.chatApplication.model.Converter;
 import com.sliit.chatApplication.model.OrderDetailsDTO;
 import com.sliit.chatApplication.repository.CartItemRepository;
 import com.sliit.chatApplication.repository.OrderDetailsRepository;
+import com.sliit.chatApplication.repository.entity.CartItem;
 import com.sliit.chatApplication.repository.entity.OrderDetails;
 import com.sliit.chatApplication.service.OrderDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,21 +22,31 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
     }
 
     @Autowired
-    public OrderDetailsServiceImpl(OrderDetailsRepository orderDetailsRepository,CartItemRepository cartItemRepository) {
+    public OrderDetailsServiceImpl(OrderDetailsRepository orderDetailsRepository, CartItemRepository cartItemRepository) {
         this.orderDetailsRepository = orderDetailsRepository;
         this.cartItemRepository = cartItemRepository;
     }
 
     @Override
-    public OrderDetailsDTO addOrderDetail(OrderDetailsDTO orderDetailsDTO) {
+    public long addOrderDetail(OrderDetailsDTO orderDetailsDTO) {
         OrderDetails orderDetails = orderDetailsRepository.save(Converter.getEntity(orderDetailsDTO));
 
-        orderDetailsDTO.getCartItems().forEach(item->{
-            item.setOrderDetails( orderDetailsRepository.findById(orderDetails.getOrderId()).get());
-            cartItemRepository.save(item);
-        });
+        orderDetailsDTO.getCartItems().forEach(cartItem -> {
+            cartItem.setOrderDetails(orderDetails);
+            CartItem save = cartItemRepository.save(cartItem);
 
-        return Converter.getDTO(orderDetails);
+//             cartItemRepository.save(cartItem);
+        });
+        return orderDetails.getOrderId();
+
+//        OrderDetails orderDetails = orderDetailsRepository.save(Converter.getEntity(orderDetailsDTO));
+//
+//        orderDetailsDTO.getCartItems().forEach(item -> {
+//            item.setOrderDetails(orderDetailsRepository.findById(orderDetails.getOrderId()).get());
+//            cartItemRepository.save(item);
+//        });
+
+//        return Converter.getDTO(orderDetails);
     }
 
     @Override

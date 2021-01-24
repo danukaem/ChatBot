@@ -47,7 +47,6 @@ public class Converter {
             orderDetails.setOrderAmount(orderDetailsDTO.getOrderAmount());
             orderDetails.setOrderDate(orderDetailsDTO.getOrderDate());
             orderDetails.setPurchaseDate(orderDetailsDTO.getPurchaseDate());
-            orderDetails.setCartItems(orderDetailsDTO.getCartItems());
             return (T) orderDetails;
         }else if (superDTO instanceof ChatMessageDTO) {
             ChatMessageDTO chatMessageDTO = (ChatMessageDTO) superDTO;
@@ -79,7 +78,7 @@ public class Converter {
             return (T) new CartItemDTO(cartItem.getCartItemId(),cartItem.getItem(),cartItem.getQuantity(),cartItem.getOrderDetails(),cartItem.getUserId(),cartItem.getIpAddress());
         } else if (superEntity instanceof OrderDetails) {
             OrderDetails orderDetails = (OrderDetails) superEntity;
-            return (T) new OrderDetailsDTO(orderDetails.getOrderId(), orderDetails.getOrderAmount(), orderDetails.getOrderDate(), orderDetails.getPurchaseDate(), orderDetails.getUser(), orderDetails.getCartItems());
+            return (T) new OrderDetailsDTO(orderDetails.getOrderId(), orderDetails.getOrderAmount(), orderDetails.getOrderDate(), orderDetails.getPurchaseDate(), orderDetails.getUser(),null);
         }else if (superEntity instanceof ChatMessage) {
             ChatMessage chatMessage = (ChatMessage) superEntity;
             return (T) new ChatMessageDTO(chatMessage.getChatId(),chatMessage.getChatSessionId(),chatMessage.getUserId(),chatMessage.getIpAddress(),chatMessage.getChatMember(),chatMessage.getChatMessage(),chatMessage.getCartId(),chatMessage.getOrderId(),chatMessage.getStateOfOrder());

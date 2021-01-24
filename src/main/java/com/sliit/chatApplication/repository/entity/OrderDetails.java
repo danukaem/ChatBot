@@ -1,16 +1,10 @@
 package com.sliit.chatApplication.repository.entity;
 
-import lombok.*;
-
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
-//@Getter
-//@Setter
-//@NoArgsConstructor
-//@AllArgsConstructor
+
 public class OrderDetails extends SuperEntity {
 
     @Id
@@ -22,18 +16,16 @@ public class OrderDetails extends SuperEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     User user;
-    @OneToMany(mappedBy = "orderDetails",fetch = FetchType.EAGER)
-    List<CartItem> cartItems;
+
 
     public OrderDetails() {
     }
 
-    public OrderDetails(long orderAmount, Date orderDate, Date purchaseDate, User user, List<CartItem> cartItems) {
+    public OrderDetails(long orderAmount, Date orderDate, Date purchaseDate, User user) {
         this.orderAmount = orderAmount;
         this.orderDate = orderDate;
         this.purchaseDate = purchaseDate;
         this.user = user;
-        this.cartItems = cartItems;
     }
 
     public long getOrderId() {
@@ -76,11 +68,5 @@ public class OrderDetails extends SuperEntity {
         this.user = user;
     }
 
-    public List<CartItem> getCartItems() {
-        return cartItems;
-    }
 
-    public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
-    }
 }

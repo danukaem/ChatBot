@@ -21,7 +21,7 @@ public class OrderDetailsController {
     }
 
     @PostMapping("/addOrderDetails")
-    OrderDetailsDTO addOrderDetails(@RequestBody OrderDetailsDTO orderDetailsDTO) {
+    long addOrderDetails(@RequestBody OrderDetailsDTO orderDetailsDTO) {
         System.out.println(orderDetailsDTO);
         return orderDetailsService.addOrderDetail(orderDetailsDTO);
     }
