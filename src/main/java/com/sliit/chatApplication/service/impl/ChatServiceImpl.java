@@ -5,6 +5,7 @@ import com.sliit.chatApplication.model.Converter;
 import com.sliit.chatApplication.repository.ChatMessageRepository;
 import com.sliit.chatApplication.repository.entity.ChatMessage;
 import com.sliit.chatApplication.service.ChatService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -45,11 +46,33 @@ public class ChatServiceImpl implements ChatService {
         return Converter.getDTOList(chatMessageRepository.findAll());
     }
 
+    public ResponseEntity getChatResponse(String chatMessage, String chatSessionId, String userId, String ipAddress,
+                                          ChatMessageDTO.StateOfOrder stateOfOrder,
+                                          String cartId, String orderId) {
 
-    public ResponseEntity getChatResponse(String message, String sessionId) {
-        String url = chatUrl + "chat?message=" + message;
 
-        return this.httpService.sendHttpGetUrlConnection(url);
+        ChatMessage robotChatMessageObj = new ChatMessage();
+        robotChatMessageObj.setChatMessage(chatMessage);
+        robotChatMessageObj.setChatSessionId(chatSessionId);
+        robotChatMessageObj.setUserId(userId);
+        robotChatMessageObj.setIpAddress(ipAddress);
+        robotChatMessageObj.setOrderId(orderId);
+        robotChatMessageObj.setStateOfOrder(stateOfOrder);
+        robotChatMessageObj.setCartId(cartId);
+        robotChatMessageObj.setChatMember(ChatMessageDTO.ChatMember.ROBOT);
+        chatMessageRepository.save(robotChatMessageObj);
+        String url = chatUrl + "chat?message=" + chatMessage;
+        ResponseEntity responseEntity = this.httpService.sendHttpGetUrlConnection(url);
+
+        robotChatMessageObj.setChatMember(ChatMessageDTO.ChatMember.USER);
+
+        JSONObject jsonBody = new JSONObject(responseEntity);
+        JSONObject jsonUserMessage=new JSONObject(jsonBody.getString("body"));
+        String userMessage = jsonUserMessage.getString("userMessage");
+        robotChatMessageObj.setChatMessage(userMessage);
+        chatMessageRepository.save(robotChatMessageObj);
+
+        return responseEntity;
     }
 
 }

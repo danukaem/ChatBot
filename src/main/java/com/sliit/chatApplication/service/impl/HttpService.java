@@ -22,7 +22,6 @@ public class HttpService {
         try {
             HttpEntity<String> httpEntity = new HttpEntity<>(url, httpHeaders);
             ResponseEntity<String> exchange = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
-            System.out.println(exchange);
             return exchange;
 
         } catch (HttpServerErrorException | HttpClientErrorException e) {

@@ -40,8 +40,11 @@ public class ChatController {
 
 
     @GetMapping("/chat")
-    public Object getChatResponse(@RequestParam("message") String message, @RequestParam("sessionId") String sessionId) {
-        ResponseEntity responseEntity = chatService.getChatResponse(message, sessionId);
+    public Object getChatResponse(@RequestParam("chatMessage") String chatMessage, @RequestParam("chatSessionId") String chatSessionId
+            , @RequestParam("userId") String userId, @RequestParam("ipAddress") String ipAddress
+            , @RequestParam("stateOfOrder") ChatMessageDTO.StateOfOrder stateOfOrder
+            , @RequestParam("cartId") String cartId, @RequestParam("orderId") String orderId) {
+        ResponseEntity responseEntity = chatService.getChatResponse(chatMessage, chatSessionId, userId, ipAddress, stateOfOrder, cartId, orderId);
         return responseEntity.getBody();
     }
 

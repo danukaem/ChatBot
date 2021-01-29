@@ -120,7 +120,7 @@ public class ChatMessageDTO extends SuperDTO{
     }
 
     public enum StateOfOrder {
-        PAID, CANCELED
+        PAID, CANCELED,PENDING
     }
 }
 

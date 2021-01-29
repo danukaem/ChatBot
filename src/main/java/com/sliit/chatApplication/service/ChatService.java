@@ -12,5 +12,5 @@ public interface ChatService {
 
     List<ChatMessageDTO> getChatMessagesList();
 
-    ResponseEntity getChatResponse(String message,String sessionId);
+    ResponseEntity getChatResponse(String chatMessage, String chatSessionId, String userId, String ipAddress, ChatMessageDTO.StateOfOrder stateOfOrder, String cartId, String orderId);
 }
