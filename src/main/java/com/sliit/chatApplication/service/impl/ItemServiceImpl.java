@@ -32,4 +32,8 @@ public class ItemServiceImpl implements ItemService {
     public List<ItemDTO> getItemList() {
         return Converter.getDTOList(itemRepository.findAll());
     }
+    @Override
+    public List<ItemDTO> getItemLimitedList(int itemLimit) {
+        return Converter.getDTOList(itemRepository.getItemLimitedList(itemLimit));
+    }
 }

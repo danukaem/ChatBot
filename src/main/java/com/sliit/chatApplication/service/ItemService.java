@@ -7,4 +7,5 @@ import java.util.List;
 public interface ItemService {
     ItemDTO addItem(ItemDTO itemDTO);
     List<ItemDTO> getItemList();
+    List<ItemDTO> getItemLimitedList(int itemLimit);
 }

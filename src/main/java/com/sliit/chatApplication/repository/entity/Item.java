@@ -9,12 +9,14 @@ public class Item extends SuperEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private
-    long itemId;
-    String itemName;
-    String itemCode;
-    String description;
-    long price;
+    private long itemId;
+    private String itemName;
+    private String itemCode;
+    private String description;
+    private String imgSrc;
+    private String category;
+    private long price;
+    private long discountPercentage;
 
 
     public long getItemId() {
@@ -55,5 +57,43 @@ public class Item extends SuperEntity {
 
     public void setPrice(long price) {
         this.price = price;
+    }
+
+    public long getDiscountPercentage() {
+        return discountPercentage;
+    }
+
+    public void setDiscountPercentage(long discountPercentage) {
+        this.discountPercentage = discountPercentage;
+    }
+
+    public String getImgSrc() {
+        return imgSrc;
+    }
+
+    public void setImgSrc(String imgSrc) {
+        this.imgSrc = imgSrc;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "itemId=" + itemId +
+                ", itemName='" + itemName + '\'' +
+                ", itemCode='" + itemCode + '\'' +
+                ", description='" + description + '\'' +
+                ", imgSrc='" + imgSrc + '\'' +
+                ", category='" + category + '\'' +
+                ", price=" + price +
+                ", discountPercentage=" + discountPercentage +
+                '}';
     }
 }
