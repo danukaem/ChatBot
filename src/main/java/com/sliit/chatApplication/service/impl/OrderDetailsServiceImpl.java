@@ -32,21 +32,13 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
         OrderDetails orderDetails = orderDetailsRepository.save(Converter.getEntity(orderDetailsDTO));
 
         orderDetailsDTO.getCartItems().forEach(cartItem -> {
-            cartItem.setOrderDetails(orderDetails);
-            CartItem save = cartItemRepository.save(cartItem);
-
-//             cartItemRepository.save(cartItem);
+            if (cartItem.getOrderDetails() == null) {
+                cartItem.setOrderDetails(orderDetails);
+                CartItem save = cartItemRepository.save(cartItem);
+            }
         });
         return orderDetails.getOrderId();
 
-//        OrderDetails orderDetails = orderDetailsRepository.save(Converter.getEntity(orderDetailsDTO));
-//
-//        orderDetailsDTO.getCartItems().forEach(item -> {
-//            item.setOrderDetails(orderDetailsRepository.findById(orderDetails.getOrderId()).get());
-//            cartItemRepository.save(item);
-//        });
-
-//        return Converter.getDTO(orderDetails);
     }
 
     @Override
