@@ -51,25 +51,38 @@ public class ChatServiceImpl implements ChatService {
                                           String cartId, String orderId) {
 
 
+        ChatMessage userChatMessageObj = new ChatMessage();
+        userChatMessageObj.setChatMessage(chatMessage);
+        userChatMessageObj.setChatSessionId(chatSessionId);
+        userChatMessageObj.setUserId(userId);
+        userChatMessageObj.setIpAddress(ipAddress);
+        userChatMessageObj.setOrderId(orderId);
+        userChatMessageObj.setStateOfOrder(stateOfOrder);
+        userChatMessageObj.setCartId(cartId);
+        userChatMessageObj.setChatMember(ChatMessageDTO.ChatMember.USER);
+        chatMessageRepository.save(userChatMessageObj);
+
         ChatMessage robotChatMessageObj = new ChatMessage();
-        robotChatMessageObj.setChatMessage(chatMessage);
-        robotChatMessageObj.setChatSessionId(chatSessionId);
-        robotChatMessageObj.setUserId(userId);
-        robotChatMessageObj.setIpAddress(ipAddress);
-        robotChatMessageObj.setOrderId(orderId);
-        robotChatMessageObj.setStateOfOrder(stateOfOrder);
-        robotChatMessageObj.setCartId(cartId);
-        robotChatMessageObj.setChatMember(ChatMessageDTO.ChatMember.ROBOT);
-        chatMessageRepository.save(robotChatMessageObj);
+
+
         String url = chatUrl + "chat?message=" + chatMessage;
         ResponseEntity responseEntity = this.httpService.sendHttpGetUrlConnection(url);
 
-        robotChatMessageObj.setChatMember(ChatMessageDTO.ChatMember.USER);
+        robotChatMessageObj.setChatMember(ChatMessageDTO.ChatMember.ROBOT);
 
         JSONObject jsonBody = new JSONObject(responseEntity);
         JSONObject jsonUserMessage=new JSONObject(jsonBody.getString("body"));
         String userMessage = jsonUserMessage.getString("userMessage");
         robotChatMessageObj.setChatMessage(userMessage);
+
+        robotChatMessageObj.setChatSessionId(userChatMessageObj.getChatSessionId());
+        robotChatMessageObj.setUserId(userChatMessageObj.getUserId());
+        robotChatMessageObj.setIpAddress(userChatMessageObj.getIpAddress());
+        robotChatMessageObj.setOrderId(userChatMessageObj.getOrderId());
+        robotChatMessageObj.setStateOfOrder(userChatMessageObj.getStateOfOrder());
+        robotChatMessageObj.setCartId(userChatMessageObj.getCartId());
+
+
         chatMessageRepository.save(robotChatMessageObj);
 
         return responseEntity;

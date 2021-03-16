@@ -29,6 +29,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 
     @Override
     public long addOrderDetail(OrderDetailsDTO orderDetailsDTO) {
+        System.out.println(orderDetailsDTO);
         OrderDetails orderDetails = orderDetailsRepository.save(Converter.getEntity(orderDetailsDTO));
 
         orderDetailsDTO.getCartItems().forEach(cartItem -> {
