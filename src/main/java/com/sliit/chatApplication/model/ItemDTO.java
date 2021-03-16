@@ -8,14 +8,14 @@ public class ItemDTO extends SuperDTO {
     private String itemCode;
     private String Description;
     private String imgSrc;
-    private String category;
+    private ItemCategory category;
     private long price;
     private long discountPercentage;
 
     public ItemDTO() {
     }
 
-    public ItemDTO(long itemId, String itemName, String itemCode, String description, String imgSrc, String category, long price, long discountPercentage) {
+    public ItemDTO(long itemId, String itemName, String itemCode, String description, String imgSrc, ItemCategory category, long price, long discountPercentage) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemCode = itemCode;
@@ -82,11 +82,11 @@ public class ItemDTO extends SuperDTO {
         this.discountPercentage = discountPercentage;
     }
 
-    public String getCategory() {
+    public ItemCategory getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(ItemCategory category) {
         this.category = category;
     }
 
@@ -98,7 +98,7 @@ public class ItemDTO extends SuperDTO {
                 ", itemCode='" + itemCode + '\'' +
                 ", Description='" + Description + '\'' +
                 ", imgSrc='" + imgSrc + '\'' +
-                ", category='" + category + '\'' +
+                ", category=" + category +
                 ", price=" + price +
                 ", discountPercentage=" + discountPercentage +
                 '}';

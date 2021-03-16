@@ -48,10 +48,11 @@ public class Converter {
             orderDetails.setOrderId(orderDetailsDTO.getOrderId());
             orderDetails.setUser(orderDetailsDTO.getUser());
             orderDetails.setOrderAmount(orderDetailsDTO.getOrderAmount());
+            orderDetails.setPaid(orderDetailsDTO.isPaid());
             orderDetails.setOrderDate(orderDetailsDTO.getOrderDate());
             orderDetails.setPurchaseDate(orderDetailsDTO.getPurchaseDate());
             return (T) orderDetails;
-        }else if (superDTO instanceof ChatMessageDTO) {
+        } else if (superDTO instanceof ChatMessageDTO) {
             ChatMessageDTO chatMessageDTO = (ChatMessageDTO) superDTO;
             ChatMessage chatMessage = new ChatMessage();
             chatMessage.setChatId(chatMessageDTO.getChatId());
@@ -75,16 +76,16 @@ public class Converter {
             return (T) new UserDTO(user.getUserId(), user.getUserName(), user.getEmail(), user.getPassword(), user.getGender(), user.getBirthDay(), user.getCountry(), user.getCity());
         } else if (superEntity instanceof Item) {
             Item item = (Item) superEntity;
-            return (T) new ItemDTO(item.getItemId(), item.getItemName(), item.getItemCode(), item.getDescription(), item.getImgSrc(),item.getCategory(), item.getPrice(), item.getDiscountPercentage());
+            return (T) new ItemDTO(item.getItemId(), item.getItemName(), item.getItemCode(), item.getDescription(), item.getImgSrc(), item.getCategory(), item.getPrice(), item.getDiscountPercentage());
         } else if (superEntity instanceof CartItem) {
             CartItem cartItem = (CartItem) superEntity;
-            return (T) new CartItemDTO(cartItem.getCartItemId(),cartItem.getItem(),cartItem.getQuantity(),cartItem.getOrderDetails(),cartItem.getUserId(),cartItem.getIpAddress());
+            return (T) new CartItemDTO(cartItem.getCartItemId(), cartItem.getItem(), cartItem.getQuantity(), cartItem.getOrderDetails(), cartItem.getUserId(), cartItem.getIpAddress());
         } else if (superEntity instanceof OrderDetails) {
             OrderDetails orderDetails = (OrderDetails) superEntity;
-            return (T) new OrderDetailsDTO(orderDetails.getOrderId(), orderDetails.getOrderAmount(), orderDetails.getOrderDate(), orderDetails.getPurchaseDate(), orderDetails.getUser(),null);
-        }else if (superEntity instanceof ChatMessage) {
+            return (T) new OrderDetailsDTO(orderDetails.getOrderId(), orderDetails.getOrderAmount(), orderDetails.getOrderDate(), orderDetails.getPurchaseDate(), orderDetails.getUser(), orderDetails.isPaid(), null);
+        } else if (superEntity instanceof ChatMessage) {
             ChatMessage chatMessage = (ChatMessage) superEntity;
-            return (T) new ChatMessageDTO(chatMessage.getChatId(),chatMessage.getChatSessionId(),chatMessage.getUserId(),chatMessage.getIpAddress(),chatMessage.getChatMember(),chatMessage.getChatMessage(),chatMessage.getCartId(),chatMessage.getOrderId(),chatMessage.getStateOfOrder());
+            return (T) new ChatMessageDTO(chatMessage.getChatId(), chatMessage.getChatSessionId(), chatMessage.getUserId(), chatMessage.getIpAddress(), chatMessage.getChatMember(), chatMessage.getChatMessage(), chatMessage.getCartId(), chatMessage.getOrderId(), chatMessage.getStateOfOrder());
         } else {
             throw new RuntimeException("This entity can't be converted to a DTO");
         }

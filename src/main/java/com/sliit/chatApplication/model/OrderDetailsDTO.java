@@ -16,23 +16,34 @@ import java.util.List;
 //@AllArgsConstructor
 public class OrderDetailsDTO extends SuperDTO {
 
-    long orderId;
-    long orderAmount;
-    Date orderDate;
-    Date purchaseDate;
-    User user;
-    List<CartItem> cartItems;
+    private long orderId;
+    private long orderAmount;
+    private Date orderDate;
+    private Date purchaseDate;
+    private User user;
+    private boolean isPaid;
+
+    private List<CartItem> cartItems;
 
     public OrderDetailsDTO() {
     }
 
-    public OrderDetailsDTO(long orderId, long orderAmount, Date orderDate, Date purchaseDate, User user, List<CartItem> cartItems) {
+    public OrderDetailsDTO(long orderId, long orderAmount, Date orderDate, Date purchaseDate, User user, boolean isPaid, List<CartItem> cartItems) {
         this.orderId = orderId;
         this.orderAmount = orderAmount;
         this.orderDate = orderDate;
         this.purchaseDate = purchaseDate;
         this.user = user;
+        this.isPaid = isPaid;
         this.cartItems = cartItems;
+    }
+
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        isPaid = paid;
     }
 
     public long getOrderId() {
@@ -91,6 +102,7 @@ public class OrderDetailsDTO extends SuperDTO {
                 ", orderDate=" + orderDate +
                 ", purchaseDate=" + purchaseDate +
                 ", user=" + user +
+                ", isPaid=" + isPaid +
                 ", cartItems=" + cartItems +
                 '}';
     }

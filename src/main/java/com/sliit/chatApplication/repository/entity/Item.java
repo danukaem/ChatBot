@@ -1,6 +1,8 @@
 package com.sliit.chatApplication.repository.entity;
 
 
+import com.sliit.chatApplication.model.ItemCategory;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -14,10 +16,22 @@ public class Item extends SuperEntity {
     private String itemCode;
     private String description;
     private String imgSrc;
-    private String category;
+    private ItemCategory category;
     private long price;
     private long discountPercentage;
 
+    public Item() {
+    }
+
+    public Item(String itemName, String itemCode, String description, String imgSrc, ItemCategory category, long price, long discountPercentage) {
+        this.itemName = itemName;
+        this.itemCode = itemCode;
+        this.description = description;
+        this.imgSrc = imgSrc;
+        this.category = category;
+        this.price = price;
+        this.discountPercentage = discountPercentage;
+    }
 
     public long getItemId() {
         return itemId;
@@ -75,11 +89,11 @@ public class Item extends SuperEntity {
         this.imgSrc = imgSrc;
     }
 
-    public String getCategory() {
+    public ItemCategory getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(ItemCategory category) {
         this.category = category;
     }
 
@@ -91,7 +105,7 @@ public class Item extends SuperEntity {
                 ", itemCode='" + itemCode + '\'' +
                 ", description='" + description + '\'' +
                 ", imgSrc='" + imgSrc + '\'' +
-                ", category='" + category + '\'' +
+                ", category=" + category +
                 ", price=" + price +
                 ", discountPercentage=" + discountPercentage +
                 '}';

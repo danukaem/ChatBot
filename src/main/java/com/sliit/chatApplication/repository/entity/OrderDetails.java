@@ -9,23 +9,35 @@ public class OrderDetails extends SuperEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private
     long orderId;
-    long orderAmount;
-    Date orderDate;
-    Date purchaseDate;
+    private long orderAmount;
+    private Date orderDate;
+    private Date purchaseDate;
+    private boolean isPaid;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
+    private
     User user;
 
 
     public OrderDetails() {
     }
 
-    public OrderDetails(long orderAmount, Date orderDate, Date purchaseDate, User user) {
+    public OrderDetails(long orderAmount, Date orderDate, Date purchaseDate, boolean isPaid, User user) {
         this.orderAmount = orderAmount;
         this.orderDate = orderDate;
         this.purchaseDate = purchaseDate;
+        this.isPaid = isPaid;
         this.user = user;
+    }
+
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        isPaid = paid;
     }
 
     public long getOrderId() {
@@ -68,5 +80,15 @@ public class OrderDetails extends SuperEntity {
         this.user = user;
     }
 
-
+    @Override
+    public String toString() {
+        return "OrderDetails{" +
+                "orderId=" + orderId +
+                ", orderAmount=" + orderAmount +
+                ", orderDate=" + orderDate +
+                ", purchaseDate=" + purchaseDate +
+                ", isPaid=" + isPaid +
+                ", user=" + user +
+                '}';
+    }
 }

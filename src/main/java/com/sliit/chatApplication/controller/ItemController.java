@@ -1,5 +1,6 @@
 package com.sliit.chatApplication.controller;
 
+import com.sliit.chatApplication.model.ItemCategory;
 import com.sliit.chatApplication.model.ItemDTO;
 import com.sliit.chatApplication.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import java.util.List;
 @RequestMapping("/item")
 public class ItemController {
 
+    @Autowired
     ItemService itemService;
 
     @Autowired
@@ -34,6 +36,11 @@ public class ItemController {
     @GetMapping("/getItemList/{itemLimit}")
     List<ItemDTO> getItemLimitedList(@PathVariable("itemLimit") int itemLimit) {
         return itemService.getItemLimitedList(itemLimit);
+    }
+
+    @GetMapping("/getCategoryList")
+    List<ItemCategory> getCategoryList() {
+        return itemService.getCategoryList();
     }
 
 
