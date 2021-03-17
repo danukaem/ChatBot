@@ -25,6 +25,11 @@ public class OrderDetailsController {
         return orderDetailsService.addOrderDetail(orderDetailsDTO);
     }
 
+    @PostMapping("/removeOrderDetails")
+    long removeOrderDetails(@RequestBody OrderDetailsDTO orderDetailsDTO) {
+        return orderDetailsService.removeOrderDetails(orderDetailsDTO);
+    }
+
     @GetMapping("/getOrderDetailsList")
     List<OrderDetailsDTO> getOrderDetailsList() {
         return orderDetailsService.getOrderDetailList();

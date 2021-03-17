@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface OrderDetailsService {
     long addOrderDetail(OrderDetailsDTO orderDetailsDTO);
+    long removeOrderDetails(OrderDetailsDTO orderDetailsDTO);
     List<OrderDetailsDTO> getOrderDetailList();
 }

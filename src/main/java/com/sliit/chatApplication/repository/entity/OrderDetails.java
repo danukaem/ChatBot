@@ -1,5 +1,7 @@
 package com.sliit.chatApplication.repository.entity;
 
+import com.sliit.chatApplication.model.StateOfOrder;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -19,17 +21,19 @@ public class OrderDetails extends SuperEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private
     User user;
+    private StateOfOrder stateOfOrder;
 
 
     public OrderDetails() {
     }
 
-    public OrderDetails(long orderAmount, Date orderDate, Date purchaseDate, boolean isPaid, User user) {
+    public OrderDetails(long orderAmount, Date orderDate, Date purchaseDate, boolean isPaid, User user, StateOfOrder stateOfOrder) {
         this.orderAmount = orderAmount;
         this.orderDate = orderDate;
         this.purchaseDate = purchaseDate;
         this.isPaid = isPaid;
         this.user = user;
+        this.stateOfOrder = stateOfOrder;
     }
 
     public boolean isPaid() {
@@ -80,6 +84,14 @@ public class OrderDetails extends SuperEntity {
         this.user = user;
     }
 
+    public StateOfOrder getStateOfOrder() {
+        return stateOfOrder;
+    }
+
+    public void setStateOfOrder(StateOfOrder stateOfOrder) {
+        this.stateOfOrder = stateOfOrder;
+    }
+
     @Override
     public String toString() {
         return "OrderDetails{" +
@@ -89,6 +101,7 @@ public class OrderDetails extends SuperEntity {
                 ", purchaseDate=" + purchaseDate +
                 ", isPaid=" + isPaid +
                 ", user=" + user +
+                ", stateOfOrder=" + stateOfOrder +
                 '}';
     }
 }

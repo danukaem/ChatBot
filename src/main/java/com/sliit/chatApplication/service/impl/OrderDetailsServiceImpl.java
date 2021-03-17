@@ -29,7 +29,6 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 
     @Override
     public long addOrderDetail(OrderDetailsDTO orderDetailsDTO) {
-        System.out.println(orderDetailsDTO);
         OrderDetails orderDetails = orderDetailsRepository.save(Converter.getEntity(orderDetailsDTO));
 
         orderDetailsDTO.getCartItems().forEach(cartItem -> {
@@ -40,6 +39,19 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
         });
         return orderDetails.getOrderId();
 
+    }
+
+    @Override
+    public long removeOrderDetails(OrderDetailsDTO orderDetailsDTO) {
+        OrderDetails orderDetails = orderDetailsRepository.save(Converter.getEntity(orderDetailsDTO));
+
+        orderDetailsDTO.getCartItems().forEach(cartItem -> {
+            if (cartItem.getOrderDetails() == null) {
+                cartItem.setOrderDetails(orderDetails);
+                CartItem save = cartItemRepository.save(cartItem);
+            }
+        });
+        return orderDetails.getOrderId();
     }
 
     @Override

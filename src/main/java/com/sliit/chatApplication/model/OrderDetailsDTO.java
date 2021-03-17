@@ -24,11 +24,12 @@ public class OrderDetailsDTO extends SuperDTO {
     private boolean isPaid;
 
     private List<CartItem> cartItems;
+    private StateOfOrder stateOfOrder;
 
     public OrderDetailsDTO() {
     }
 
-    public OrderDetailsDTO(long orderId, long orderAmount, Date orderDate, Date purchaseDate, User user, boolean isPaid, List<CartItem> cartItems) {
+    public OrderDetailsDTO(long orderId, long orderAmount, Date orderDate, Date purchaseDate, User user, boolean isPaid, List<CartItem> cartItems, StateOfOrder stateOfOrder) {
         this.orderId = orderId;
         this.orderAmount = orderAmount;
         this.orderDate = orderDate;
@@ -36,6 +37,7 @@ public class OrderDetailsDTO extends SuperDTO {
         this.user = user;
         this.isPaid = isPaid;
         this.cartItems = cartItems;
+        this.stateOfOrder = stateOfOrder;
     }
 
     public boolean isPaid() {
@@ -94,6 +96,14 @@ public class OrderDetailsDTO extends SuperDTO {
         this.cartItems = cartItems;
     }
 
+    public StateOfOrder getStateOfOrder() {
+        return stateOfOrder;
+    }
+
+    public void setStateOfOrder(StateOfOrder stateOfOrder) {
+        this.stateOfOrder = stateOfOrder;
+    }
+
     @Override
     public String toString() {
         return "OrderDetailsDTO{" +
@@ -104,6 +114,7 @@ public class OrderDetailsDTO extends SuperDTO {
                 ", user=" + user +
                 ", isPaid=" + isPaid +
                 ", cartItems=" + cartItems +
+                ", stateOfOrder=" + stateOfOrder +
                 '}';
     }
 }
