@@ -2,6 +2,7 @@ package com.sliit.chatApplication.service.impl;
 
 import com.sliit.chatApplication.model.ChatMessageDTO;
 import com.sliit.chatApplication.model.Converter;
+import com.sliit.chatApplication.model.StateOfOrder;
 import com.sliit.chatApplication.repository.ChatMessageRepository;
 import com.sliit.chatApplication.repository.entity.ChatMessage;
 import com.sliit.chatApplication.service.ChatService;
@@ -47,7 +48,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
     public ResponseEntity getChatResponse(String chatMessage, String chatSessionId, String userId, String ipAddress,
-                                          ChatMessageDTO.StateOfOrder stateOfOrder,
+                                          StateOfOrder stateOfOrder,
                                           String cartId, String orderId) {
 
 

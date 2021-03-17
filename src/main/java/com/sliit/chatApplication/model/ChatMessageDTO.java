@@ -1,6 +1,6 @@
 package com.sliit.chatApplication.model;
 
-public class ChatMessageDTO extends SuperDTO{
+public class ChatMessageDTO extends SuperDTO {
 
 
     private long chatId;
@@ -119,9 +119,6 @@ public class ChatMessageDTO extends SuperDTO{
         ROBOT, USER
     }
 
-    public enum StateOfOrder {
-        PAID, CANCELED,PENDING
-    }
 }
 
 

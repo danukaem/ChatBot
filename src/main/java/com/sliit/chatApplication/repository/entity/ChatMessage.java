@@ -1,6 +1,7 @@
 package com.sliit.chatApplication.repository.entity;
 
 import com.sliit.chatApplication.model.ChatMessageDTO;
+import com.sliit.chatApplication.model.StateOfOrder;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,12 +21,12 @@ public class ChatMessage  extends SuperEntity {
     private String chatMessage;
     private String cartId;
     private String orderId;
-    private ChatMessageDTO.StateOfOrder stateOfOrder;
+    private StateOfOrder stateOfOrder;
 
     public ChatMessage() {
     }
 
-    public ChatMessage(long chatId, String chatSessionId, String userId, String ipAddress, ChatMessageDTO.ChatMember chatMember, String chatMessage, String cartId, String orderId, ChatMessageDTO.StateOfOrder stateOfOrder) {
+    public ChatMessage(long chatId, String chatSessionId, String userId, String ipAddress, ChatMessageDTO.ChatMember chatMember, String chatMessage, String cartId, String orderId, StateOfOrder stateOfOrder) {
         this.chatId = chatId;
         this.chatSessionId = chatSessionId;
         this.userId = userId;
@@ -101,11 +102,11 @@ public class ChatMessage  extends SuperEntity {
         this.orderId = orderId;
     }
 
-    public ChatMessageDTO.StateOfOrder getStateOfOrder() {
+    public StateOfOrder getStateOfOrder() {
         return stateOfOrder;
     }
 
-    public void setStateOfOrder(ChatMessageDTO.StateOfOrder stateOfOrder) {
+    public void setStateOfOrder(StateOfOrder stateOfOrder) {
         this.stateOfOrder = stateOfOrder;
     }
 }
