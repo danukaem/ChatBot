@@ -95,7 +95,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
 
-    @Scheduled(fixedRate = 1000*3600*24)
+    @Scheduled(fixedRate = 100*3600*24)
     public ResponseEntity generateChatModel() {
         String url = chatUrl + "generateChatModel";
         return this.httpService.sendHttpGetUrlConnection(url);
