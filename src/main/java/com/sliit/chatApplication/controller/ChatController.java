@@ -49,4 +49,9 @@ public class ChatController {
         return responseEntity.getBody();
     }
 
+    @GetMapping("/generateChatModel")
+    public ResponseEntity generateChatModel() {
+        return chatService.generateChatModel();
+    }
+
 }

@@ -9,10 +9,13 @@ import com.sliit.chatApplication.service.ChatService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
@@ -21,6 +24,8 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Date;
 import java.util.List;
 
+@Configuration
+@EnableScheduling
 @Service
 public class ChatServiceImpl implements ChatService {
     @Value("${chatUrl}")
@@ -72,7 +77,7 @@ public class ChatServiceImpl implements ChatService {
         robotChatMessageObj.setChatMember(ChatMessageDTO.ChatMember.ROBOT);
 
         JSONObject jsonBody = new JSONObject(responseEntity);
-        JSONObject jsonUserMessage=new JSONObject(jsonBody.getString("body"));
+        JSONObject jsonUserMessage = new JSONObject(jsonBody.getString("body"));
         String userMessage = jsonUserMessage.getString("userMessage");
         robotChatMessageObj.setChatMessage(userMessage);
 
@@ -88,5 +93,14 @@ public class ChatServiceImpl implements ChatService {
 
         return responseEntity;
     }
+
+
+    @Scheduled(fixedRate = 1000*3600*24)
+    public ResponseEntity generateChatModel() {
+        String url = chatUrl + "generateChatModel";
+        return this.httpService.sendHttpGetUrlConnection(url);
+
+    }
+
 
 }
