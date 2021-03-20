@@ -1,6 +1,7 @@
 package com.sliit.chatApplication.controller;
 
 import com.sliit.chatApplication.model.CartItemDTO;
+import com.sliit.chatApplication.model.ItemDTO;
 import com.sliit.chatApplication.service.CartItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -40,5 +41,10 @@ public class CartItemController {
     List<CartItemDTO> getCartItemListByUserId(@PathVariable long userId) {
         List<CartItemDTO> cartItemDTOS = cartItemService.getCartItemListByUserId(userId);
         return cartItemDTOS;
+    }
+    @GetMapping("/getRecommendCartItemListByUserId/{userId}")
+    List<ItemDTO> getRecommendCartItemListByUserId(@PathVariable long userId) {
+        List<ItemDTO>  ItemDTOS = cartItemService.getRecommendCartItemListByUserId(userId);
+        return ItemDTOS;
     }
 }

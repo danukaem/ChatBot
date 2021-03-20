@@ -1,20 +1,29 @@
 package com.sliit.chatApplication.service.impl;
 
-import com.sliit.chatApplication.model.CartItemDTO;
-import com.sliit.chatApplication.model.Converter;
-import com.sliit.chatApplication.model.SuperDTO;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sliit.chatApplication.model.*;
 import com.sliit.chatApplication.repository.CartItemRepository;
 import com.sliit.chatApplication.repository.entity.CartItem;
 import com.sliit.chatApplication.service.CartItemService;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 class CartItemServiceImpl implements CartItemService {
 
     private CartItemRepository cartItemRepository;
+    @Value("${chatUrl}")
+    String chatUrl;
+    @Autowired
+    HttpService httpService;
 
     CartItemServiceImpl() {
     }
@@ -53,6 +62,31 @@ class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
+    public List<ItemDTO> getRecommendCartItemListByUserId(long userId) {
+        String url = chatUrl + "getRecommendCartItems?userId=" + userId;
+        ResponseEntity getRecommendCartItems = httpService.sendHttpGetUrlConnection(url);
+
+        JSONObject jsonObj = new JSONObject(getRecommendCartItems);
+        JSONObject jsonBody = new JSONObject(jsonObj.getString("body"));
+        Object forecastResults = jsonBody.get("forecastResults");
+        String resultList = forecastResults.toString();
+        String splitedResultList = resultList.substring(1, resultList.length() - 1);
+        splitedResultList = splitedResultList.substring(1, splitedResultList.length() - 1);
+        String stringList[] = splitedResultList.split("], \\[");
+        List<List<Float>> resList = new ArrayList<>();
+        for (String a : stringList) {
+            String sb[] = a.split(",");
+            List<Float> list = new ArrayList<>();
+            for (String b : sb) {
+                list.add(Float.valueOf(b));
+            }
+            resList.add(list);
+        }
+
+        return findRecommendedItems(resList);
+    }
+
+    @Override
     public List<CartItemDTO> getCartItemListByIp(String ip) {
         List<CartItem> itemList = cartItemRepository.findByIpAddress(ip);
         if (itemList.size() > 0) {
@@ -61,4 +95,12 @@ class CartItemServiceImpl implements CartItemService {
             return null;
         }
     }
+
+    public List<ItemDTO> findRecommendedItems(List<List<Float>> resList) {
+
+        System.out.println(resList);
+        return null;
+    }
+
+
 }
