@@ -4,22 +4,27 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sliit.chatApplication.model.*;
 import com.sliit.chatApplication.repository.CartItemRepository;
+import com.sliit.chatApplication.repository.ItemRepository;
 import com.sliit.chatApplication.repository.entity.CartItem;
+import com.sliit.chatApplication.repository.entity.Item;
 import com.sliit.chatApplication.service.CartItemService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Service
 class CartItemServiceImpl implements CartItemService {
 
     private CartItemRepository cartItemRepository;
+    private ItemRepository itemRepository;
+
     @Value("${chatUrl}")
     String chatUrl;
     @Autowired
@@ -29,9 +34,12 @@ class CartItemServiceImpl implements CartItemService {
     }
 
     @Autowired
-    public CartItemServiceImpl(CartItemRepository cartItemRepository) {
+
+    public CartItemServiceImpl(CartItemRepository cartItemRepository, ItemRepository itemRepository) {
         this.cartItemRepository = cartItemRepository;
+        this.itemRepository = itemRepository;
     }
+
 
     @Override
     public CartItemDTO addCartItem(CartItemDTO cartItemDTO) {
@@ -62,28 +70,15 @@ class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public List<ItemDTO> getRecommendCartItemListByUserId(long userId) {
-        String url = chatUrl + "getRecommendCartItems?userId=" + userId;
-        ResponseEntity getRecommendCartItems = httpService.sendHttpGetUrlConnection(url);
-
-        JSONObject jsonObj = new JSONObject(getRecommendCartItems);
-        JSONObject jsonBody = new JSONObject(jsonObj.getString("body"));
-        Object forecastResults = jsonBody.get("forecastResults");
-        String resultList = forecastResults.toString();
-        String splitedResultList = resultList.substring(1, resultList.length() - 1);
-        splitedResultList = splitedResultList.substring(1, splitedResultList.length() - 1);
-        String stringList[] = splitedResultList.split("], \\[");
-        List<List<Float>> resList = new ArrayList<>();
-        for (String a : stringList) {
-            String sb[] = a.split(",");
-            List<Float> list = new ArrayList<>();
-            for (String b : sb) {
-                list.add(Float.valueOf(b));
-            }
-            resList.add(list);
+    public ResponseEntity<List<ItemDTO>> getRecommendCartItemListByUserId(long userId) {
+        String url = chatUrl + "itemCategoryDemandForecastingByUserId?userId=" + userId;
+        ResponseEntity response = httpService.sendHttpGetUrlConnection(url);
+        try {
+            return new ResponseEntity<>(findRecommendedItems(getArrayListFromResponse(response)), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        return findRecommendedItems(resList);
     }
 
     @Override
@@ -96,10 +91,65 @@ class CartItemServiceImpl implements CartItemService {
         }
     }
 
-    public List<ItemDTO> findRecommendedItems(List<List<Float>> resList) {
+    public List<ItemDTO> findRecommendedItems(List<Integer> resList) {
 
+        Set<Integer> set = new HashSet<>();
         System.out.println(resList);
-        return null;
+        Map<Integer, Integer> duplicates = new HashMap<>();
+        for (Integer integer : resList) {
+            if (duplicates.containsKey(integer)) {
+                duplicates.put(integer, duplicates.get(integer) + 1);
+            } else {
+                duplicates.put(integer, 1);
+            }
+            set.add(integer);
+        }
+
+        List<Integer> list = new ArrayList<>(set);
+
+        System.out.println("11   " + list);
+        int recommendCategory = 0;
+        int maxCount = 0;
+
+        for (int i = 0; i < list.size(); i++) {
+            if (duplicates.get(list.get(i)) > maxCount) {
+                maxCount = duplicates.get(list.get(i));
+            }
+        }
+        for (int i = 0; i < list.size(); i++) {
+            if (duplicates.get(list.get(i)) == maxCount) {
+                recommendCategory = list.get(i);
+            }
+
+        }
+
+
+        System.out.println(recommendCategory);
+
+        List<Item> itemsbyCategory = itemRepository.findItemsbyCategory(recommendCategory);
+
+        return Converter.getDTOList(itemsbyCategory);
+
+
+    }
+
+    List<Integer> getArrayListFromResponse(ResponseEntity response) {
+        JSONObject jsonObj = new JSONObject(response);
+        JSONObject jsonBody = new JSONObject(jsonObj.getString("body"));
+        Object forecastResults = jsonBody.get("forecastResults");
+        String resultList = forecastResults.toString();
+        String splitedResultList = resultList.substring(1, resultList.length() - 1);
+        splitedResultList = splitedResultList.substring(1, splitedResultList.length() - 1);
+        String stringList[] = splitedResultList.split("]\\n \\[");
+        List<Integer> resList = new ArrayList<>();
+        for (int i = 0; i < stringList.length; i++) {
+            resList.add(BigDecimal.valueOf(Float.valueOf(stringList[i]))
+                    .setScale(0, BigDecimal.ROUND_HALF_DOWN)
+                    .intValue());
+        }
+
+
+        return resList;
     }
 
 

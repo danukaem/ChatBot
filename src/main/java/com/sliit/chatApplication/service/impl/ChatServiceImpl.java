@@ -78,8 +78,9 @@ public class ChatServiceImpl implements ChatService {
 
         JSONObject jsonBody = new JSONObject(responseEntity);
         JSONObject jsonUserMessage = new JSONObject(jsonBody.getString("body"));
-        String userMessage = jsonUserMessage.getString("userMessage");
-        robotChatMessageObj.setChatMessage(userMessage);
+        String robotMessage = jsonUserMessage.getString("robotMessage");
+        System.out.println(robotMessage);
+        robotChatMessageObj.setChatMessage(robotMessage);
 
         robotChatMessageObj.setChatSessionId(userChatMessageObj.getChatSessionId());
         robotChatMessageObj.setUserId(userChatMessageObj.getUserId());
@@ -95,7 +96,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
 
-    @Scheduled(fixedRate = 100*3600*24)
+//    @Scheduled(fixedRate = 100*3600*24)
     public ResponseEntity generateChatModel() {
         String url = chatUrl + "generateChatModel";
         return this.httpService.sendHttpGetUrlConnection(url);

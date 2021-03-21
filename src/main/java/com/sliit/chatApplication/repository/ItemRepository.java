@@ -12,4 +12,10 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     @Query(value = "select * from item limit ?1", nativeQuery = true)
     List<Item> getItemLimitedList(int itemLimit);
+
+    @Query(value = "select * from item where category=?1", nativeQuery = true)
+    List<Item> findItemsbyCategory(int categoryNumber);
+
+
+
 }

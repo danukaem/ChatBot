@@ -4,6 +4,7 @@ import com.sliit.chatApplication.model.CartItemDTO;
 import com.sliit.chatApplication.model.ItemDTO;
 import com.sliit.chatApplication.service.CartItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,8 +44,8 @@ public class CartItemController {
         return cartItemDTOS;
     }
     @GetMapping("/getRecommendCartItemListByUserId/{userId}")
-    List<ItemDTO> getRecommendCartItemListByUserId(@PathVariable long userId) {
-        List<ItemDTO>  ItemDTOS = cartItemService.getRecommendCartItemListByUserId(userId);
+    ResponseEntity<List<ItemDTO>> getRecommendCartItemListByUserId(@PathVariable long userId) throws Exception {
+        ResponseEntity<List<ItemDTO>>  ItemDTOS = cartItemService.getRecommendCartItemListByUserId(userId);
         return ItemDTOS;
     }
 }

@@ -2,6 +2,7 @@ package com.sliit.chatApplication.service;
 
 import com.sliit.chatApplication.model.CartItemDTO;
 import com.sliit.chatApplication.model.ItemDTO;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface CartItemService {
     List<CartItemDTO> addCartItems(List<CartItemDTO> userDTOs);
     List<CartItemDTO> getCartItemList();
     List<CartItemDTO> getCartItemListByUserId(long userId);
-    List<ItemDTO> getRecommendCartItemListByUserId(long userId);
+    ResponseEntity<List<ItemDTO>> getRecommendCartItemListByUserId(long userId) throws Exception;
     List<CartItemDTO> getCartItemListByIp(String ip);
-    List<ItemDTO> findRecommendedItems(List<List<Float>> resList);
+    List<ItemDTO> findRecommendedItems(List<Integer> resList);
 }
