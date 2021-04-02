@@ -82,6 +82,18 @@ class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
+    public ResponseEntity<List<ItemDTO>> getRecommendCartItemListByIpAddress(String ipAddress) {
+        String url = chatUrl + "itemCategoryDemandForecastingByIpAddress?ipAddress=" + ipAddress;
+        ResponseEntity response = httpService.sendHttpGetUrlConnection(url);
+        try {
+            return new ResponseEntity<>(findRecommendedItems(getArrayListFromResponse(response)), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
     public List<CartItemDTO> getCartItemListByIp(String ip) {
         List<CartItem> itemList = cartItemRepository.findByIpAddress(ip);
         if (itemList.size() > 0) {
@@ -94,7 +106,6 @@ class CartItemServiceImpl implements CartItemService {
     public List<ItemDTO> findRecommendedItems(List<Integer> resList) {
 
         Set<Integer> set = new HashSet<>();
-        System.out.println(resList);
         Map<Integer, Integer> duplicates = new HashMap<>();
         for (Integer integer : resList) {
             if (duplicates.containsKey(integer)) {
@@ -107,7 +118,6 @@ class CartItemServiceImpl implements CartItemService {
 
         List<Integer> list = new ArrayList<>(set);
 
-        System.out.println("11   " + list);
         int recommendCategory = 0;
         int maxCount = 0;
 
@@ -134,20 +144,23 @@ class CartItemServiceImpl implements CartItemService {
     }
 
     List<Integer> getArrayListFromResponse(ResponseEntity response) {
-        JSONObject jsonObj = new JSONObject(response);
-        JSONObject jsonBody = new JSONObject(jsonObj.getString("body"));
-        Object forecastResults = jsonBody.get("forecastResults");
-        String resultList = forecastResults.toString();
-        String splitedResultList = resultList.substring(1, resultList.length() - 1);
-        splitedResultList = splitedResultList.substring(1, splitedResultList.length() - 1);
-        String stringList[] = splitedResultList.split("]\\n \\[");
         List<Integer> resList = new ArrayList<>();
-        for (int i = 0; i < stringList.length; i++) {
-            resList.add(BigDecimal.valueOf(Float.valueOf(stringList[i]))
-                    .setScale(0, BigDecimal.ROUND_HALF_DOWN)
-                    .intValue());
+        try {
+            JSONObject jsonObj = new JSONObject(response);
+            JSONObject jsonBody = new JSONObject(jsonObj.getString("body"));
+            Object forecastResults = jsonBody.get("forecastResults");
+            String resultList = forecastResults.toString();
+            String splitedResultList = resultList.substring(1, resultList.length() - 1);
+            splitedResultList = splitedResultList.substring(1, splitedResultList.length() - 1);
+            String stringList[] = splitedResultList.split("]\\n \\[");
+            for (int i = 0; i < stringList.length; i++) {
+                resList.add(BigDecimal.valueOf(Float.valueOf(stringList[i]))
+                        .setScale(0, BigDecimal.ROUND_HALF_DOWN)
+                        .intValue());
+            }
+        } catch (Exception e) {
+//            e.printStackTrace();
         }
-
 
         return resList;
     }

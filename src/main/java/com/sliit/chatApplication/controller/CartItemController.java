@@ -48,4 +48,9 @@ public class CartItemController {
         ResponseEntity<List<ItemDTO>>  ItemDTOS = cartItemService.getRecommendCartItemListByUserId(userId);
         return ItemDTOS;
     }
+    @GetMapping("/getRecommendCartItemListByIpAddress/{ipAddress}")
+    ResponseEntity<List<ItemDTO>> getRecommendCartItemListByIpAddress(@PathVariable String ipAddress) throws Exception {
+        ResponseEntity<List<ItemDTO>>  ItemDTOS = cartItemService.getRecommendCartItemListByIpAddress(ipAddress);
+        return ItemDTOS;
+    }
 }
