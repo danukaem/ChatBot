@@ -53,4 +53,14 @@ public class CartItemController {
         ResponseEntity<List<ItemDTO>>  ItemDTOS = cartItemService.getRecommendCartItemListByIpAddress(ipAddress);
         return ItemDTOS;
     }
+    @GetMapping("/getRecommendCartItemListByUserId_chat/{userId}")
+    ResponseEntity<List<ItemDTO>> getRecommendCartItemListByUserIdChat(@PathVariable long userId) throws Exception {
+        ResponseEntity<List<ItemDTO>>  ItemDTOS = cartItemService.getRecommendCartItemListByUserIdChat(userId);
+        return ItemDTOS;
+    }
+    @GetMapping("/getRecommendCartItemListByIpAddress_chat/{ipAddress}")
+    ResponseEntity<List<ItemDTO>> getRecommendCartItemListByIpAddressChat(@PathVariable String ipAddress) throws Exception {
+        ResponseEntity<List<ItemDTO>>  ItemDTOS = cartItemService.getRecommendCartItemListByIpAddressChat(ipAddress);
+        return ItemDTOS;
+    }
 }

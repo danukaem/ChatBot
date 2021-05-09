@@ -94,6 +94,29 @@ class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
+    public ResponseEntity<List<ItemDTO>> getRecommendCartItemListByUserIdChat(long userId) {
+        String url = chatUrl + "itemCategoryDemandForecastingByUserIdChat?userId=" + userId;
+        ResponseEntity response = httpService.sendHttpGetUrlConnection(url);
+        try {
+            return new ResponseEntity<>(findRecommendedItems(getArrayListFromResponse(response)), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public ResponseEntity<List<ItemDTO>> getRecommendCartItemListByIpAddressChat(String ipAddress) {
+        String url = chatUrl + "itemCategoryDemandForecastingByIpAddressChat?ipAddress=" + ipAddress;
+        ResponseEntity response = httpService.sendHttpGetUrlConnection(url);
+        try {
+            return new ResponseEntity<>(findRecommendedItems(getArrayListFromResponse(response)), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @Override
     public List<CartItemDTO> getCartItemListByIp(String ip) {
         List<CartItem> itemList = cartItemRepository.findByIpAddress(ip);
         if (itemList.size() > 0) {
