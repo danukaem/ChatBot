@@ -50,6 +50,7 @@ public class ItemServiceImpl implements ItemService {
         categoryList.add(ItemCategory.MACHINERY);
         categoryList.add(ItemCategory.HOMEANDGARDEN);
         categoryList.add(ItemCategory.BEAUTY_AND_PERSONALCARE);
+        categoryList.add(ItemCategory.FOOD);
         return categoryList;
     }
 }
