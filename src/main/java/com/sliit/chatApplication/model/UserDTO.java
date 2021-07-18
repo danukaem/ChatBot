@@ -18,12 +18,13 @@ public class UserDTO extends SuperDTO {
     private Date birthDay;
     private String country;
     private String city;
+    float age;
 
 
     public UserDTO() {
     }
 
-    public UserDTO(long userId, String userName, String email, String password, Gender gender, Date birthDay, String country, String city) {
+    public UserDTO(long userId, String userName, String email, String password, Gender gender, Date birthDay, String country, String city, float age) {
         this.userId = userId;
         this.userName = userName;
         this.email = email;
@@ -32,6 +33,7 @@ public class UserDTO extends SuperDTO {
         this.birthDay = birthDay;
         this.country = country;
         this.city = city;
+        this.age = age;
     }
 
     public long getUserId() {
@@ -96,6 +98,14 @@ public class UserDTO extends SuperDTO {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public float getAge() {
+        return age;
+    }
+
+    public void setAge(float age) {
+        this.age = age;
     }
 
     @Override

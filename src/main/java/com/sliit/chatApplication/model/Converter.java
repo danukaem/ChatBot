@@ -19,6 +19,7 @@ public class Converter {
             user.setBirthDay(userDTO.getBirthDay());
             user.setCountry(userDTO.getCountry());
             user.setCity(userDTO.getCity());
+            user.setAge(userDTO.getAge());
             return (T) user;
         } else if (superDTO instanceof ItemDTO) {
             ItemDTO itemDTO = (ItemDTO) superDTO;
@@ -74,7 +75,7 @@ public class Converter {
     public static <T extends SuperDTO> T getDTO(SuperEntity superEntity) {
         if (superEntity instanceof User) {
             User user = (User) superEntity;
-            return (T) new UserDTO(user.getUserId(), user.getUserName(), user.getEmail(), user.getPassword(), user.getGender(), user.getBirthDay(), user.getCountry(), user.getCity());
+            return (T) new UserDTO(user.getUserId(), user.getUserName(), user.getEmail(), user.getPassword(), user.getGender(), user.getBirthDay(), user.getCountry(), user.getCity(),user.getAge());
         } else if (superEntity instanceof Item) {
             Item item = (Item) superEntity;
             return (T) new ItemDTO(item.getItemId(), item.getItemName(), item.getItemCode(), item.getDescription(), item.getImgSrc(), item.getCategory(), item.getPrice(), item.getDiscountPercentage());

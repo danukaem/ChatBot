@@ -34,7 +34,6 @@ public class CartItemController {
 
     @GetMapping("/getCartItemListByIp/{ip}")
     List<CartItemDTO> getCartItemList(@PathVariable String ip) {
-        System.out.println(ip);
         return cartItemService.getCartItemListByIp(ip);
     }
 

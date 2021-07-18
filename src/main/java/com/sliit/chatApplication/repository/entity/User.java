@@ -24,6 +24,7 @@ public class User extends SuperEntity {
     Date birthDay;
     String country;
     String city;
+    float age;
 
 
 
@@ -34,7 +35,8 @@ public class User extends SuperEntity {
     public User() {
     }
 
-    public User(String userName, String email, String password, UserDTO.Gender gender, Date birthDay, String country, String city) {
+    public User(long userId, String userName, String email, String password, UserDTO.Gender gender, Date birthDay, String country, String city, float age) {
+        this.userId = userId;
         this.userName = userName;
         this.email = email;
         this.password = password;
@@ -42,6 +44,7 @@ public class User extends SuperEntity {
         this.birthDay = birthDay;
         this.country = country;
         this.city = city;
+        this.age = age;
     }
 
     public long getUserId() {
@@ -106,5 +109,13 @@ public class User extends SuperEntity {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public float getAge() {
+        return age;
+    }
+
+    public void setAge(float age) {
+        this.age = age;
     }
 }

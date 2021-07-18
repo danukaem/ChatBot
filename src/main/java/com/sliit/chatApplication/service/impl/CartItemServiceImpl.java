@@ -73,6 +73,7 @@ class CartItemServiceImpl implements CartItemService {
     public ResponseEntity<List<ItemDTO>> getRecommendCartItemListByUserId(long userId) {
         String url = chatUrl + "itemCategoryDemandForecastingByUserId?userId=" + userId;
         ResponseEntity response = httpService.sendHttpGetUrlConnection(url);
+        System.out.println(response);
         try {
             return new ResponseEntity<>(findRecommendedItems(getArrayListFromResponse(response)), HttpStatus.OK);
         } catch (Exception e) {
