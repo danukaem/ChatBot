@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/cartItem")
 public class CartItemController {
 
-    CartItemService cartItemService;
+    private CartItemService cartItemService;
 
     @Autowired
     public CartItemController(CartItemService cartItemService) {
@@ -42,24 +42,5 @@ public class CartItemController {
         List<CartItemDTO> cartItemDTOS = cartItemService.getCartItemListByUserId(userId);
         return cartItemDTOS;
     }
-    @GetMapping("/getRecommendCartItemListByUserId/{userId}")
-    ResponseEntity<List<ItemDTO>> getRecommendCartItemListByUserId(@PathVariable long userId) throws Exception {
-        ResponseEntity<List<ItemDTO>>  ItemDTOS = cartItemService.getRecommendCartItemListByUserId(userId);
-        return ItemDTOS;
-    }
-    @GetMapping("/getRecommendCartItemListByIpAddress/{ipAddress}")
-    ResponseEntity<List<ItemDTO>> getRecommendCartItemListByIpAddress(@PathVariable String ipAddress) throws Exception {
-        ResponseEntity<List<ItemDTO>>  ItemDTOS = cartItemService.getRecommendCartItemListByIpAddress(ipAddress);
-        return ItemDTOS;
-    }
-    @GetMapping("/getRecommendCartItemListByUserId_chat/{userId}")
-    ResponseEntity<List<ItemDTO>> getRecommendCartItemListByUserIdChat(@PathVariable long userId) throws Exception {
-        ResponseEntity<List<ItemDTO>>  ItemDTOS = cartItemService.getRecommendCartItemListByUserIdChat(userId);
-        return ItemDTOS;
-    }
-    @GetMapping("/getRecommendCartItemListByIpAddress_chat/{ipAddress}")
-    ResponseEntity<List<ItemDTO>> getRecommendCartItemListByIpAddressChat(@PathVariable String ipAddress) throws Exception {
-        ResponseEntity<List<ItemDTO>>  ItemDTOS = cartItemService.getRecommendCartItemListByIpAddressChat(ipAddress);
-        return ItemDTOS;
-    }
+
 }

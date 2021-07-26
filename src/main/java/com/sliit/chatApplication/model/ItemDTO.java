@@ -6,7 +6,7 @@ public class ItemDTO extends SuperDTO {
     private long itemId;
     private String itemName;
     private String itemCode;
-    private String Description;
+    private String description;
     private String imgSrc;
     private ItemCategory category;
     private long price;
@@ -19,7 +19,7 @@ public class ItemDTO extends SuperDTO {
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemCode = itemCode;
-        Description = description;
+        this.description = description;
         this.imgSrc = imgSrc;
         this.category = category;
         this.price = price;
@@ -51,11 +51,11 @@ public class ItemDTO extends SuperDTO {
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     public String getImgSrc() {
@@ -96,7 +96,7 @@ public class ItemDTO extends SuperDTO {
                 "itemId=" + itemId +
                 ", itemName='" + itemName + '\'' +
                 ", itemCode='" + itemCode + '\'' +
-                ", Description='" + Description + '\'' +
+                ", description='" + description + '\'' +
                 ", imgSrc='" + imgSrc + '\'' +
                 ", category=" + category +
                 ", price=" + price +

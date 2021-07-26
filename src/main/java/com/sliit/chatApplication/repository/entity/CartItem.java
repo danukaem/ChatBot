@@ -1,7 +1,6 @@
 package com.sliit.chatApplication.repository.entity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class CartItem extends SuperEntity {
@@ -11,40 +10,43 @@ public class CartItem extends SuperEntity {
     private
     long cartItemId;
     @ManyToOne
-    @JoinColumn(name = "itemId", referencedColumnName = "itemId")
+    @JoinColumn(name = "item_id", referencedColumnName = "itemId")
     private Item item;
     private long quantity;
     @ManyToOne
-    @JoinColumn(name = "orderDetailId", referencedColumnName = "orderId")
+    @JoinColumn(name = "order_detail_id", referencedColumnName = "orderId")
     private OrderDetails orderDetails;
-    private long userId;
-    private String ipAddress;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "userId")
+    private User user;
+    private String sessionId;
 
     public CartItem() {
     }
 
-    public CartItem(Item item, long quantity, OrderDetails orderDetails, long userId, String ipAddress) {
+    public CartItem(long cartItemId, Item item, long quantity, OrderDetails orderDetails, User user, String sessionId) {
+        this.cartItemId = cartItemId;
         this.item = item;
         this.quantity = quantity;
         this.orderDetails = orderDetails;
-        this.userId = userId;
-        this.ipAddress = ipAddress;
+        this.user = user;
+        this.sessionId = sessionId;
     }
 
-    public String getIpAddress() {
-        return ipAddress;
+    public String getSessionId() {
+        return sessionId;
     }
 
-    public void setIpAddress(String ipAddress) {
-        this.ipAddress = ipAddress;
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 
-    public long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public long getCartItemId() {

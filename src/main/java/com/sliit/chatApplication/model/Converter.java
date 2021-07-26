@@ -16,7 +16,6 @@ public class Converter {
             user.setEmail(userDTO.getEmail());
             user.setPassword(userDTO.getPassword());
             user.setGender(userDTO.getGender());
-            user.setBirthDay(userDTO.getBirthDay());
             user.setCountry(userDTO.getCountry());
             user.setCity(userDTO.getCity());
             user.setAge(userDTO.getAge());
@@ -39,9 +38,8 @@ public class Converter {
             cartItem.setCartItemId(cartItemDTO.getCartItemId());
             cartItem.setItem(cartItemDTO.getItem());
             cartItem.setQuantity(cartItemDTO.getQuantity());
-            cartItem.setOrderDetails(cartItemDTO.getOrderDetails());
-            cartItem.setUserId(cartItemDTO.getUserId());
-            cartItem.setIpAddress(cartItemDTO.getIpAddress());
+            cartItem.setUser(cartItemDTO.getUser());
+            cartItem.setSessionId(cartItemDTO.getSessionId());
             return (T) cartItem;
         } else if (superDTO instanceof OrderDetailsDTO) {
             OrderDetailsDTO orderDetailsDTO = (OrderDetailsDTO) superDTO;
@@ -49,23 +47,19 @@ public class Converter {
             orderDetails.setOrderId(orderDetailsDTO.getOrderId());
             orderDetails.setUser(orderDetailsDTO.getUser());
             orderDetails.setOrderAmount(orderDetailsDTO.getOrderAmount());
-            orderDetails.setPaid(orderDetailsDTO.isPaid());
             orderDetails.setOrderDate(orderDetailsDTO.getOrderDate());
             orderDetails.setPurchaseDate(orderDetailsDTO.getPurchaseDate());
             orderDetails.setStateOfOrder(orderDetailsDTO.getStateOfOrder());
+            orderDetails.setSessionId(orderDetailsDTO.getSessionId());
             return (T) orderDetails;
         } else if (superDTO instanceof ChatMessageDTO) {
             ChatMessageDTO chatMessageDTO = (ChatMessageDTO) superDTO;
             ChatMessage chatMessage = new ChatMessage();
             chatMessage.setChatId(chatMessageDTO.getChatId());
-            chatMessage.setUserId(chatMessageDTO.getUserId());
-            chatMessage.setChatSessionId(chatMessageDTO.getChatSessionId());
-            chatMessage.setIpAddress(chatMessageDTO.getIpAddress());
+            chatMessage.setUser(chatMessageDTO.getUser());
+            chatMessage.setSessionId(chatMessageDTO.getSessionId());
             chatMessage.setChatMember(chatMessageDTO.getChatMember());
             chatMessage.setChatMessage(chatMessageDTO.getChatMessage());
-            chatMessage.setCartId(chatMessageDTO.getCartId());
-            chatMessage.setOrderId(chatMessageDTO.getOrderId());
-            chatMessage.setStateOfOrder(chatMessageDTO.getStateOfOrder());
             return (T) chatMessage;
         } else {
             throw new RuntimeException("This entity can't be converted to a DTO");
@@ -75,19 +69,19 @@ public class Converter {
     public static <T extends SuperDTO> T getDTO(SuperEntity superEntity) {
         if (superEntity instanceof User) {
             User user = (User) superEntity;
-            return (T) new UserDTO(user.getUserId(), user.getUserName(), user.getEmail(), user.getPassword(), user.getGender(), user.getBirthDay(), user.getCountry(), user.getCity(),user.getAge());
+            return (T) new UserDTO(user.getUserId(), user.getUserName(), user.getEmail(), user.getPassword(), user.getGender(), user.getCountry(), user.getCity(),user.getAge());
         } else if (superEntity instanceof Item) {
             Item item = (Item) superEntity;
             return (T) new ItemDTO(item.getItemId(), item.getItemName(), item.getItemCode(), item.getDescription(), item.getImgSrc(), item.getCategory(), item.getPrice(), item.getDiscountPercentage());
         } else if (superEntity instanceof CartItem) {
             CartItem cartItem = (CartItem) superEntity;
-            return (T) new CartItemDTO(cartItem.getCartItemId(), cartItem.getItem(), cartItem.getQuantity(), cartItem.getOrderDetails(), cartItem.getUserId(), cartItem.getIpAddress());
+            return (T) new CartItemDTO(cartItem.getCartItemId(), cartItem.getItem(), cartItem.getQuantity(),  cartItem.getUser(), cartItem.getSessionId());
         } else if (superEntity instanceof OrderDetails) {
             OrderDetails orderDetails = (OrderDetails) superEntity;
-            return (T) new OrderDetailsDTO(orderDetails.getOrderId(), orderDetails.getOrderAmount(), orderDetails.getOrderDate(), orderDetails.getPurchaseDate(), orderDetails.getUser(), orderDetails.isPaid(), null, orderDetails.getStateOfOrder());
+            return (T) new OrderDetailsDTO(orderDetails.getOrderId(), orderDetails.getOrderAmount(), orderDetails.getOrderDate(), orderDetails.getPurchaseDate(), orderDetails.getUser(), null, orderDetails.getStateOfOrder(),orderDetails.getSessionId());
         } else if (superEntity instanceof ChatMessage) {
             ChatMessage chatMessage = (ChatMessage) superEntity;
-            return (T) new ChatMessageDTO(chatMessage.getChatId(), chatMessage.getChatSessionId(), chatMessage.getUserId(), chatMessage.getIpAddress(), chatMessage.getChatMember(), chatMessage.getChatMessage(), chatMessage.getCartId(), chatMessage.getOrderId(), chatMessage.getStateOfOrder());
+            return (T) new ChatMessageDTO(chatMessage.getChatId(), chatMessage.getSessionId(), chatMessage.getUser(), chatMessage.getChatMember(), chatMessage.getChatMessage());
         } else {
             throw new RuntimeException("This entity can't be converted to a DTO");
         }

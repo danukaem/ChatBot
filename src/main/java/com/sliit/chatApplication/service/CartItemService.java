@@ -11,19 +11,9 @@ public interface CartItemService {
 
     List<CartItemDTO> addCartItems(List<CartItemDTO> userDTOs);
 
-    List<CartItemDTO> getCartItemList();
-
     List<CartItemDTO> getCartItemListByUserId(long userId);
 
-    ResponseEntity<List<ItemDTO>> getRecommendCartItemListByUserId(long userId) throws Exception;
-
-    ResponseEntity<List<ItemDTO>> getRecommendCartItemListByUserIdChat(long userId) throws Exception;
-
-    ResponseEntity<List<ItemDTO>> getRecommendCartItemListByIpAddress(String ipAddress) throws Exception;
-
-    ResponseEntity<List<ItemDTO>> getRecommendCartItemListByIpAddressChat(String ipAddress) throws Exception;
 
     List<CartItemDTO> getCartItemListByIp(String ip);
 
-    List<ItemDTO> findRecommendedItems(List<Integer> resList);
 }

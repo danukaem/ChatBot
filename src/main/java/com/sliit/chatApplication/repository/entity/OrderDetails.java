@@ -16,33 +16,36 @@ public class OrderDetails extends SuperEntity {
     private long orderAmount;
     private Date orderDate;
     private Date purchaseDate;
-    private boolean isPaid;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private
     User user;
     private StateOfOrder stateOfOrder;
+    private String sessionId;
+
 
 
     public OrderDetails() {
     }
 
-    public OrderDetails(long orderAmount, Date orderDate, Date purchaseDate, boolean isPaid, User user, StateOfOrder stateOfOrder) {
+    public OrderDetails(long orderId, long orderAmount, Date orderDate, Date purchaseDate, User user, StateOfOrder stateOfOrder, String sessionId) {
+        this.orderId = orderId;
         this.orderAmount = orderAmount;
         this.orderDate = orderDate;
         this.purchaseDate = purchaseDate;
-        this.isPaid = isPaid;
         this.user = user;
         this.stateOfOrder = stateOfOrder;
+        this.sessionId = sessionId;
     }
 
-    public boolean isPaid() {
-        return isPaid;
+    public String getSessionId() {
+        return sessionId;
     }
 
-    public void setPaid(boolean paid) {
-        isPaid = paid;
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
+
 
     public long getOrderId() {
         return orderId;
@@ -99,7 +102,6 @@ public class OrderDetails extends SuperEntity {
                 ", orderAmount=" + orderAmount +
                 ", orderDate=" + orderDate +
                 ", purchaseDate=" + purchaseDate +
-                ", isPaid=" + isPaid +
                 ", user=" + user +
                 ", stateOfOrder=" + stateOfOrder +
                 '}';

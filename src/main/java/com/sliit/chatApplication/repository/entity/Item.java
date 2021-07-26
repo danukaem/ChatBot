@@ -4,7 +4,6 @@ package com.sliit.chatApplication.repository.entity;
 import com.sliit.chatApplication.model.ItemCategory;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Item extends SuperEntity {

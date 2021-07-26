@@ -1,36 +1,25 @@
 package com.sliit.chatApplication.model;
 
-import lombok.*;
-
-import java.util.Date;
-
-//@Data
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@Getter
-//@Setter
 public class UserDTO extends SuperDTO {
     private long userId;
     private String userName;
     private String email;
     private String password;
     private Gender gender;
-    private Date birthDay;
     private String country;
     private String city;
-    float age;
+    private float age;
 
 
     public UserDTO() {
     }
 
-    public UserDTO(long userId, String userName, String email, String password, Gender gender, Date birthDay, String country, String city, float age) {
+    public UserDTO(long userId, String userName, String email, String password, Gender gender, String country, String city, float age) {
         this.userId = userId;
         this.userName = userName;
         this.email = email;
         this.password = password;
         this.gender = gender;
-        this.birthDay = birthDay;
         this.country = country;
         this.city = city;
         this.age = age;
@@ -76,14 +65,6 @@ public class UserDTO extends SuperDTO {
         this.gender = gender;
     }
 
-    public Date getBirthDay() {
-        return birthDay;
-    }
-
-    public void setBirthDay(Date birthDay) {
-        this.birthDay = birthDay;
-    }
-
     public String getCountry() {
         return country;
     }
@@ -116,9 +97,9 @@ public class UserDTO extends SuperDTO {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", gender=" + gender +
-                ", birthDay=" + birthDay +
                 ", country='" + country + '\'' +
                 ", city='" + city + '\'' +
+                ", age=" + age +
                 '}';
     }
 

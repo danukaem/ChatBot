@@ -2,6 +2,7 @@ package com.sliit.chatApplication.model;
 
 import com.sliit.chatApplication.repository.entity.Item;
 import com.sliit.chatApplication.repository.entity.OrderDetails;
+import com.sliit.chatApplication.repository.entity.User;
 
 
 import java.util.List;
@@ -10,38 +11,20 @@ import java.util.List;
 public class CartItemDTO extends SuperDTO {
 
     private long cartItemId;
-    Item item;
+    private Item item;
     private long quantity;
-    private OrderDetails orderDetails;
-    private long userId;
-    private String ipAddress;
+    private User user;
+    private String sessionId;
 
     public CartItemDTO() {
     }
 
-    public CartItemDTO(long cartItemId, Item item, long quantity, OrderDetails orderDetails, long userId, String ipAddress) {
+    public CartItemDTO(long cartItemId, Item item, long quantity, User user, String sessionId) {
         this.cartItemId = cartItemId;
         this.item = item;
         this.quantity = quantity;
-        this.orderDetails = orderDetails;
-        this.userId = userId;
-        this.ipAddress = ipAddress;
-    }
-
-    public String getIpAddress() {
-        return ipAddress;
-    }
-
-    public void setIpAddress(String ipAddress) {
-        this.ipAddress = ipAddress;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
+        this.user = user;
+        this.sessionId = sessionId;
     }
 
     public long getCartItemId() {
@@ -68,23 +51,19 @@ public class CartItemDTO extends SuperDTO {
         this.quantity = quantity;
     }
 
-    public OrderDetails getOrderDetails() {
-        return orderDetails;
+    public User getUser() {
+        return user;
     }
 
-    public void setOrderDetails(OrderDetails orderDetails) {
-        this.orderDetails = orderDetails;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    @Override
-    public String toString() {
-        return "CartItemDTO{" +
-                "cartItemId=" + cartItemId +
-                ", item=" + item +
-                ", quantity=" + quantity +
-                ", orderDetails=" + orderDetails +
-                ", userId=" + userId +
-                ", ipAddress='" + ipAddress + '\'' +
-                '}';
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 }

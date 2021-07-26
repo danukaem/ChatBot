@@ -44,13 +44,8 @@ public class ItemServiceImpl implements ItemService {
     public List<ItemCategory> getCategoryList() {
 
         List<ItemCategory> categoryList = new ArrayList<>();
-        categoryList.add(ItemCategory.ELECTRONIC);
-        categoryList.add(ItemCategory.APPAREL);
-        categoryList.add(ItemCategory.VEHICLE_AND_ACCESSORIES);
-        categoryList.add(ItemCategory.MACHINERY);
-        categoryList.add(ItemCategory.HOMEANDGARDEN);
-        categoryList.add(ItemCategory.BEAUTY_AND_PERSONALCARE);
-        categoryList.add(ItemCategory.FOOD);
+        categoryList.add(ItemCategory.LAPTOP);
+        categoryList.add(ItemCategory.PHONE);
         return categoryList;
     }
 }

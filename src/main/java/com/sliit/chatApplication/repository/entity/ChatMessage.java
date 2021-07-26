@@ -3,39 +3,38 @@ package com.sliit.chatApplication.repository.entity;
 import com.sliit.chatApplication.model.ChatMessageDTO;
 import com.sliit.chatApplication.model.StateOfOrder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-public class ChatMessage  extends SuperEntity {
+public class ChatMessage extends SuperEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long chatId;
-    private String chatSessionId;
-    private String userId;
-    private String ipAddress;
+    private String sessionId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "userId")
+    private User user;
     private ChatMessageDTO.ChatMember chatMember;
     private String chatMessage;
-    private String cartId;
-    private String orderId;
-    private StateOfOrder stateOfOrder;
 
     public ChatMessage() {
     }
 
-    public ChatMessage(long chatId, String chatSessionId, String userId, String ipAddress, ChatMessageDTO.ChatMember chatMember, String chatMessage, String cartId, String orderId, StateOfOrder stateOfOrder) {
+    public ChatMessage(long chatId, String sessionId, User user, ChatMessageDTO.ChatMember chatMember, String chatMessage) {
         this.chatId = chatId;
-        this.chatSessionId = chatSessionId;
-        this.userId = userId;
-        this.ipAddress = ipAddress;
+        this.sessionId = sessionId;
+        this.user = user;
         this.chatMember = chatMember;
         this.chatMessage = chatMessage;
-        this.cartId = cartId;
-        this.orderId = orderId;
-        this.stateOfOrder = stateOfOrder;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 
     public long getChatId() {
@@ -46,28 +45,12 @@ public class ChatMessage  extends SuperEntity {
         this.chatId = chatId;
     }
 
-    public String getChatSessionId() {
-        return chatSessionId;
+    public User getUser() {
+        return user;
     }
 
-    public void setChatSessionId(String chatSessionId) {
-        this.chatSessionId = chatSessionId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getIpAddress() {
-        return ipAddress;
-    }
-
-    public void setIpAddress(String ipAddress) {
-        this.ipAddress = ipAddress;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public ChatMessageDTO.ChatMember getChatMember() {
@@ -86,27 +69,5 @@ public class ChatMessage  extends SuperEntity {
         this.chatMessage = chatMessage;
     }
 
-    public String getCartId() {
-        return cartId;
-    }
 
-    public void setCartId(String cartId) {
-        this.cartId = cartId;
-    }
-
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
-
-    public StateOfOrder getStateOfOrder() {
-        return stateOfOrder;
-    }
-
-    public void setStateOfOrder(StateOfOrder stateOfOrder) {
-        this.stateOfOrder = stateOfOrder;
-    }
 }

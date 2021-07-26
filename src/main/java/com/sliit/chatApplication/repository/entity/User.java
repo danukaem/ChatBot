@@ -7,41 +7,29 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-//@Getter
-//@Setter
 @Entity
-//@AllArgsConstructor
-//@NoArgsConstructor
 public class User extends SuperEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long userId;
-    String userName;
-
-    String email;
-    String password;
-    UserDTO.Gender gender;
-    Date birthDay;
-    String country;
-    String city;
-    float age;
-
-
-
-//    @OneToMany(mappedBy = "user")
-//    private List<OrderDetails> orderList;
+    private long userId;
+    private String userName;
+    private  String email;
+    private  String password;
+    private  UserDTO.Gender gender;
+    private  String country;
+    private  String city;
+    private  float age;
 
 
     public User() {
     }
 
-    public User(long userId, String userName, String email, String password, UserDTO.Gender gender, Date birthDay, String country, String city, float age) {
+    public User(long userId, String userName, String email, String password, UserDTO.Gender gender,  String country, String city, float age) {
         this.userId = userId;
         this.userName = userName;
         this.email = email;
         this.password = password;
         this.gender = gender;
-        this.birthDay = birthDay;
         this.country = country;
         this.city = city;
         this.age = age;
@@ -85,14 +73,6 @@ public class User extends SuperEntity {
 
     public void setGender(UserDTO.Gender gender) {
         this.gender = gender;
-    }
-
-    public Date getBirthDay() {
-        return birthDay;
-    }
-
-    public void setBirthDay(Date birthDay) {
-        this.birthDay = birthDay;
     }
 
     public String getCountry() {

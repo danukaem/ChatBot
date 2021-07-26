@@ -4,6 +4,7 @@ import com.sliit.chatApplication.model.ChatMessageDTO;
 import com.sliit.chatApplication.model.Converter;
 import com.sliit.chatApplication.model.StateOfOrder;
 import com.sliit.chatApplication.repository.ChatMessageRepository;
+import com.sliit.chatApplication.repository.UserRepository;
 import com.sliit.chatApplication.repository.entity.ChatMessage;
 import com.sliit.chatApplication.service.ChatService;
 import org.json.JSONObject;
@@ -31,6 +32,7 @@ public class ChatServiceImpl implements ChatService {
     @Value("${chatUrl}")
     String chatUrl;
     private ChatMessageRepository chatMessageRepository;
+    private UserRepository userRepository;
 
     @Autowired
     HttpService httpService;
@@ -52,61 +54,18 @@ public class ChatServiceImpl implements ChatService {
         return Converter.getDTOList(chatMessageRepository.findAll());
     }
 
-    public ResponseEntity getChatResponse(String chatMessage, String chatSessionId, String userId, String ipAddress,
-                                          StateOfOrder stateOfOrder,
-                                          String cartId, String orderId) {
 
-
-        ChatMessage userChatMessageObj = new ChatMessage();
-        userChatMessageObj.setChatMessage(chatMessage);
-        userChatMessageObj.setChatSessionId(chatSessionId);
-        userChatMessageObj.setUserId(userId);
-        userChatMessageObj.setIpAddress(ipAddress);
-        userChatMessageObj.setOrderId(orderId);
-        userChatMessageObj.setStateOfOrder(stateOfOrder);
-        userChatMessageObj.setCartId(cartId);
-        userChatMessageObj.setChatMember(ChatMessageDTO.ChatMember.USER);
-        chatMessageRepository.save(userChatMessageObj);
-
-        ChatMessage robotChatMessageObj = new ChatMessage();
-
-
-        String url = chatUrl + "chat?message=" + chatMessage;
-        ResponseEntity responseEntity = this.httpService.sendHttpGetUrlConnection(url);
-
-        robotChatMessageObj.setChatMember(ChatMessageDTO.ChatMember.ROBOT);
-
-        JSONObject jsonBody = new JSONObject(responseEntity);
-        JSONObject jsonUserMessage = new JSONObject(jsonBody.getString("body"));
-        String robotMessage = jsonUserMessage.getString("robotMessage");
-        System.out.println(robotMessage);
-        robotChatMessageObj.setChatMessage(robotMessage);
-
-        robotChatMessageObj.setChatSessionId(userChatMessageObj.getChatSessionId());
-        robotChatMessageObj.setUserId(userChatMessageObj.getUserId());
-        robotChatMessageObj.setIpAddress(userChatMessageObj.getIpAddress());
-        robotChatMessageObj.setOrderId(userChatMessageObj.getOrderId());
-        robotChatMessageObj.setStateOfOrder(userChatMessageObj.getStateOfOrder());
-        robotChatMessageObj.setCartId(userChatMessageObj.getCartId());
-
-
-        chatMessageRepository.save(robotChatMessageObj);
-
-        return responseEntity;
-    }
 
 
 //    @Scheduled(fixedRate = 100*3600*24)
+    //    @Scheduled(cron = "0 0 0 * * *")
+
     public ResponseEntity generateChatModel() {
         String url = chatUrl + "generateChatModel";
         return this.httpService.sendHttpGetUrlConnection(url);
 
     }
 
-//    @Scheduled(cron = "0 0 0 * * *")
-//    void testScheduler(){
-//        System.out.println("Hello world  "+i);
-//    }
 
 
 }
