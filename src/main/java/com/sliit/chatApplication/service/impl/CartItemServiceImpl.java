@@ -21,8 +21,6 @@ class CartItemServiceImpl implements CartItemService {
     private ItemRepository itemRepository;
     private UserRepository userRepository;
 
-    @Value("${chatUrl}")
-    String chatUrl;
     @Autowired
     HttpService httpService;
 

@@ -2,6 +2,8 @@ package com.sliit.chatApplication.model;
 
 import com.sliit.chatApplication.repository.entity.User;
 
+import java.util.Date;
+
 public class ChatMessageDTO extends SuperDTO {
 
 
@@ -10,16 +12,27 @@ public class ChatMessageDTO extends SuperDTO {
     private User user;
     private ChatMember chatMember;
     private String chatMessage;
+    private String time;
+
 
     public ChatMessageDTO() {
     }
 
-    public ChatMessageDTO(long chatId, String sessionId, User user, ChatMember chatMember, String chatMessage) {
+    public ChatMessageDTO(long chatId, String sessionId, User user, ChatMember chatMember, String chatMessage, String time) {
         this.chatId = chatId;
         this.sessionId = sessionId;
         this.user = user;
         this.chatMember = chatMember;
         this.chatMessage = chatMessage;
+        this.time = time;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getSessionId() {

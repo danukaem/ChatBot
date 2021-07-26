@@ -43,4 +43,15 @@ public class UserController {
         return userService.getUserByUserId(userId);
     }
 
+    @GetMapping("/getUserNameByUserId")
+    public String getUsernameByUserId(@RequestParam("userId") String userId) {
+
+
+        if (userService.getUserByUserId(Long.parseLong(userId)) != null) {
+            return userService.getUserByUserId(Long.parseLong(userId)).getUserName();
+        }
+
+        return null;
+    }
+
 }

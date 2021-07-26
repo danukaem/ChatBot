@@ -11,8 +11,11 @@ public interface ChatService {
 
     ChatMessageDTO saveChatMessage(ChatMessageDTO chatMessageDTO);
 
-    List<ChatMessageDTO> getChatMessagesList();
+    ResponseEntity<List<ChatMessageDTO>> getChatMessagesList(String userId);
 
+    ResponseEntity<List<ChatMessageDTO>> getChatResponse(String chatMessage, String chatSessionId, String userId);
 
-     ResponseEntity generateChatModel();
+    ResponseEntity<String> chatRasaLoginResponse(String chatMessage, String chatSessionId, String userId);
+
+    ResponseEntity generateChatModel();
 }

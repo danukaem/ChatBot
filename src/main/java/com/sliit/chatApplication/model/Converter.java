@@ -60,6 +60,7 @@ public class Converter {
             chatMessage.setSessionId(chatMessageDTO.getSessionId());
             chatMessage.setChatMember(chatMessageDTO.getChatMember());
             chatMessage.setChatMessage(chatMessageDTO.getChatMessage());
+            chatMessage.setTime(chatMessageDTO.getTime());
             return (T) chatMessage;
         } else {
             throw new RuntimeException("This entity can't be converted to a DTO");
@@ -81,7 +82,7 @@ public class Converter {
             return (T) new OrderDetailsDTO(orderDetails.getOrderId(), orderDetails.getOrderAmount(), orderDetails.getOrderDate(), orderDetails.getPurchaseDate(), orderDetails.getUser(), null, orderDetails.getStateOfOrder(),orderDetails.getSessionId());
         } else if (superEntity instanceof ChatMessage) {
             ChatMessage chatMessage = (ChatMessage) superEntity;
-            return (T) new ChatMessageDTO(chatMessage.getChatId(), chatMessage.getSessionId(), chatMessage.getUser(), chatMessage.getChatMember(), chatMessage.getChatMessage());
+            return (T) new ChatMessageDTO(chatMessage.getChatId(), chatMessage.getSessionId(), chatMessage.getUser(), chatMessage.getChatMember(), chatMessage.getChatMessage(),chatMessage.getTime());
         } else {
             throw new RuntimeException("This entity can't be converted to a DTO");
         }

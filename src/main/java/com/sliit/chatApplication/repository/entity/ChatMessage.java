@@ -4,6 +4,7 @@ import com.sliit.chatApplication.model.ChatMessageDTO;
 import com.sliit.chatApplication.model.StateOfOrder;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class ChatMessage extends SuperEntity {
@@ -17,16 +18,26 @@ public class ChatMessage extends SuperEntity {
     private User user;
     private ChatMessageDTO.ChatMember chatMember;
     private String chatMessage;
+    private String time;
 
     public ChatMessage() {
     }
 
-    public ChatMessage(long chatId, String sessionId, User user, ChatMessageDTO.ChatMember chatMember, String chatMessage) {
+    public ChatMessage(long chatId, String sessionId, User user, ChatMessageDTO.ChatMember chatMember, String chatMessage, String time) {
         this.chatId = chatId;
         this.sessionId = sessionId;
         this.user = user;
         this.chatMember = chatMember;
         this.chatMessage = chatMessage;
+        this.time = time;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getSessionId() {

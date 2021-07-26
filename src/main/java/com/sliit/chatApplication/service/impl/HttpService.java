@@ -9,12 +9,14 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.Date;
 
 @Service
 public class HttpService {
 
     private RestTemplate restTemplate = new RestTemplate();
+    private HttpHeaders httpHeaders;
 
     ResponseEntity sendHttpGetUrlConnection(String url) {
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -29,5 +31,23 @@ public class HttpService {
         }
     }
 
+//    ResponseEntity sentHttpPostConnection(String url,Object obj){
+//
+//        restTemplate.exchange(url,HttpMethod.POST,)
+////        ResponseEntity<String> stringResponseEntity = restTemplate.postForEntity(url, obj, String.class);
+////        return stringResponseEntity;
+//    }
+
+
+    public ResponseEntity sentHttpPostConnection(String url, String jsonData)  {
+        this.httpHeaders = new HttpHeaders();
+        try {
+            HttpEntity<String> httpEntity = new HttpEntity<>(jsonData, httpHeaders);
+            return restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
+        } catch (HttpClientErrorException | HttpServerErrorException e) {
+            return ResponseEntity.status(e.getStatusCode().value()).body(e.getResponseBodyAsString());
+        }
+
+    }
 
 }

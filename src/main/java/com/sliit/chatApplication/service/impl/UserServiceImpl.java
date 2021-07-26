@@ -48,6 +48,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserByUserId(long userId) {
-        return Converter.getDTO(userRepository.findByUserId(userId));
+        User byUserId = userRepository.findByUserId(userId);
+        if(byUserId != null){
+            return Converter.getDTO(byUserId);
+
+        }
+        return null;
     }
 }

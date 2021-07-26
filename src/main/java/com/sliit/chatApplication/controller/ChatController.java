@@ -1,10 +1,12 @@
 package com.sliit.chatApplication.controller;
 
 import com.sliit.chatApplication.model.ChatMessageDTO;
+import com.sliit.chatApplication.model.StateOfOrder;
 import com.sliit.chatApplication.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @CrossOrigin("*")
@@ -27,10 +29,22 @@ public class ChatController {
     }
 
     @GetMapping("/getChatMessageList")
-    public List<ChatMessageDTO> getChatMessageList() {
-        return chatService.getChatMessagesList();
+    public Object getChatMessageList(@RequestParam("userId") String userId) {
+        return chatService.getChatMessagesList(userId);
     }
 
+
+    @GetMapping("/chat")
+    public Object getChatResponse(@RequestParam("chatMessage") String chatMessage, @RequestParam("chatSessionId") String chatSessionId
+            , @RequestParam("userId") String userId) {
+        return chatService.getChatResponse(chatMessage, chatSessionId, userId);
+    }
+    @GetMapping("/chatLoginRasa")
+    public Object chatRasaLoginResponse(@RequestParam("chatMessage") String chatMessage, @RequestParam("chatSessionId") String chatSessionId
+            , @RequestParam("userId") String userId) {
+        System.out.println(chatMessage);
+        return chatService.chatRasaLoginResponse(chatMessage, chatSessionId, userId);
+    }
 
     @GetMapping("/generateChatModel")
     public ResponseEntity generateChatModel() {
