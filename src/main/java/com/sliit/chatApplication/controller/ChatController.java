@@ -1,6 +1,7 @@
 package com.sliit.chatApplication.controller;
 
 import com.sliit.chatApplication.model.ChatMessageDTO;
+import com.sliit.chatApplication.model.ItemExtractRasaDTO;
 import com.sliit.chatApplication.model.StateOfOrder;
 import com.sliit.chatApplication.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ public class ChatController {
             , @RequestParam("userId") String userId) {
         return chatService.getChatResponse(chatMessage, chatSessionId, userId);
     }
+
     @GetMapping("/chatLoginRasa")
     public Object chatRasaLoginResponse(@RequestParam("chatMessage") String chatMessage, @RequestParam("chatSessionId") String chatSessionId
             , @RequestParam("userId") String userId) {
@@ -49,6 +51,30 @@ public class ChatController {
     @GetMapping("/generateChatModel")
     public ResponseEntity generateChatModel() {
         return chatService.generateChatModel();
+    }
+
+    @GetMapping("/itemExtractRasaDataSave")
+    public String itemExtractRasaDataSave(@RequestParam("item") String item, @RequestParam("ram") String ram
+            , @RequestParam("screen") String screen, @RequestParam("price") String price
+            , @RequestParam("brand") String brand, @RequestParam("color") String color
+            , @RequestParam("storage") String storage, @RequestParam("user_id") String user_id
+            , @RequestParam("item_extract_id") String itemExtractId) {
+
+        ItemExtractRasaDTO itemExtractRasaDTO = new ItemExtractRasaDTO();
+        itemExtractRasaDTO.setItemCategory(item);
+        itemExtractRasaDTO.setRam(ram);
+        itemExtractRasaDTO.setScreen(screen);
+        itemExtractRasaDTO.setPrice(price);
+        itemExtractRasaDTO.setBrand(brand);
+        itemExtractRasaDTO.setColor(color);
+        itemExtractRasaDTO.setStorage(storage);
+        itemExtractRasaDTO.setUserId(Integer.parseInt(user_id));
+        if(!itemExtractId.trim().equals("")){
+            itemExtractRasaDTO.setItemExtractId(Integer.parseInt(itemExtractId));
+        }
+        System.out.println(itemExtractRasaDTO);
+
+        return chatService.itemExtractRasaDataSave(itemExtractRasaDTO);
     }
 
 

@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sliit.chatApplication.model.*;
 import com.sliit.chatApplication.repository.ChatMessageRepository;
+import com.sliit.chatApplication.repository.ItemExtractRasaRepository;
 import com.sliit.chatApplication.repository.UserRepository;
 import com.sliit.chatApplication.repository.entity.ChatMessage;
+import com.sliit.chatApplication.repository.entity.ItemExtractRasa;
 import com.sliit.chatApplication.repository.entity.User;
 import com.sliit.chatApplication.service.ChatService;
 import org.json.JSONObject;
@@ -42,6 +44,8 @@ public class ChatServiceImpl implements ChatService {
     HttpService httpService;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private ItemExtractRasaRepository extractRasaRepository;
 
     public ChatServiceImpl(ChatMessageRepository chatMessageRepository) {
         this.chatMessageRepository = chatMessageRepository;
@@ -149,6 +153,33 @@ public class ChatServiceImpl implements ChatService {
     public ResponseEntity generateChatModel() {
         String url = chatUrl + "generateChatModel";
         return this.httpService.sendHttpGetUrlConnection(url);
+
+    }
+
+    @Override
+    public String itemExtractRasaDataSave(ItemExtractRasaDTO itemExtractRasaDTO) {
+        if (itemExtractRasaDTO.getItemExtractId() > 0) {
+            Optional<ItemExtractRasa> byId = extractRasaRepository.findById(itemExtractRasaDTO.getItemExtractId());
+            if (byId.isPresent()) {
+                ItemExtractRasa itemExtractRasa = byId.get();
+                itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
+                itemExtractRasa.setItemCategory(itemExtractRasaDTO.getItemCategory());
+                itemExtractRasa.setRam(itemExtractRasaDTO.getRam());
+                itemExtractRasa.setScreen(itemExtractRasaDTO.getScreen());
+                itemExtractRasa.setPrice(itemExtractRasaDTO.getPrice());
+                itemExtractRasa.setBrand(itemExtractRasaDTO.getBrand());
+                itemExtractRasa.setColor(itemExtractRasaDTO.getColor());
+                itemExtractRasa.setStorage(itemExtractRasaDTO.getStorage());
+                itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
+                extractRasaRepository.save(itemExtractRasa);
+                return Integer.toString(itemExtractRasaDTO.getItemExtractId());
+            }
+            return "";
+
+        } else {
+            ItemExtractRasa save = extractRasaRepository.save(Converter.getEntity(itemExtractRasaDTO));
+            return Integer.toString(save.getItemExtractId());
+        }
 
     }
 

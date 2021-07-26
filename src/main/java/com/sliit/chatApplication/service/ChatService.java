@@ -2,6 +2,7 @@ package com.sliit.chatApplication.service;
 
 
 import com.sliit.chatApplication.model.ChatMessageDTO;
+import com.sliit.chatApplication.model.ItemExtractRasaDTO;
 import com.sliit.chatApplication.model.StateOfOrder;
 import org.springframework.http.ResponseEntity;
 
@@ -18,4 +19,6 @@ public interface ChatService {
     ResponseEntity<String> chatRasaLoginResponse(String chatMessage, String chatSessionId, String userId);
 
     ResponseEntity generateChatModel();
+
+    String itemExtractRasaDataSave(ItemExtractRasaDTO itemExtractRasaDTO);
 }

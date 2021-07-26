@@ -62,6 +62,19 @@ public class Converter {
             chatMessage.setChatMessage(chatMessageDTO.getChatMessage());
             chatMessage.setTime(chatMessageDTO.getTime());
             return (T) chatMessage;
+        } else if (superDTO instanceof ItemExtractRasaDTO) {
+            ItemExtractRasaDTO itemExtractRasaDTO = (ItemExtractRasaDTO) superDTO;
+            ItemExtractRasa itemExtractRasa = new ItemExtractRasa();
+            itemExtractRasa.setItemExtractId(itemExtractRasaDTO.getItemExtractId());
+            itemExtractRasa.setItemCategory(itemExtractRasaDTO.getItemCategory());
+            itemExtractRasa.setRam(itemExtractRasaDTO.getRam());
+            itemExtractRasa.setScreen(itemExtractRasaDTO.getScreen());
+            itemExtractRasa.setBrand(itemExtractRasaDTO.getBrand());
+            itemExtractRasa.setColor(itemExtractRasaDTO.getColor());
+            itemExtractRasa.setPrice(itemExtractRasaDTO.getPrice());
+            itemExtractRasa.setStorage(itemExtractRasaDTO.getStorage());
+            itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
+            return (T) itemExtractRasa;
         } else {
             throw new RuntimeException("This entity can't be converted to a DTO");
         }
@@ -70,19 +83,23 @@ public class Converter {
     public static <T extends SuperDTO> T getDTO(SuperEntity superEntity) {
         if (superEntity instanceof User) {
             User user = (User) superEntity;
-            return (T) new UserDTO(user.getUserId(), user.getUserName(), user.getEmail(), user.getPassword(), user.getGender(), user.getCountry(), user.getCity(),user.getAge());
+            return (T) new UserDTO(user.getUserId(), user.getUserName(), user.getEmail(), user.getPassword(), user.getGender(), user.getCountry(), user.getCity(), user.getAge());
         } else if (superEntity instanceof Item) {
             Item item = (Item) superEntity;
             return (T) new ItemDTO(item.getItemId(), item.getItemName(), item.getItemCode(), item.getDescription(), item.getImgSrc(), item.getCategory(), item.getPrice(), item.getDiscountPercentage());
         } else if (superEntity instanceof CartItem) {
             CartItem cartItem = (CartItem) superEntity;
-            return (T) new CartItemDTO(cartItem.getCartItemId(), cartItem.getItem(), cartItem.getQuantity(),  cartItem.getUser(), cartItem.getSessionId());
+            return (T) new CartItemDTO(cartItem.getCartItemId(), cartItem.getItem(), cartItem.getQuantity(), cartItem.getUser(), cartItem.getSessionId());
         } else if (superEntity instanceof OrderDetails) {
             OrderDetails orderDetails = (OrderDetails) superEntity;
-            return (T) new OrderDetailsDTO(orderDetails.getOrderId(), orderDetails.getOrderAmount(), orderDetails.getOrderDate(), orderDetails.getPurchaseDate(), orderDetails.getUser(), null, orderDetails.getStateOfOrder(),orderDetails.getSessionId());
+            return (T) new OrderDetailsDTO(orderDetails.getOrderId(), orderDetails.getOrderAmount(), orderDetails.getOrderDate(), orderDetails.getPurchaseDate(), orderDetails.getUser(), null, orderDetails.getStateOfOrder(), orderDetails.getSessionId());
         } else if (superEntity instanceof ChatMessage) {
             ChatMessage chatMessage = (ChatMessage) superEntity;
-            return (T) new ChatMessageDTO(chatMessage.getChatId(), chatMessage.getSessionId(), chatMessage.getUser(), chatMessage.getChatMember(), chatMessage.getChatMessage(),chatMessage.getTime());
+            return (T) new ChatMessageDTO(chatMessage.getChatId(), chatMessage.getSessionId(), chatMessage.getUser(), chatMessage.getChatMember(), chatMessage.getChatMessage(), chatMessage.getTime());
+        } else if (superEntity instanceof ItemExtractRasa) {
+            ItemExtractRasa itemExtractRasa = (ItemExtractRasa) superEntity;
+            return (T) new ItemExtractRasaDTO(itemExtractRasa.getItemExtractId(), itemExtractRasa.getItemCategory(), itemExtractRasa.getRam(), itemExtractRasa.getScreen(),
+                    itemExtractRasa.getBrand(), itemExtractRasa.getColor(), itemExtractRasa.getPrice(), itemExtractRasa.getStorage(), itemExtractRasa.getUserId());
         } else {
             throw new RuntimeException("This entity can't be converted to a DTO");
         }
