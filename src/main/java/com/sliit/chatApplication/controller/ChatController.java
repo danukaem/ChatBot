@@ -61,30 +61,34 @@ public class ChatController {
             , @RequestParam("item_extract_id") String itemExtractId
             , @RequestParam("session_id") String sessionId) {
 
-        ItemExtractRasaDTO itemExtractRasaDTO = new ItemExtractRasaDTO();
-        itemExtractRasaDTO.setItemCategory(item);
-        itemExtractRasaDTO.setRam(ram);
-        itemExtractRasaDTO.setScreen(screen);
-        itemExtractRasaDTO.setPrice(price);
-        itemExtractRasaDTO.setBrand(brand);
-        itemExtractRasaDTO.setColor(color);
-        itemExtractRasaDTO.setStorage(storage);
-        itemExtractRasaDTO.setSessionId(sessionId);
         try {
-            itemExtractRasaDTO.setUserId(Integer.parseInt(user_id));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (!itemExtractId.trim().equals("")) {
+            ItemExtractRasaDTO itemExtractRasaDTO = new ItemExtractRasaDTO();
+            itemExtractRasaDTO.setItemCategory(item);
+            itemExtractRasaDTO.setRam(ram);
+            itemExtractRasaDTO.setScreen(screen);
+            itemExtractRasaDTO.setPrice(price);
+            itemExtractRasaDTO.setBrand(brand);
+            itemExtractRasaDTO.setColor(color);
+            itemExtractRasaDTO.setStorage(storage);
+            itemExtractRasaDTO.setSessionId(sessionId);
             try {
-                itemExtractRasaDTO.setItemExtractId(Integer.parseInt(itemExtractId));
+                itemExtractRasaDTO.setUserId(Integer.parseInt(user_id));
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-        System.out.println(itemExtractRasaDTO);
+            if (!itemExtractId.trim().equals("")) {
+                try {
+                    itemExtractRasaDTO.setItemExtractId(Integer.parseInt(itemExtractId));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println(itemExtractRasaDTO);
 
-        return chatService.itemExtractRasaDataSave(itemExtractRasaDTO);
+            return chatService.itemExtractRasaDataSave(itemExtractRasaDTO);
+        } catch (Exception e) {
+            return "";
+        }
     }
 
 

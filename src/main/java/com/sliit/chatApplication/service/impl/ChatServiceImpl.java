@@ -158,6 +158,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public String itemExtractRasaDataSave(ItemExtractRasaDTO itemExtractRasaDTO) {
+        itemExtractRasaDTO = RasaExtractDataFormatting.getFilteredItemExtractRasa(itemExtractRasaDTO);
         Optional<ItemExtractRasa> byId = extractRasaRepository.findAllBySessionId(itemExtractRasaDTO.getSessionId());
         if (byId.isPresent()) {
             ItemExtractRasa itemExtractRasa = byId.get();
@@ -190,12 +191,6 @@ public class ChatServiceImpl implements ChatService {
             return Integer.toString(save.getItemExtractId());
         }
 
-    }
-
-    ItemExtractRasaDTO itemExtractRasaFormatiing(ItemExtractRasaDTO rasaDTO) {
-
-
-        return null;
     }
 
 }
