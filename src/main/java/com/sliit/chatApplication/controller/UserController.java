@@ -2,6 +2,7 @@ package com.sliit.chatApplication.controller;
 
 import com.sliit.chatApplication.model.UserDTO;
 import com.sliit.chatApplication.service.UserService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,7 +49,13 @@ public class UserController {
 
 
         if (userService.getUserByUserId(Long.parseLong(userId)) != null) {
-            return userService.getUserByUserId(Long.parseLong(userId)).getUserName();
+
+            JSONObject object = new JSONObject();
+            object.put("user_name",userService.getUserByUserId(Long.parseLong(userId)).getUserName());
+            object.put("session_id",userService.getUserByUserId(Long.parseLong(userId)).getSessionId());
+            System.out.println(userService.getUserByUserId(Long.parseLong(userId)).getUserName());
+            System.out.println(userService.getUserByUserId(Long.parseLong(userId)).getSessionId());
+            return object.toString();
         }
 
         return null;

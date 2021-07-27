@@ -10,11 +10,13 @@ public class ItemExtractRasaDTO extends SuperDTO {
     private String price;
     private String storage;
     private float userId;
+    private String sessionId;
+
 
     public ItemExtractRasaDTO() {
     }
 
-    public ItemExtractRasaDTO(int itemExtractId, String itemCategory, String ram, String screen, String brand, String color, String price, String storage, float userId) {
+    public ItemExtractRasaDTO(int itemExtractId, String itemCategory, String ram, String screen, String brand, String color, String price, String storage, float userId, String sessionId) {
         this.itemExtractId = itemExtractId;
         this.itemCategory = itemCategory;
         this.ram = ram;
@@ -24,6 +26,15 @@ public class ItemExtractRasaDTO extends SuperDTO {
         this.price = price;
         this.storage = storage;
         this.userId = userId;
+        this.sessionId = sessionId;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 
     public float getUserId() {
@@ -96,5 +107,21 @@ public class ItemExtractRasaDTO extends SuperDTO {
 
     public void setStorage(String storage) {
         this.storage = storage;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemExtractRasaDTO{" +
+                "itemExtractId=" + itemExtractId +
+                ", itemCategory='" + itemCategory + '\'' +
+                ", ram='" + ram + '\'' +
+                ", screen='" + screen + '\'' +
+                ", brand='" + brand + '\'' +
+                ", color='" + color + '\'' +
+                ", price='" + price + '\'' +
+                ", storage='" + storage + '\'' +
+                ", userId=" + userId +
+                ", sessionId='" + sessionId + '\'' +
+                '}';
     }
 }

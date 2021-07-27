@@ -9,12 +9,13 @@ public class UserDTO extends SuperDTO {
     private String country;
     private String city;
     private float age;
+    private  String sessionId;
 
 
     public UserDTO() {
     }
 
-    public UserDTO(long userId, String userName, String email, String password, Gender gender, String country, String city, float age) {
+    public UserDTO(long userId, String userName, String email, String password, Gender gender, String country, String city, float age, String sessionId) {
         this.userId = userId;
         this.userName = userName;
         this.email = email;
@@ -23,6 +24,15 @@ public class UserDTO extends SuperDTO {
         this.country = country;
         this.city = city;
         this.age = age;
+        this.sessionId = sessionId;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 
     public long getUserId() {

@@ -19,13 +19,14 @@ public class ItemExtractRasa extends SuperEntity {
     private String price;
     private String storage;
     private float userId;
+    private String sessionId;
 
 
 
     public ItemExtractRasa() {
     }
 
-    public ItemExtractRasa(int itemExtractId, String itemCategory, String ram, String screen, String brand, String color, String price, String storage, float userId) {
+    public ItemExtractRasa(int itemExtractId, String itemCategory, String ram, String screen, String brand, String color, String price, String storage, float userId, String sessionId) {
         this.itemExtractId = itemExtractId;
         this.itemCategory = itemCategory;
         this.ram = ram;
@@ -35,6 +36,15 @@ public class ItemExtractRasa extends SuperEntity {
         this.price = price;
         this.storage = storage;
         this.userId = userId;
+        this.sessionId = sessionId;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 
     public float getUserId() {
@@ -107,5 +117,21 @@ public class ItemExtractRasa extends SuperEntity {
 
     public void setStorage(String storage) {
         this.storage = storage;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemExtractRasa{" +
+                "itemExtractId=" + itemExtractId +
+                ", itemCategory='" + itemCategory + '\'' +
+                ", ram='" + ram + '\'' +
+                ", screen='" + screen + '\'' +
+                ", brand='" + brand + '\'' +
+                ", color='" + color + '\'' +
+                ", price='" + price + '\'' +
+                ", storage='" + storage + '\'' +
+                ", userId=" + userId +
+                ", sessionId='" + sessionId + '\'' +
+                '}';
     }
 }

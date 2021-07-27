@@ -58,7 +58,8 @@ public class ChatController {
             , @RequestParam("screen") String screen, @RequestParam("price") String price
             , @RequestParam("brand") String brand, @RequestParam("color") String color
             , @RequestParam("storage") String storage, @RequestParam("user_id") String user_id
-            , @RequestParam("item_extract_id") String itemExtractId) {
+            , @RequestParam("item_extract_id") String itemExtractId
+            , @RequestParam("session_id") String sessionId) {
 
         ItemExtractRasaDTO itemExtractRasaDTO = new ItemExtractRasaDTO();
         itemExtractRasaDTO.setItemCategory(item);
@@ -68,9 +69,18 @@ public class ChatController {
         itemExtractRasaDTO.setBrand(brand);
         itemExtractRasaDTO.setColor(color);
         itemExtractRasaDTO.setStorage(storage);
-        itemExtractRasaDTO.setUserId(Integer.parseInt(user_id));
-        if(!itemExtractId.trim().equals("")){
-            itemExtractRasaDTO.setItemExtractId(Integer.parseInt(itemExtractId));
+        itemExtractRasaDTO.setSessionId(sessionId);
+        try {
+            itemExtractRasaDTO.setUserId(Integer.parseInt(user_id));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (!itemExtractId.trim().equals("")) {
+            try {
+                itemExtractRasaDTO.setItemExtractId(Integer.parseInt(itemExtractId));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         System.out.println(itemExtractRasaDTO);
 

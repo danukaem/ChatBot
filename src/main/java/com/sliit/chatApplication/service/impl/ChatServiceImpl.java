@@ -158,30 +158,44 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public String itemExtractRasaDataSave(ItemExtractRasaDTO itemExtractRasaDTO) {
-        if (itemExtractRasaDTO.getItemExtractId() > 0) {
-            Optional<ItemExtractRasa> byId = extractRasaRepository.findById(itemExtractRasaDTO.getItemExtractId());
-            if (byId.isPresent()) {
-                ItemExtractRasa itemExtractRasa = byId.get();
-                itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
-                itemExtractRasa.setItemCategory(itemExtractRasaDTO.getItemCategory());
-                itemExtractRasa.setRam(itemExtractRasaDTO.getRam());
-                itemExtractRasa.setScreen(itemExtractRasaDTO.getScreen());
-                itemExtractRasa.setPrice(itemExtractRasaDTO.getPrice());
-                itemExtractRasa.setBrand(itemExtractRasaDTO.getBrand());
-                itemExtractRasa.setColor(itemExtractRasaDTO.getColor());
-                itemExtractRasa.setStorage(itemExtractRasaDTO.getStorage());
-                itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
-                extractRasaRepository.save(itemExtractRasa);
-                return Integer.toString(itemExtractRasaDTO.getItemExtractId());
-            }
-            return "";
+        Optional<ItemExtractRasa> byId = extractRasaRepository.findAllBySessionId(itemExtractRasaDTO.getSessionId());
+        if (byId.isPresent()) {
+            ItemExtractRasa itemExtractRasa = byId.get();
+            itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
+            itemExtractRasa.setItemCategory(itemExtractRasaDTO.getItemCategory());
+            itemExtractRasa.setRam(itemExtractRasaDTO.getRam());
+            itemExtractRasa.setScreen(itemExtractRasaDTO.getScreen());
+            itemExtractRasa.setPrice(itemExtractRasaDTO.getPrice());
+            itemExtractRasa.setBrand(itemExtractRasaDTO.getBrand());
+            itemExtractRasa.setColor(itemExtractRasaDTO.getColor());
+            itemExtractRasa.setStorage(itemExtractRasaDTO.getStorage());
+            itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
+            extractRasaRepository.save(itemExtractRasa);
+            return Integer.toString(itemExtractRasaDTO.getItemExtractId());
 
         } else {
-            ItemExtractRasa save = extractRasaRepository.save(Converter.getEntity(itemExtractRasaDTO));
+
+            ItemExtractRasa itemExtractRasa = new ItemExtractRasa();
+            itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
+            itemExtractRasa.setItemCategory(itemExtractRasaDTO.getItemCategory());
+            itemExtractRasa.setRam(itemExtractRasaDTO.getRam());
+            itemExtractRasa.setScreen(itemExtractRasaDTO.getScreen());
+            itemExtractRasa.setPrice(itemExtractRasaDTO.getPrice());
+            itemExtractRasa.setBrand(itemExtractRasaDTO.getBrand());
+            itemExtractRasa.setColor(itemExtractRasaDTO.getColor());
+            itemExtractRasa.setStorage(itemExtractRasaDTO.getStorage());
+            itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
+            itemExtractRasa.setSessionId(itemExtractRasaDTO.getSessionId());
+            ItemExtractRasa save = extractRasaRepository.save(itemExtractRasa);
             return Integer.toString(save.getItemExtractId());
         }
 
     }
 
+    ItemExtractRasaDTO itemExtractRasaFormatiing(ItemExtractRasaDTO rasaDTO) {
+
+
+        return null;
+    }
 
 }

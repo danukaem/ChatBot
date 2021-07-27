@@ -34,6 +34,9 @@ public class UserServiceImpl implements UserService {
         UserDTO user;
         List<User> userList = userRepository.findByUserNameAndPassword(userDTO.getUserName(), userDTO.getPassword());
         if (userList.size() > 0) {
+            User user1 = userList.get(0);
+            user1.setSessionId(userDTO.getSessionId());
+            userRepository.save(user1);
             user = Converter.getDTO(userList.get(0));
         } else {
             user = null;
