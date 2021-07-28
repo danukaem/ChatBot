@@ -56,6 +56,7 @@ public class ItemServiceImpl implements ItemService {
         return categoryList;
     }
 
+
     @Override
     public List<Item> getRecommendItems(float userId, String sessionId) {
         Optional<ItemExtractRasa> extractRasa = rasaRepository.findByUserIdAndSessionId(userId, sessionId);
