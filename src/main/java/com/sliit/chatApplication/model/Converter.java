@@ -32,6 +32,11 @@ public class Converter {
             item.setCategory(itemDTO.getCategory());
             item.setDiscountPercentage(itemDTO.getDiscountPercentage());
             item.setPrice(itemDTO.getPrice());
+            item.setRam(itemDTO.getRam());
+            item.setScreen(itemDTO.getScreen());
+            item.setBrand(itemDTO.getBrand());
+            item.setColor(itemDTO.getColor());
+            item.setStorage(itemDTO.getStorage());
             return (T) item;
         } else if (superDTO instanceof CartItemDTO) {
             CartItemDTO cartItemDTO = (CartItemDTO) superDTO;
@@ -88,7 +93,8 @@ public class Converter {
             return (T) new UserDTO(user.getUserId(), user.getUserName(), user.getEmail(), user.getPassword(), user.getGender(), user.getCountry(), user.getCity(), user.getAge(), user.getSessionId());
         } else if (superEntity instanceof Item) {
             Item item = (Item) superEntity;
-            return (T) new ItemDTO(item.getItemId(), item.getItemName(), item.getItemCode(), item.getDescription(), item.getImgSrc(), item.getCategory(), item.getPrice(), item.getDiscountPercentage());
+            return (T) new ItemDTO(item.getItemId(), item.getItemName(), item.getItemCode(), item.getDescription(), item.getImgSrc(), item.getCategory(), item.getPrice(), item.getDiscountPercentage()
+            ,item.getRam(),item.getScreen(),item.getBrand(),item.getColor(),item.getStorage());
         } else if (superEntity instanceof CartItem) {
             CartItem cartItem = (CartItem) superEntity;
             return (T) new CartItemDTO(cartItem.getCartItemId(), cartItem.getItem(), cartItem.getQuantity(), cartItem.getUser(), cartItem.getSessionId());

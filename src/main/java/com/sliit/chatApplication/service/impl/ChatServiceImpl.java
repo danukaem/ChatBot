@@ -138,6 +138,9 @@ public class ChatServiceImpl implements ChatService {
             senderMessage.setMessage(chatMessage);
             ResponseEntity responseEntity = this.httpService.sentHttpPostConnection(chatUrl, objectMapper.writeValueAsString(senderMessage));
             String res = responseEntity.getBody().toString();
+            System.out.println("res");
+            System.out.println(res);
+            System.out.println("res");
             return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (Exception ex) {
             ex.printStackTrace();

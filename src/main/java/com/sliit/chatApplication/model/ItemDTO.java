@@ -8,14 +8,19 @@ public class ItemDTO extends SuperDTO {
     private String itemCode;
     private String description;
     private String imgSrc;
-    private ItemCategory category;
+    private String category;
     private long price;
     private long discountPercentage;
+    private String ram;
+    private String screen;
+    private String brand;
+    private String color;
+    private String storage;
 
     public ItemDTO() {
     }
 
-    public ItemDTO(long itemId, String itemName, String itemCode, String description, String imgSrc, ItemCategory category, long price, long discountPercentage) {
+    public ItemDTO(long itemId, String itemName, String itemCode, String description, String imgSrc, String category, long price, long discountPercentage, String ram, String screen, String brand, String color, String storage) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemCode = itemCode;
@@ -24,6 +29,57 @@ public class ItemDTO extends SuperDTO {
         this.category = category;
         this.price = price;
         this.discountPercentage = discountPercentage;
+        this.ram = ram;
+        this.screen = screen;
+        this.brand = brand;
+        this.color = color;
+        this.storage = storage;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getRam() {
+        return ram;
+    }
+
+    public void setRam(String ram) {
+        this.ram = ram;
+    }
+
+    public String getScreen() {
+        return screen;
+    }
+
+    public void setScreen(String screen) {
+        this.screen = screen;
+    }
+
+
+
+    public String getStorage() {
+        return storage;
+    }
+
+    public void setStorage(String storage) {
+        this.storage = storage;
     }
 
     public long getItemId() {
@@ -82,12 +138,8 @@ public class ItemDTO extends SuperDTO {
         this.discountPercentage = discountPercentage;
     }
 
-    public ItemCategory getCategory() {
+    public String getCategory() {
         return category;
-    }
-
-    public void setCategory(ItemCategory category) {
-        this.category = category;
     }
 
     @Override
@@ -98,9 +150,14 @@ public class ItemDTO extends SuperDTO {
                 ", itemCode='" + itemCode + '\'' +
                 ", description='" + description + '\'' +
                 ", imgSrc='" + imgSrc + '\'' +
-                ", category=" + category +
+                ", category='" + category + '\'' +
                 ", price=" + price +
                 ", discountPercentage=" + discountPercentage +
+                ", ram='" + ram + '\'' +
+                ", screen='" + screen + '\'' +
+                ", brand='" + brand + '\'' +
+                ", color='" + color + '\'' +
+                ", storage='" + storage + '\'' +
                 '}';
     }
 }

@@ -5,9 +5,9 @@ import com.sliit.chatApplication.model.ItemExtractRasaDTO;
 public class RasaExtractDataFormatting {
 
 
-    public static int getNumberFromWordFilter(String lettersNumber) {
+    public static double getNumberFromWordFilter(String lettersNumber) {
         String input_string = lettersNumber;
-        int number_output = Integer.parseInt(input_string.replaceAll("[^0-9]", ""));
+        double number_output = Double.parseDouble(input_string.replaceAll("[^0-9.]", ""));
         System.out.println(number_output);
         return number_output;
     }
@@ -61,27 +61,27 @@ public class RasaExtractDataFormatting {
 
 
     public static String getFilteredPrice(String price) {
-        return Integer.toString(getNumberFromWordFilter(price));
+        return Double.toString(getNumberFromWordFilter(price));
     }
 
     public static String getFilteredRam(String ram) {
         String metricRam = "";
-        int ramSize = getNumberFromWordFilter(ram);
+        Double ramSize = getNumberFromWordFilter(ram);
         String metric = getStringFromWordFilter(ram);
         if (metric.equals("")) {
-            metricRam = Integer.toString(ramSize);
+            metricRam = Double.toString(ramSize);
         } else if (metric.equals("gb")) {
-            metricRam = Integer.toString(ramSize);
+            metricRam = Double.toString(ramSize);
         } else if (metric.equals("gbs")) {
-            metricRam = Integer.toString(ramSize);
+            metricRam = Double.toString(ramSize);
         } else if (metric.equals("mb")) {
-            metricRam = Integer.toString(ramSize / 1000);
+            metricRam = Double.toString(ramSize / 1000);
         } else if (metric.equals("mbs")) {
-            metricRam = Integer.toString(ramSize / 1000);
+            metricRam = Double.toString(ramSize / 1000);
         } else if (metric.equals("tb")) {
-            metricRam = Integer.toString(ramSize * 1000);
+            metricRam = Double.toString(ramSize * 1000);
         } else if (metric.equals("tbs")) {
-            metricRam = Integer.toString(ramSize * 1000);
+            metricRam = Double.toString(ramSize * 1000);
         } else {
             metricRam = "";
         }
@@ -89,17 +89,17 @@ public class RasaExtractDataFormatting {
     }
 
     public static String getFilteredScreenSize(String screen) {
-        int sSize = getNumberFromWordFilter(screen);
+        double sSize = getNumberFromWordFilter(screen);
         String metric = getStringFromWordFilter(screen);
         String screenSize = "";
         if (metric.equals("")) {
-            screenSize = Integer.toString(sSize);
+            screenSize = Double.toString(sSize);
         } else if (metric.equals("inch")) {
-            screenSize = Integer.toString(sSize);
+            screenSize = Double.toString(sSize);
         } else if (metric.equals("inchs")) {
-            screenSize = Integer.toString(sSize);
+            screenSize = Double.toString(sSize);
         } else if (metric.equals("inches")) {
-            screenSize = Integer.toString(sSize);
+            screenSize = Double.toString(sSize);
         } else if (metric.equals("mm")) {
             screenSize = Double.toString(sSize / 25.4);
         } else if (metric.equals("cm")) {
@@ -114,17 +114,17 @@ public class RasaExtractDataFormatting {
 
     public static String getFilteredStotageSize(String strg) {
         String metric = getStringFromWordFilter(strg);
-        int storage = getNumberFromWordFilter(strg);
+        double storage = getNumberFromWordFilter(strg);
         String storageSize = "";
 
         if (metric.equals("gb")) {
-            storageSize = Integer.toString(storage);
+            storageSize = Double.toString(storage);
         } else if (metric.equals("gbs")) {
-            storageSize = Integer.toString(storage);
+            storageSize = Double.toString(storage);
         } else if (metric.equals("tb")) {
-            storageSize = Integer.toString(storage * 1000);
+            storageSize = Double.toString(storage * 1000);
         } else if (metric.equals("tbs")) {
-            storageSize = Integer.toString(storage * 1000);
+            storageSize = Double.toString(storage * 1000);
         } else {
             storageSize = "";
         }

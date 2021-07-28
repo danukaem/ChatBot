@@ -2,6 +2,7 @@ package com.sliit.chatApplication.controller;
 
 import com.sliit.chatApplication.model.ItemCategory;
 import com.sliit.chatApplication.model.ItemDTO;
+import com.sliit.chatApplication.repository.entity.Item;
 import com.sliit.chatApplication.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -43,5 +44,9 @@ public class ItemController {
         return itemService.getCategoryList();
     }
 
+    @GetMapping("/getRecommendItems")
+    List<Item> getRecommendItems(@RequestParam("userId") float userId, @RequestParam("sessionId") String sessionId){
+       return  itemService.getRecommendItems(userId,sessionId);
+    }
 
 }

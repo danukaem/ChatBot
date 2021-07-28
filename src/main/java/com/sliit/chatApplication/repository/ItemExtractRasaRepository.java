@@ -8,4 +8,7 @@ import java.util.Optional;
 public interface ItemExtractRasaRepository extends JpaRepository<ItemExtractRasa, Integer> {
 
     Optional<ItemExtractRasa> findAllBySessionId(String sessionId);
+
+    Optional<ItemExtractRasa> findByUserIdAndSessionId(float userId,String sessionId);
+
 }
