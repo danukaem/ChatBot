@@ -27,7 +27,7 @@ public class UserController {
 
     @PostMapping("/signIn")
     UserDTO signIn(@RequestBody UserDTO userDTO) {
-        System.out.println(userService.signInUser(userDTO));
+//        System.out.println(userService.signInUser(userDTO));
         return userService.signInUser(userDTO);
     }
 
@@ -53,8 +53,8 @@ public class UserController {
             JSONObject object = new JSONObject();
             object.put("user_name",userService.getUserByUserId(Long.parseLong(userId)).getUserName());
             object.put("session_id",userService.getUserByUserId(Long.parseLong(userId)).getSessionId());
-            System.out.println(userService.getUserByUserId(Long.parseLong(userId)).getUserName());
-            System.out.println(userService.getUserByUserId(Long.parseLong(userId)).getSessionId());
+//            System.out.println(userService.getUserByUserId(Long.parseLong(userId)).getUserName());
+//            System.out.println(userService.getUserByUserId(Long.parseLong(userId)).getSessionId());
             return object.toString();
         }
 

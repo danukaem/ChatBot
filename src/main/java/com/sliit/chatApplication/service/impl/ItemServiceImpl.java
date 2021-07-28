@@ -65,7 +65,13 @@ public class ItemServiceImpl implements ItemService {
 
             String color = "%" + rasa.getColor().trim() + "%";
             String brand = "%" + rasa.getBrand().trim() + "%";
-            String category = "%" + rasa.getItemCategory().trim() + "%";
+            String category;
+            if (rasa.getItemCategory().trim().equals("phone") || rasa.getItemCategory().trim().equals("laptop")) {
+                 category = "%" + rasa.getItemCategory().trim() + "%";
+
+            }else {
+                 category = "%%";
+            }
             double price = 0;
             double ram = 0;
             double screen = 0;
@@ -96,7 +102,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> findAllByBrand(String brand) {
-        return itemRepository.findAllByBrand(  brand );
+        return itemRepository.findAllByBrand(brand);
 
     }
 }

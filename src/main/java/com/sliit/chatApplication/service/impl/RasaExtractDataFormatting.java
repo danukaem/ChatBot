@@ -8,14 +8,14 @@ public class RasaExtractDataFormatting {
     public static double getNumberFromWordFilter(String lettersNumber) {
         String input_string = lettersNumber;
         double number_output = Double.parseDouble(input_string.replaceAll("[^0-9.]", ""));
-        System.out.println(number_output);
+//        System.out.println(number_output);
         return number_output;
     }
 
     public static String getStringFromWordFilter(String lettersNumber) {
         String input_string = lettersNumber;
         String string_output = input_string.replaceAll("[^A-Za-z]", "").toLowerCase();
-        System.out.println(string_output);
+//        System.out.println(string_output);
         return string_output;
     }
 

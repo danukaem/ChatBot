@@ -44,7 +44,7 @@ public class ChatController {
     @GetMapping("/chatLoginRasa")
     public Object chatRasaLoginResponse(@RequestParam("chatMessage") String chatMessage, @RequestParam("chatSessionId") String chatSessionId
             , @RequestParam("userId") String userId) {
-        System.out.println(chatMessage);
+//        System.out.println(chatMessage);
         return chatService.chatRasaLoginResponse(chatMessage, chatSessionId, userId);
     }
 
@@ -83,7 +83,7 @@ public class ChatController {
                     e.printStackTrace();
                 }
             }
-            System.out.println(itemExtractRasaDTO);
+//            System.out.println(itemExtractRasaDTO);
 
             return chatService.itemExtractRasaDataSave(itemExtractRasaDTO);
         } catch (Exception e) {
