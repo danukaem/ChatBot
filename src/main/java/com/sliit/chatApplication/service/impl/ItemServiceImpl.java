@@ -93,4 +93,10 @@ public class ItemServiceImpl implements ItemService {
         }
         return null;
     }
+
+    @Override
+    public List<Item> findAllByBrand(String brand) {
+        return itemRepository.findAllByBrand(  brand );
+
+    }
 }

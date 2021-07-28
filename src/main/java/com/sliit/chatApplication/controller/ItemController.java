@@ -49,4 +49,13 @@ public class ItemController {
        return  itemService.getRecommendItems(userId,sessionId);
     }
 
+
+
+    @GetMapping("/findAllByBrand")
+    List<Item> findAllByBrand(@RequestParam("brand")  String brand){
+        return  itemService.findAllByBrand(brand);
+    }
+
+
+
 }

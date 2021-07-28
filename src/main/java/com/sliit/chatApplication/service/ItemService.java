@@ -13,4 +13,6 @@ public interface ItemService {
     List<ItemCategory> getCategoryList();
 
     List<Item> getRecommendItems(float userId, String sessionId);
+
+    List<Item> findAllByBrand(String brand);
 }
