@@ -165,29 +165,48 @@ public class ChatServiceImpl implements ChatService {
         Optional<ItemExtractRasa> byId = extractRasaRepository.findAllBySessionId(itemExtractRasaDTO.getSessionId());
         if (byId.isPresent()) {
             ItemExtractRasa itemExtractRasa = byId.get();
-            itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
-            itemExtractRasa.setItemCategory(itemExtractRasaDTO.getItemCategory());
-            if (!itemExtractRasaDTO.getRam().equals("")) {
+
+            if (itemExtractRasa.getItemCategory().equals(itemExtractRasaDTO.getItemCategory()) || itemExtractRasaDTO.getItemCategory().equals("") ) {
+                itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
+                if (!itemExtractRasaDTO.getItemCategory().equals("")) {
+                    itemExtractRasa.setItemCategory(itemExtractRasaDTO.getItemCategory());
+                }
+                if (!itemExtractRasaDTO.getRam().equals("")) {
+                    itemExtractRasa.setRam(itemExtractRasaDTO.getRam());
+                }
+                if (!itemExtractRasaDTO.getScreen().equals("")) {
+                    itemExtractRasa.setScreen(itemExtractRasaDTO.getScreen());
+                }
+                if (!itemExtractRasaDTO.getPrice().equals("")) {
+                    itemExtractRasa.setPrice(itemExtractRasaDTO.getPrice());
+                }
+                if (!itemExtractRasaDTO.getBrand().equals("")) {
+                    itemExtractRasa.setBrand(itemExtractRasaDTO.getBrand());
+                }
+                if (!itemExtractRasaDTO.getColor().equals("")) {
+                    itemExtractRasa.setColor(itemExtractRasaDTO.getColor());
+                }
+                if (!itemExtractRasaDTO.getStorage().equals("")) {
+                    itemExtractRasa.setStorage(itemExtractRasaDTO.getStorage());
+                }
+                itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
+                extractRasaRepository.save(itemExtractRasa);
+                return Integer.toString(itemExtractRasaDTO.getItemExtractId());
+            } else {
+                itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
+                itemExtractRasa.setItemExtractId(itemExtractRasaDTO.getItemExtractId());
+                itemExtractRasa.setItemCategory(itemExtractRasaDTO.getItemCategory());
                 itemExtractRasa.setRam(itemExtractRasaDTO.getRam());
-            }
-            if (!itemExtractRasaDTO.getScreen().equals("")) {
                 itemExtractRasa.setScreen(itemExtractRasaDTO.getScreen());
-            }
-            if (!itemExtractRasaDTO.getPrice().equals("")) {
                 itemExtractRasa.setPrice(itemExtractRasaDTO.getPrice());
-            }
-            if (!itemExtractRasaDTO.getBrand().equals("")) {
                 itemExtractRasa.setBrand(itemExtractRasaDTO.getBrand());
-            }
-            if (!itemExtractRasaDTO.getColor().equals("")) {
                 itemExtractRasa.setColor(itemExtractRasaDTO.getColor());
-            }
-            if (!itemExtractRasaDTO.getStorage().equals("")) {
                 itemExtractRasa.setStorage(itemExtractRasaDTO.getStorage());
+                itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
+                extractRasaRepository.save(itemExtractRasa);
+                return Integer.toString(itemExtractRasaDTO.getItemExtractId());
             }
-            itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
-            extractRasaRepository.save(itemExtractRasa);
-            return Integer.toString(itemExtractRasaDTO.getItemExtractId());
+
 
         } else {
 

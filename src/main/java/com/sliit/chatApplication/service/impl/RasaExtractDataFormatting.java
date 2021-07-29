@@ -53,7 +53,7 @@ public class RasaExtractDataFormatting {
         } else if (category.equals("computers")) {
             iCategory = "laptop";
         } else {
-            iCategory = category;
+            iCategory = "";
         }
         return iCategory;
 
