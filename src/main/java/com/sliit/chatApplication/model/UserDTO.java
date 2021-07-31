@@ -5,9 +5,9 @@ public class UserDTO extends SuperDTO {
     private String userName;
     private String email;
     private String password;
-    private Gender gender;
+    private String gender;
     private String country;
-    private String city;
+    private String district;
     private float age;
     private  String sessionId;
     private  String occupation;
@@ -16,17 +16,33 @@ public class UserDTO extends SuperDTO {
     public UserDTO() {
     }
 
-    public UserDTO(long userId, String userName, String email, String password, Gender gender, String country, String city, float age, String sessionId, String occupation) {
+    public UserDTO(long userId, String userName, String email, String password, String gender, String country, String district, float age, String sessionId, String occupation) {
         this.userId = userId;
         this.userName = userName;
         this.email = email;
         this.password = password;
         this.gender = gender;
         this.country = country;
-        this.city = city;
+        this.district = district;
         this.age = age;
         this.sessionId = sessionId;
         this.occupation = occupation;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
     }
 
     public String getOccupation() {
@@ -77,13 +93,6 @@ public class UserDTO extends SuperDTO {
         this.password = password;
     }
 
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
 
     public String getCountry() {
         return country;
@@ -93,13 +102,7 @@ public class UserDTO extends SuperDTO {
         this.country = country;
     }
 
-    public String getCity() {
-        return city;
-    }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
 
     public float getAge() {
         return age;
@@ -109,6 +112,7 @@ public class UserDTO extends SuperDTO {
         this.age = age;
     }
 
+
     @Override
     public String toString() {
         return "UserDTO{" +
@@ -116,10 +120,12 @@ public class UserDTO extends SuperDTO {
                 ", userName='" + userName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", gender=" + gender +
+                ", gender='" + gender + '\'' +
                 ", country='" + country + '\'' +
-                ", city='" + city + '\'' +
+                ", district='" + district + '\'' +
                 ", age=" + age +
+                ", sessionId='" + sessionId + '\'' +
+                ", occupation='" + occupation + '\'' +
                 '}';
     }
 

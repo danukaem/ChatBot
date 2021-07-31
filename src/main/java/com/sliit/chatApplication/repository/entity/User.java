@@ -15,9 +15,9 @@ public class User extends SuperEntity {
     private String userName;
     private  String email;
     private  String password;
-    private  UserDTO.Gender gender;
+    private  String gender;
     private  String country;
-    private  String city;
+    private  String district;
     private  float age;
     private  String sessionId;
     private  String occupation;
@@ -26,17 +26,34 @@ public class User extends SuperEntity {
     public User() {
     }
 
-    public User(long userId, String userName, String email, String password, UserDTO.Gender gender, String country, String city, float age, String sessionId, String occupation) {
+
+    public User(long userId, String userName, String email, String password, String gender, String country, String district, float age, String sessionId, String occupation) {
         this.userId = userId;
         this.userName = userName;
         this.email = email;
         this.password = password;
         this.gender = gender;
         this.country = country;
-        this.city = city;
+        this.district = district;
         this.age = age;
         this.sessionId = sessionId;
         this.occupation = occupation;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
     }
 
     public String getOccupation() {
@@ -87,13 +104,7 @@ public class User extends SuperEntity {
         this.password = password;
     }
 
-    public UserDTO.Gender getGender() {
-        return gender;
-    }
 
-    public void setGender(UserDTO.Gender gender) {
-        this.gender = gender;
-    }
 
     public String getCountry() {
         return country;
@@ -103,13 +114,6 @@ public class User extends SuperEntity {
         this.country = country;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
 
     public float getAge() {
         return age;
