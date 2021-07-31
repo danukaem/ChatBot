@@ -3,8 +3,12 @@ package com.sliit.chatApplication.controller;
 import com.sliit.chatApplication.model.ItemCategory;
 import com.sliit.chatApplication.model.ItemDTO;
 import com.sliit.chatApplication.repository.entity.Item;
+import com.sliit.chatApplication.repository.entity.ItemExtractRasa;
 import com.sliit.chatApplication.service.ItemService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
@@ -45,15 +49,30 @@ public class ItemController {
     }
 
     @GetMapping("/getRecommendItems")
-    List<Item> getRecommendItems(@RequestParam("userId") float userId, @RequestParam("sessionId") String sessionId){
-       return  itemService.getRecommendItems(userId,sessionId);
+    List<Item> getRecommendItems(@RequestParam("userId") float userId, @RequestParam("sessionId") String sessionId,@RequestParam("advancedSearch") boolean advancedSearch) {
+        System.out.println(advancedSearch);
+        return itemService.getRecommendItems(userId, sessionId,advancedSearch);
     }
 
 
-
     @GetMapping("/findAllByBrand")
-    List<Item> findAllByBrand(@RequestParam("brand")  String brand){
-        return  itemService.findAllByBrand(brand);
+    List<Item> findAllByBrand(@RequestParam("brand") String brand) {
+        return itemService.findAllByBrand(brand);
+    }
+
+    @GetMapping("/getChatItemRequirements")
+    public ItemExtractRasa getChatItemRequirements(@RequestParam("user_id") String userId, @RequestParam("session_id") String sessionId) {
+
+        ItemExtractRasa chatItemRequirement = itemService.getChatItemRequirements(userId, sessionId);
+        System.out.println(chatItemRequirement);
+        return chatItemRequirement;
+    }
+
+    @GetMapping("/getForecastedItems")
+
+    public List<Item> getForecastedItems(){
+
+        return itemService.getForecastedItems();
     }
 
 

@@ -9,11 +9,10 @@ import com.sliit.chatApplication.repository.entity.Item;
 import com.sliit.chatApplication.repository.entity.ItemExtractRasa;
 import com.sliit.chatApplication.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -22,6 +21,8 @@ public class ItemServiceImpl implements ItemService {
     ItemRepository itemRepository;
     @Autowired
     ItemExtractRasaRepository rasaRepository;
+    @Autowired
+    HttpService httpService;
 
     public ItemServiceImpl() {
     }
@@ -57,7 +58,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> getRecommendItems(float userId, String sessionId) {
+    public List<Item> getRecommendItems(float userId, String sessionId, boolean advancedSearch) {
         Optional<ItemExtractRasa> extractRasa = rasaRepository.findByUserIdAndSessionId(userId, sessionId);
 
         if (extractRasa.isPresent()) {
@@ -67,10 +68,10 @@ public class ItemServiceImpl implements ItemService {
             String brand = "%" + rasa.getBrand().trim() + "%";
             String category;
             if (rasa.getItemCategory().trim().equals("phone") || rasa.getItemCategory().trim().equals("laptop")) {
-                 category = "%" + rasa.getItemCategory().trim() + "%";
+                category = "%" + rasa.getItemCategory().trim() + "%";
 
-            }else {
-                 category = "%%";
+            } else {
+                category = "%%";
             }
             double price = 0;
             double ram = 0;
@@ -94,8 +95,15 @@ public class ItemServiceImpl implements ItemService {
 
             }
 
+            if (advancedSearch) {
+                List<Item> forecastedItems = getForecastedItems();
+                forecastedItems.forEach(i -> {
+                    if (i.getCategory().equals(category)) {
+                        recommendItemsQuery.add(i);
+                    }
+                });
+            }
             return recommendItemsQuery;
-
         }
         return null;
     }
@@ -105,4 +113,78 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.findAllByBrand(brand);
 
     }
+
+    @Override
+    public ItemExtractRasa getChatItemRequirements(String userId, String sessionId) {
+        Optional<ItemExtractRasa> rasa = rasaRepository.findByUserIdAndSessionId(Float.parseFloat(userId), sessionId);
+        if (rasa.isPresent()) {
+            ItemExtractRasa itemExtractRasa = rasa.get();
+            return itemExtractRasa;
+        } else {
+            return new ItemExtractRasa();
+        }
+    }
+
+    @Override
+    public List<Item> getForecastedItems() {
+
+        String urlItem = "http://localhost:5000/getForecastedItems";
+        String urlItemCode = "http://localhost:5000/getForecastedItemsCodes";
+        ResponseEntity responseEntityItem = this.httpService.sendHttpGetUrlConnection(urlItem);
+        List<Double> probabilities = filterItemProbabilities(responseEntityItem);
+        ResponseEntity responseEntityCode = this.httpService.sendHttpGetUrlConnection(urlItemCode);
+        List<String> itemCodes = filterItemCodes(responseEntityCode);
+
+        Map<Double, String> itemCodeProbability = new HashMap<>();
+        for (int i = 0; i < itemCodes.size(); i++) {
+            itemCodeProbability.put(probabilities.get(i), itemCodes.get(i));
+        }
+        Map<Double, String> treeMap = new TreeMap<>(
+                new Comparator<Double>() {
+                    @Override
+                    public int compare(Double o1, Double o2) {
+                        return o2.compareTo(o1);
+                    }
+                });
+        treeMap.putAll(itemCodeProbability);
+        List<Item> items = new ArrayList<>();
+        treeMap.forEach((k, v) -> {
+            if (k > 0) {
+                Optional<Item> byItemCode = itemRepository.findByItemCode(v);
+                if (byItemCode.isPresent()) {
+                    Item item = byItemCode.get();
+                    item.setItemName(item.getItemName() + " ***");
+                    items.add(byItemCode.get());
+                }
+            }
+        });
+        return items;
+    }
+
+    List<Double> filterItemProbabilities(ResponseEntity responseEntity) {
+        String res = responseEntity.getBody().toString();
+        res = res.replaceAll("[{}]", "");
+        res = res.split(":")[1];
+        res = res.replaceAll("[\"\\[\\]\"]", "");
+        String[] itemValues = res.split(",");
+        List<Double> probabilities = new ArrayList<>();
+        for (int i = 0; i < itemValues.length; i++) {
+            probabilities.add(Double.parseDouble(itemValues[i]));
+        }
+        return probabilities;
+    }
+
+    List<String> filterItemCodes(ResponseEntity responseEntity) {
+        String res = responseEntity.getBody().toString();
+        res = res.replaceAll("[{}\"\\[\\]\\\\]", "");
+        String resCodes = res.split(":")[1];
+        resCodes = resCodes.replaceAll("item_code_", "");
+        String[] resCodesArray = resCodes.split(",");
+        List<String> itemCodes = new ArrayList<>();
+        for (int i = 0; i < resCodesArray.length; i++) {
+            itemCodes.add(resCodesArray[i].trim());
+        }
+        return itemCodes;
+    }
+
 }
