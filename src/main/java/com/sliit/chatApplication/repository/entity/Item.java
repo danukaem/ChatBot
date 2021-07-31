@@ -25,11 +25,12 @@ public class Item extends SuperEntity {
     private String brand;
     private String color;
     private String storage;
+    private String processor;
 
     public Item() {
     }
 
-    public Item(long itemId, String itemName, String itemCode, String description, String imgSrc, String category, long price, long discountPercentage, String ram, String screen, String brand, String color, String storage) {
+    public Item(long itemId, String itemName, String itemCode, String description, String imgSrc, String category, long price, long discountPercentage, String ram, String screen, String brand, String color, String storage, String processor) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemCode = itemCode;
@@ -43,6 +44,15 @@ public class Item extends SuperEntity {
         this.brand = brand;
         this.color = color;
         this.storage = storage;
+        this.processor = processor;
+    }
+
+    public String getProcessor() {
+        return processor;
+    }
+
+    public void setProcessor(String processor) {
+        this.processor = processor;
     }
 
     public void setCategory(String category) {
@@ -166,6 +176,7 @@ public class Item extends SuperEntity {
                 ", brand='" + brand + '\'' +
                 ", color='" + color + '\'' +
                 ", storage='" + storage + '\'' +
+                ", processor='" + processor + '\'' +
                 '}';
     }
 }

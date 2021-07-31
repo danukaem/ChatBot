@@ -38,6 +38,7 @@ public class Converter {
             item.setBrand(itemDTO.getBrand());
             item.setColor(itemDTO.getColor());
             item.setStorage(itemDTO.getStorage());
+            item.setProcessor(itemDTO.getProcessor());
             return (T) item;
         } else if (superDTO instanceof CartItemDTO) {
             CartItemDTO cartItemDTO = (CartItemDTO) superDTO;
@@ -91,11 +92,11 @@ public class Converter {
     public static <T extends SuperDTO> T getDTO(SuperEntity superEntity) {
         if (superEntity instanceof User) {
             User user = (User) superEntity;
-            return (T) new UserDTO(user.getUserId(), user.getUserName(), user.getEmail(), user.getPassword(), user.getGender(), user.getCountry(), user.getDistrict(), user.getAge(), user.getSessionId(),user.getOccupation());
+            return (T) new UserDTO(user.getUserId(), user.getUserName(), user.getEmail(), user.getPassword(), user.getGender(), user.getCountry(), user.getDistrict(), user.getAge(), user.getSessionId(), user.getOccupation());
         } else if (superEntity instanceof Item) {
             Item item = (Item) superEntity;
             return (T) new ItemDTO(item.getItemId(), item.getItemName(), item.getItemCode(), item.getDescription(), item.getImgSrc(), item.getCategory(), item.getPrice(), item.getDiscountPercentage()
-            ,item.getRam(),item.getScreen(),item.getBrand(),item.getColor(),item.getStorage());
+                    , item.getRam(), item.getScreen(), item.getBrand(), item.getColor(), item.getStorage(), item.getProcessor());
         } else if (superEntity instanceof CartItem) {
             CartItem cartItem = (CartItem) superEntity;
             return (T) new CartItemDTO(cartItem.getCartItemId(), cartItem.getItem(), cartItem.getQuantity(), cartItem.getUser(), cartItem.getSessionId());
