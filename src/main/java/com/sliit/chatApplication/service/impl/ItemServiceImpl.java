@@ -1,8 +1,11 @@
 package com.sliit.chatApplication.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sliit.chatApplication.model.Converter;
 import com.sliit.chatApplication.model.ItemCategory;
 import com.sliit.chatApplication.model.ItemDTO;
+import com.sliit.chatApplication.model.Model2Input;
 import com.sliit.chatApplication.repository.ItemExtractRasaRepository;
 import com.sliit.chatApplication.repository.ItemRepository;
 import com.sliit.chatApplication.repository.entity.Item;
@@ -18,11 +21,16 @@ import java.util.*;
 public class ItemServiceImpl implements ItemService {
 
     @Autowired
+    ItemRepository userRepository;
+
+    @Autowired
     ItemRepository itemRepository;
     @Autowired
     ItemExtractRasaRepository rasaRepository;
     @Autowired
     HttpService httpService;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     public ItemServiceImpl() {
     }
@@ -58,7 +66,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> getRecommendItems(float userId, String sessionId, boolean advancedSearch) {
+    public List<Item> getRecommendItems(float userId, String sessionId, boolean advancedSearch) throws JsonProcessingException {
         Optional<ItemExtractRasa> extractRasa = rasaRepository.findByUserIdAndSessionId(userId, sessionId);
 
         if (extractRasa.isPresent()) {
@@ -96,7 +104,7 @@ public class ItemServiceImpl implements ItemService {
             }
 
             if (advancedSearch) {
-                List<Item> forecastedItems = getForecastedItems();
+                List<Item> forecastedItems = getForecastedItems(userId, sessionId);
                 forecastedItems.forEach(i -> {
                     if (i.getCategory().equals(category)) {
                         recommendItemsQuery.add(i);
@@ -126,14 +134,56 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> getForecastedItems() {
+    public List<Item> getForecastedItems(float userId, String sessionId) throws JsonProcessingException {
 
-        String urlItem = "http://localhost:5000/getForecastedItems";
-        String urlItemCode = "http://localhost:5000/getForecastedItemsCodes";
-        ResponseEntity responseEntityItem = this.httpService.sendHttpGetUrlConnection(urlItem);
+//        String urlModel1InputColumn = "http://localhost:5000/getModel1InputNames";
+        String urlModel2InputColumn = "http://localhost:5000/getModel2InputNames";
+//        String urlModel1OutPutColumn = "http://localhost:5000/getModel1OutPutNames";
+        String urlModel2OutputColumn = "http://localhost:5000/getModel2OutPutNames";
+
+        ResponseEntity model1InputColumns = this.httpService.sendHttpGetUrlConnection(urlModel2InputColumn);
+        List<String> inputColumnNames = filterModelInputColumns(model1InputColumns);
+        List<String[]> model2InputData = this.userRepository.findModel2InputData(userId, sessionId);
+        String[] dataFromDB = model2InputData.get(0);
+        String[] inputData = new String[inputColumnNames.size()];
+        for (int i = 0; i < inputData.length; i++) {
+            inputData[i] = "0";
+        }
+
+        for (int i = 0; i < dataFromDB.length; i++) {
+            for (int j = 0; j < inputColumnNames.size(); j++) {
+                if (dataFromDB[i].trim().equals(inputColumnNames.get(j).trim())) {
+                    inputData[j] = "1";
+                }
+            }
+        }
+
+        for (int i = 0; i < inputColumnNames.size(); i++) {
+            if (inputColumnNames.get(i).trim().equals("ram")) {
+                inputData[i] = dataFromDB[3];
+            }
+            if (inputColumnNames.get(i).trim().equals("price")) {
+                inputData[i] = dataFromDB[4];
+            }
+            if (inputColumnNames.get(i).trim().equals("screen")) {
+                inputData[i] = dataFromDB[5];
+            }
+            if (inputColumnNames.get(i).trim().equals("age")) {
+                inputData[i] = dataFromDB[6];
+            }
+        }
+
+        List<Float> inputDataList = new ArrayList<>();
+        for (int i = 0; i < inputData.length; i++) {
+            inputDataList.add(Float.parseFloat(inputData[i]));
+        }
+        Model2Input model2Input = new Model2Input();
+        model2Input.setArray(inputDataList);
+        ResponseEntity  model2OutPutNames = this.httpService.sendHttpGetUrlConnection(urlModel2OutputColumn);
+        String urlPrediction = "http://localhost:5000/getForecastedItemsByUserId";
+        ResponseEntity responseEntityItem = this.httpService.sentHttpPostConnection(urlPrediction,model2Input);
         List<Double> probabilities = filterItemProbabilities(responseEntityItem);
-        ResponseEntity responseEntityCode = this.httpService.sendHttpGetUrlConnection(urlItemCode);
-        List<String> itemCodes = filterItemCodes(responseEntityCode);
+        List<String> itemCodes = filterModeOutputColumns(model2OutPutNames);
 
         Map<Double, String> itemCodeProbability = new HashMap<>();
         for (int i = 0; i < itemCodes.size(); i++) {
@@ -163,18 +213,23 @@ public class ItemServiceImpl implements ItemService {
 
     List<Double> filterItemProbabilities(ResponseEntity responseEntity) {
         String res = responseEntity.getBody().toString();
-        res = res.replaceAll("[{}]", "");
+        res = res.replaceAll("[{\"}\\[\\]]", "");
+        res = res.replaceAll("[n]", "");
+        res = res.replaceAll("[\\\\]", "");
+        System.out.println(res);
         res = res.split(":")[1];
-        res = res.replaceAll("[\"\\[\\]\"]", "");
-        String[] itemValues = res.split(",");
+        System.out.println(res);
+        String[] itemValues = res.split(" ");
         List<Double> probabilities = new ArrayList<>();
         for (int i = 0; i < itemValues.length; i++) {
-            probabilities.add(Double.parseDouble(itemValues[i]));
+            if (!itemValues[i].trim().equals("")) {
+                probabilities.add(Double.parseDouble(itemValues[i].trim()));
+            }
         }
         return probabilities;
     }
 
-    List<String> filterItemCodes(ResponseEntity responseEntity) {
+    List<String> filterModeOutputColumns(ResponseEntity responseEntity) {
         String res = responseEntity.getBody().toString();
         res = res.replaceAll("[{}\"\\[\\]\\\\]", "");
         String resCodes = res.split(":")[1];
@@ -183,6 +238,25 @@ public class ItemServiceImpl implements ItemService {
         List<String> itemCodes = new ArrayList<>();
         for (int i = 0; i < resCodesArray.length; i++) {
             itemCodes.add(resCodesArray[i].trim());
+        }
+        return itemCodes;
+    }
+
+    List<String> filterModelInputColumns(ResponseEntity responseEntity) {
+        List<String> itemCodes = new ArrayList<>();
+        String code = responseEntity.getBody().toString();
+        code = code.replaceAll("[{}\"\\[\\]\\\\]", "");
+        code = code.split(":")[1];
+        code = code.replaceAll("occupation_", "");
+        code = code.replaceAll("district_", "");
+        code = code.replaceAll("item_category_", "");
+        code = code.replaceAll("color_", "");
+        code = code.replaceAll("gender_", "");
+        code = code.replaceAll("brand_", "");
+        code = code.replaceAll(" ", "");
+        String[] model1_input_columns = code.split(",");
+        for (int i = 0; i < model1_input_columns.length; i++) {
+            itemCodes.add(model1_input_columns[i].trim());
         }
         return itemCodes;
     }

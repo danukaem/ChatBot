@@ -1,5 +1,6 @@
 package com.sliit.chatApplication.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sliit.chatApplication.model.ItemCategory;
 import com.sliit.chatApplication.model.ItemDTO;
 import com.sliit.chatApplication.repository.entity.Item;
@@ -16,11 +17,11 @@ public interface ItemService {
 
     List<ItemCategory> getCategoryList();
 
-    List<Item> getRecommendItems(float userId, String sessionId,boolean advancedSearch);
+    List<Item> getRecommendItems(float userId, String sessionId,boolean advancedSearch) throws JsonProcessingException;
 
     List<Item> findAllByBrand(String brand);
 
     ItemExtractRasa getChatItemRequirements(String userId, String sessionId);
 
-    List<Item> getForecastedItems();
+    List<Item> getForecastedItems(float userId, String sessionId) throws JsonProcessingException;
 }

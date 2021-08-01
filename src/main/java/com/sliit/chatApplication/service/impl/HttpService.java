@@ -50,4 +50,16 @@ public class HttpService {
 
     }
 
+
+    public ResponseEntity sentHttpPostConnection(String url, Object jsonData)  {
+        this.httpHeaders = new HttpHeaders();
+        try {
+            HttpEntity<Object> httpEntity = new HttpEntity<>(jsonData, httpHeaders);
+            return restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
+        } catch (HttpClientErrorException | HttpServerErrorException e) {
+            return ResponseEntity.status(e.getStatusCode().value()).body(e.getResponseBodyAsString());
+        }
+
+    }
+
 }
