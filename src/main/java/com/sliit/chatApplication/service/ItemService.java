@@ -17,11 +17,15 @@ public interface ItemService {
 
     List<ItemCategory> getCategoryList();
 
-    List<Item> getRecommendItems(float userId, String sessionId,boolean advancedSearch) throws JsonProcessingException;
+    List<Item> getRecommendItems(float userId, String sessionId, boolean advancedSearch) throws JsonProcessingException;
 
     List<Item> findAllByBrand(String brand);
 
     ItemExtractRasa getChatItemRequirements(String userId, String sessionId);
 
     List<Item> getForecastedItems(float userId, String sessionId) throws JsonProcessingException;
+
+    ItemExtractRasa findByUserIdAndSessionIdPrevious(float userId, String sessionId);
+
+    List<Item> getRecommendItemsForNewUser(float userId);
 }

@@ -52,7 +52,6 @@ public class ItemController {
 
     @GetMapping("/getRecommendItems")
     List<Item> getRecommendItems(@RequestParam("userId") float userId, @RequestParam("sessionId") String sessionId, @RequestParam("advancedSearch") boolean advancedSearch) throws JsonProcessingException {
-        System.out.println(advancedSearch);
         return itemService.getRecommendItems(userId, sessionId, advancedSearch);
     }
 
@@ -70,13 +69,16 @@ public class ItemController {
         return chatItemRequirement;
     }
 
-//    @GetMapping("/getForecastedItems")
-//
-//    public List<Item> getForecastedItems() {
-//
-//        return itemService.getForecastedItems();
-//    }
+    @GetMapping("/recommendItemsLoadHomePage")
+    List<Item> recommendItemsLoadHomePage(@RequestParam("userId") float userId, @RequestParam("sessionId") String sessionId) throws JsonProcessingException {
+        ItemExtractRasa extractRasa = itemService.findByUserIdAndSessionIdPrevious(userId, sessionId);
+        if (extractRasa != null) {
+            return itemService.getRecommendItems(userId, extractRasa.getSessionId(), true);
 
+        } else {
+            return itemService.getRecommendItemsForNewUser(userId);
 
+        }
+    }
 
 }

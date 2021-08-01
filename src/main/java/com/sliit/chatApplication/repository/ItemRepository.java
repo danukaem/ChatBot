@@ -27,7 +27,12 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     Optional<Item> findByItemCode(String code);
 
-    @Query(value = "select brand,color,item_category,ram,price,screen,age,gender,occupation,item_id,itm_ordr.item_code,district  from item_extract_rasa ier INNER JOIN `user` ur on ur.user_id = ier.user_id LEFT JOIN order_details od on ier.session_id = od.session_id  LEFT JOIN (select ord.order_id order_id ,ord.session_id  session_id,ord.state_of_order state_of_order ,im.item_id item_id , im.item_code from order_details ord INNER JOIN cart_item ci on  ord.order_id = ci.order_detail_id INNER JOIN item im on ci.item_id = im.item_id) itm_ordr on itm_ordr.session_id = ier.session_id where itm_ordr.state_of_order =0 and ur.user_id = ?1 AND ur.session_id = ?2 LIMIT 1", nativeQuery = true)
+    @Query(value = "select brand,color,item_category,ram,price,screen,age,gender,occupation,district from item_extract_rasa ier INNER JOIN `user` ur on ier.user_id = ur.user_id where  ier.user_id = ?1 and ier.session_id = ?2  limit 1", nativeQuery = true)
     List<String[]>  findModel2InputData(float userId, String sessionId);
+
+
+
+    @Query(value = "select age,gender,occupation,district from `user` ur  where  ur.user_id = ?1  limit 1", nativeQuery = true)
+    List<String[]>  findModel1InputData(float userId);
 
 }

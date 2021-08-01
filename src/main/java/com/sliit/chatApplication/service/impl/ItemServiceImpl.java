@@ -135,15 +135,20 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> getForecastedItems(float userId, String sessionId) throws JsonProcessingException {
-
 //        String urlModel1InputColumn = "http://localhost:5000/getModel1InputNames";
-        String urlModel2InputColumn = "http://localhost:5000/getModel2InputNames";
 //        String urlModel1OutPutColumn = "http://localhost:5000/getModel1OutPutNames";
+//        String urlPrediction = "http://localhost:5000/getForecastedItemsNewUser";
+
+        String urlModel2InputColumn = "http://localhost:5000/getModel2InputNames";
         String urlModel2OutputColumn = "http://localhost:5000/getModel2OutPutNames";
+        String urlPrediction = "http://localhost:5000/getForecastedItemsByUserId";
 
         ResponseEntity model1InputColumns = this.httpService.sendHttpGetUrlConnection(urlModel2InputColumn);
         List<String> inputColumnNames = filterModelInputColumns(model1InputColumns);
         List<String[]> model2InputData = this.userRepository.findModel2InputData(userId, sessionId);
+        if (model2InputData.size() == 0) {
+            return new ArrayList<Item>();
+        }
         String[] dataFromDB = model2InputData.get(0);
         String[] inputData = new String[inputColumnNames.size()];
         for (int i = 0; i < inputData.length; i++) {
@@ -159,16 +164,16 @@ public class ItemServiceImpl implements ItemService {
         }
 
         for (int i = 0; i < inputColumnNames.size(); i++) {
-            if (inputColumnNames.get(i).trim().equals("ram")) {
+            if (inputColumnNames.get(i).trim().equals("ram") && !dataFromDB[3].trim().equals("")) {
                 inputData[i] = dataFromDB[3];
             }
-            if (inputColumnNames.get(i).trim().equals("price")) {
+            if (inputColumnNames.get(i).trim().equals("price") && !dataFromDB[4].trim().equals("")) {
                 inputData[i] = dataFromDB[4];
             }
-            if (inputColumnNames.get(i).trim().equals("screen")) {
+            if (inputColumnNames.get(i).trim().equals("screen") && !dataFromDB[5].trim().equals("")) {
                 inputData[i] = dataFromDB[5];
             }
-            if (inputColumnNames.get(i).trim().equals("age")) {
+            if (inputColumnNames.get(i).trim().equals("age") && !dataFromDB[6].trim().equals("")) {
                 inputData[i] = dataFromDB[6];
             }
         }
@@ -179,9 +184,8 @@ public class ItemServiceImpl implements ItemService {
         }
         Model2Input model2Input = new Model2Input();
         model2Input.setArray(inputDataList);
-        ResponseEntity  model2OutPutNames = this.httpService.sendHttpGetUrlConnection(urlModel2OutputColumn);
-        String urlPrediction = "http://localhost:5000/getForecastedItemsByUserId";
-        ResponseEntity responseEntityItem = this.httpService.sentHttpPostConnection(urlPrediction,model2Input);
+        ResponseEntity model2OutPutNames = this.httpService.sendHttpGetUrlConnection(urlModel2OutputColumn);
+        ResponseEntity responseEntityItem = this.httpService.sentHttpPostConnection(urlPrediction, model2Input);
         List<Double> probabilities = filterItemProbabilities(responseEntityItem);
         List<String> itemCodes = filterModeOutputColumns(model2OutPutNames);
 
@@ -209,6 +213,100 @@ public class ItemServiceImpl implements ItemService {
             }
         });
         return items;
+    }
+
+    @Override
+    public ItemExtractRasa findByUserIdAndSessionIdPrevious(float userId, String sessionId) {
+        return rasaRepository.findByUserIdAndSessionIdPrevious(userId, sessionId);
+
+    }
+
+    @Override
+    public List<Item> getRecommendItemsForNewUser(float userId) {
+        String urlModel1InputColumn = "http://localhost:5000/getModel1InputNames";
+        String urlModel1OutPutColumn = "http://localhost:5000/getModel1OutPutNames";
+        String urlPrediction = "http://localhost:5000/getForecastedItemsNewUser";
+
+        ///////////////////////////////////////////////////////////////////////////
+//        String urlModel2InputColumn = "http://localhost:5000/getModel2InputNames";
+//        String urlModel2OutputColumn = "http://localhost:5000/getModel2OutPutNames";
+//        String urlPrediction = "http://localhost:5000/getForecastedItemsByUserId";
+
+        ResponseEntity model1InputColumns = this.httpService.sendHttpGetUrlConnection(urlModel1InputColumn);
+        List<String> inputColumnNames = filterModelInputColumns(model1InputColumns);
+        List<String[]> model1InputData = this.userRepository.findModel1InputData(userId);
+        if (model1InputData.size() == 0) {
+            return new ArrayList<Item>();
+        }
+        String[] dataFromDB = model1InputData.get(0);
+        String[] inputData = new String[inputColumnNames.size()];
+        for (int i = 0; i < inputData.length; i++) {
+            inputData[i] = "0";
+        }
+
+        for (int i = 0; i < dataFromDB.length; i++) {
+            for (int j = 0; j < inputColumnNames.size(); j++) {
+                if (dataFromDB[i].trim().equals(inputColumnNames.get(j).trim())) {
+                    inputData[j] = "1";
+                }
+            }
+        }
+
+        for (int i = 0; i < inputColumnNames.size(); i++) {
+            if (inputColumnNames.get(i).trim().equals("age") && !dataFromDB[0].trim().equals("")) {
+                inputData[i] = dataFromDB[0];
+            }
+        }
+
+        List<Float> inputDataList = new ArrayList<>();
+        for (int i = 0; i < inputData.length; i++) {
+            inputDataList.add(Float.parseFloat(inputData[i]));
+        }
+        Model2Input model1Input = new Model2Input();
+        model1Input.setArray(inputDataList);
+        ResponseEntity model1OutPutNames = this.httpService.sendHttpGetUrlConnection(urlModel1OutPutColumn);
+        ResponseEntity responseEntityItem = this.httpService.sentHttpPostConnection(urlPrediction, model1Input);
+        List<Double> probabilities = filterItemProbabilities(responseEntityItem);
+        List<String> itemCodes = filterModeOutputColumns(model1OutPutNames);
+
+        Map<Double, String> itemCodeProbability = new HashMap<>();
+        for (int i = 0; i < itemCodes.size(); i++) {
+            itemCodeProbability.put(probabilities.get(i), itemCodes.get(i));
+        }
+        Map<Double, String> treeMap = new TreeMap<>(
+                new Comparator<Double>() {
+                    @Override
+                    public int compare(Double o1, Double o2) {
+                        return o2.compareTo(o1);
+                    }
+                });
+        treeMap.putAll(itemCodeProbability);
+        List<Item> items = new ArrayList<>();
+        treeMap.forEach((k, v) -> {
+            if (k > 0) {
+                Optional<Item> byItemCode = itemRepository.findByItemCode(v);
+                if (byItemCode.isPresent()) {
+                    Item item = byItemCode.get();
+                    item.setItemName(item.getItemName() + " ***");
+                    items.add(byItemCode.get());
+                }
+            }
+        });
+
+        List<Item> limitedItems = new ArrayList<>();
+
+        int limit = 6;
+        items.forEach(i -> {
+            if (limitedItems.size() < limit) {
+                limitedItems.add(i);
+            }
+        });
+
+
+        return limitedItems;
+        ///////////////////////////////////////////////////////////////////////////
+
+
     }
 
     List<Double> filterItemProbabilities(ResponseEntity responseEntity) {

@@ -19,22 +19,4 @@ public class Model2Input {
     public void setArray(List<Float> array) {
         this.array = array;
     }
-
-
-//    String[] array;
-//
-//    public Model2Input() {
-//    }
-//
-//    public Model2Input(String[] array) {
-//        this.array = array;
-//    }
-//
-//    public String[] getArray() {
-//        return array;
-//    }
-//
-//    public void setArray(String[] array) {
-//        this.array = array;
-//    }
 }
