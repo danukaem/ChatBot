@@ -59,6 +59,7 @@ public class ChatController {
             , @RequestParam("brand") String brand, @RequestParam("color") String color
             , @RequestParam("storage") String storage, @RequestParam("user_id") String user_id
             , @RequestParam("item_extract_id") String itemExtractId
+            , @RequestParam("processor") String processor
             , @RequestParam("session_id") String sessionId) {
 
         try {
@@ -70,6 +71,7 @@ public class ChatController {
             itemExtractRasaDTO.setBrand(brand);
             itemExtractRasaDTO.setColor(color);
             itemExtractRasaDTO.setStorage(storage);
+            itemExtractRasaDTO.setProcessor(processor);
             itemExtractRasaDTO.setSessionId(sessionId);
             try {
                 itemExtractRasaDTO.setUserId(Integer.parseInt(user_id));

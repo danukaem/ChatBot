@@ -188,12 +188,14 @@ public class ChatServiceImpl implements ChatService {
                 if (!itemExtractRasaDTO.getStorage().equals("")) {
                     itemExtractRasa.setStorage(itemExtractRasaDTO.getStorage());
                 }
+                if (!itemExtractRasaDTO.getProcessor().equals("")) {
+                    itemExtractRasa.setProcessor(itemExtractRasaDTO.getProcessor());
+                }
                 itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
                 extractRasaRepository.save(itemExtractRasa);
                 return Integer.toString(itemExtractRasaDTO.getItemExtractId());
             } else {
                 itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
-//                itemExtractRasa.setItemExtractId(itemExtractRasaDTO.getItemExtractId());
                 itemExtractRasa.setItemCategory(itemExtractRasaDTO.getItemCategory());
                 itemExtractRasa.setRam(itemExtractRasaDTO.getRam());
                 itemExtractRasa.setScreen(itemExtractRasaDTO.getScreen());
@@ -201,6 +203,7 @@ public class ChatServiceImpl implements ChatService {
                 itemExtractRasa.setBrand(itemExtractRasaDTO.getBrand());
                 itemExtractRasa.setColor(itemExtractRasaDTO.getColor());
                 itemExtractRasa.setStorage(itemExtractRasaDTO.getStorage());
+                itemExtractRasa.setProcessor(itemExtractRasaDTO.getProcessor());
                 itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
                 extractRasaRepository.save(itemExtractRasa);
                 return Integer.toString(itemExtractRasaDTO.getItemExtractId());
@@ -218,6 +221,7 @@ public class ChatServiceImpl implements ChatService {
             itemExtractRasa.setBrand(itemExtractRasaDTO.getBrand());
             itemExtractRasa.setColor(itemExtractRasaDTO.getColor());
             itemExtractRasa.setStorage(itemExtractRasaDTO.getStorage());
+            itemExtractRasa.setProcessor(itemExtractRasaDTO.getProcessor());
             itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
             itemExtractRasa.setSessionId(itemExtractRasaDTO.getSessionId());
             ItemExtractRasa save = extractRasaRepository.save(itemExtractRasa);

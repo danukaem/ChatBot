@@ -74,6 +74,7 @@ public class ItemServiceImpl implements ItemService {
 
             String color = "%" + rasa.getColor().trim() + "%";
             String brand = "%" + rasa.getBrand().trim() + "%";
+            String processor = "%" + rasa.getProcessor().trim() + "%";
             String category;
             if (rasa.getItemCategory().trim().equals("phone") || rasa.getItemCategory().trim().equals("laptop")) {
                 category = "%" + rasa.getItemCategory().trim() + "%";
@@ -96,10 +97,10 @@ public class ItemServiceImpl implements ItemService {
             }
             List<Item> recommendItemsQuery;
             if (price != 0) {
-                recommendItemsQuery = itemRepository.getRecommendItems(color, brand, category, price, ram, screen);
+                recommendItemsQuery = itemRepository.getRecommendItems(color, brand, category, price, ram, screen,processor);
 
             } else {
-                recommendItemsQuery = itemRepository.getRecommendItemswithoutPrice(color, brand, category, ram, screen);
+                recommendItemsQuery = itemRepository.getRecommendItemswithoutPrice(color, brand, category, ram, screen,processor);
 
             }
 
@@ -173,8 +174,8 @@ public class ItemServiceImpl implements ItemService {
             if (inputColumnNames.get(i).trim().equals("screen") && !dataFromDB[5].trim().equals("")) {
                 inputData[i] = dataFromDB[5];
             }
-            if (inputColumnNames.get(i).trim().equals("age") && !dataFromDB[6].trim().equals("")) {
-                inputData[i] = dataFromDB[6];
+            if (inputColumnNames.get(i).trim().equals("age") && !dataFromDB[7].trim().equals("")) {
+                inputData[i] = dataFromDB[7];
             }
         }
 
@@ -351,6 +352,7 @@ public class ItemServiceImpl implements ItemService {
         code = code.replaceAll("color_", "");
         code = code.replaceAll("gender_", "");
         code = code.replaceAll("brand_", "");
+        code = code.replaceAll("processor_", "");
         code = code.replaceAll(" ", "");
         String[] model1_input_columns = code.split(",");
         for (int i = 0; i < model1_input_columns.length; i++) {

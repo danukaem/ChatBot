@@ -8,14 +8,17 @@ public class RasaExtractDataFormatting {
     public static double getNumberFromWordFilter(String lettersNumber) {
         String input_string = lettersNumber;
         double number_output = Double.parseDouble(input_string.replaceAll("[^0-9.]", ""));
-//        System.out.println(number_output);
         return number_output;
     }
 
     public static String getStringFromWordFilter(String lettersNumber) {
         String input_string = lettersNumber;
         String string_output = input_string.replaceAll("[^A-Za-z]", "").toLowerCase();
-//        System.out.println(string_output);
+        return string_output;
+    }
+    public static String getStringFromRemoveSpace(String lettersNumber) {
+        String input_string = lettersNumber;
+        String string_output = input_string.replaceAll(" ", "").toLowerCase();
         return string_output;
     }
 
@@ -131,11 +134,11 @@ public class RasaExtractDataFormatting {
         return storageSize;
     }
 
+
     public static ItemExtractRasaDTO getFilteredItemExtractRasa(ItemExtractRasaDTO item) {
 
         if (!item.getItemCategory().equals("")) {
             item.setItemCategory(getFilteredItemCategory(item.getItemCategory()));
-
         }
         if (!item.getRam().equals("")) {
             item.setRam(getFilteredRam(item.getRam()));
@@ -148,6 +151,9 @@ public class RasaExtractDataFormatting {
         }
         if (!item.getStorage().equals("")) {
             item.setStorage(getFilteredStotageSize(item.getStorage()));
+        }
+        if (!item.getProcessor().equals("")) {
+            item.setProcessor(getStringFromRemoveSpace(item.getProcessor()));
         }
 
 

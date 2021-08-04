@@ -81,6 +81,7 @@ public class Converter {
             itemExtractRasa.setColor(itemExtractRasaDTO.getColor());
             itemExtractRasa.setPrice(itemExtractRasaDTO.getPrice());
             itemExtractRasa.setStorage(itemExtractRasaDTO.getStorage());
+            itemExtractRasa.setProcessor(itemExtractRasaDTO.getProcessor());
             itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
             itemExtractRasa.setSessionId(itemExtractRasaDTO.getSessionId());
             return (T) itemExtractRasa;
@@ -109,7 +110,7 @@ public class Converter {
         } else if (superEntity instanceof ItemExtractRasa) {
             ItemExtractRasa itemExtractRasa = (ItemExtractRasa) superEntity;
             return (T) new ItemExtractRasaDTO(itemExtractRasa.getItemExtractId(), itemExtractRasa.getItemCategory(), itemExtractRasa.getRam(), itemExtractRasa.getScreen(),
-                    itemExtractRasa.getBrand(), itemExtractRasa.getColor(), itemExtractRasa.getPrice(), itemExtractRasa.getStorage(), itemExtractRasa.getUserId()
+                    itemExtractRasa.getBrand(), itemExtractRasa.getColor(), itemExtractRasa.getPrice(), itemExtractRasa.getStorage(),itemExtractRasa.getProcessor(), itemExtractRasa.getUserId()
                     , itemExtractRasa.getSessionId());
         } else {
             throw new RuntimeException("This entity can't be converted to a DTO");

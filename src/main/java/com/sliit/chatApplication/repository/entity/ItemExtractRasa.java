@@ -18,15 +18,15 @@ public class ItemExtractRasa extends SuperEntity {
     private String color;
     private String price;
     private String storage;
+    private String processor;
     private float userId;
     private String sessionId;
-
 
 
     public ItemExtractRasa() {
     }
 
-    public ItemExtractRasa(int itemExtractId, String itemCategory, String ram, String screen, String brand, String color, String price, String storage, float userId, String sessionId) {
+    public ItemExtractRasa(int itemExtractId, String itemCategory, String ram, String screen, String brand, String color, String price, String storage, String processor, float userId, String sessionId) {
         this.itemExtractId = itemExtractId;
         this.itemCategory = itemCategory;
         this.ram = ram;
@@ -35,8 +35,17 @@ public class ItemExtractRasa extends SuperEntity {
         this.color = color;
         this.price = price;
         this.storage = storage;
+        this.processor = processor;
         this.userId = userId;
         this.sessionId = sessionId;
+    }
+
+    public String getProcessor() {
+        return processor;
+    }
+
+    public void setProcessor(String processor) {
+        this.processor = processor;
     }
 
     public String getSessionId() {
