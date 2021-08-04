@@ -149,11 +149,11 @@ public class ChatServiceImpl implements ChatService {
     }
 
 
-//    @Scheduled(fixedRate = 100*3600*24)
-    //    @Scheduled(cron = "0 0 0 * * *")
+//    @Scheduled(fixedRate = 100 * 3600 * 24)
+    @Scheduled(cron = "0 0 0 * * *")
 
     public ResponseEntity generateChatModel() {
-        String url = chatUrl + "generateChatModel";
+        String url = "http://localhost:5000/generateChatModel";
         return this.httpService.sendHttpGetUrlConnection(url);
 
     }
@@ -165,7 +165,7 @@ public class ChatServiceImpl implements ChatService {
         if (byId.isPresent()) {
             ItemExtractRasa itemExtractRasa = byId.get();
 
-            if (itemExtractRasa.getItemCategory().equals(itemExtractRasaDTO.getItemCategory()) || itemExtractRasaDTO.getItemCategory().equals("") ) {
+            if (itemExtractRasa.getItemCategory().equals(itemExtractRasaDTO.getItemCategory()) || itemExtractRasaDTO.getItemCategory().equals("")) {
                 itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
                 if (!itemExtractRasaDTO.getItemCategory().equals("")) {
                     itemExtractRasa.setItemCategory(itemExtractRasaDTO.getItemCategory());
