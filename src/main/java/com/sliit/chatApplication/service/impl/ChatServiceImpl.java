@@ -193,7 +193,7 @@ public class ChatServiceImpl implements ChatService {
                 return Integer.toString(itemExtractRasaDTO.getItemExtractId());
             } else {
                 itemExtractRasa.setUserId(itemExtractRasaDTO.getUserId());
-                itemExtractRasa.setItemExtractId(itemExtractRasaDTO.getItemExtractId());
+//                itemExtractRasa.setItemExtractId(itemExtractRasaDTO.getItemExtractId());
                 itemExtractRasa.setItemCategory(itemExtractRasaDTO.getItemCategory());
                 itemExtractRasa.setRam(itemExtractRasaDTO.getRam());
                 itemExtractRasa.setScreen(itemExtractRasaDTO.getScreen());
