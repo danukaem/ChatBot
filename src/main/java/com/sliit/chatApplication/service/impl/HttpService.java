@@ -18,7 +18,7 @@ public class HttpService {
     private RestTemplate restTemplate = new RestTemplate();
     private HttpHeaders httpHeaders;
 
-    ResponseEntity sendHttpGetUrlConnection(String url) {
+    public ResponseEntity sendHttpGetUrlConnection(String url) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setDate(new Date().getTime());
         try {

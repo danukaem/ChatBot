@@ -17,12 +17,13 @@ public class ItemDTO extends SuperDTO {
     private String color;
     private String storage;
     private String processor;
+    private boolean forecasted ;
 
     public ItemDTO() {
     }
 
 
-    public ItemDTO(long itemId, String itemName, String itemCode, String description, String imgSrc, String category, long price, long discountPercentage, String ram, String screen, String brand, String color, String storage, String processor) {
+    public ItemDTO(long itemId, String itemName, String itemCode, String description, String imgSrc, String category, long price, long discountPercentage, String ram, String screen, String brand, String color, String storage, String processor, boolean forecasted) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemCode = itemCode;
@@ -37,6 +38,15 @@ public class ItemDTO extends SuperDTO {
         this.color = color;
         this.storage = storage;
         this.processor = processor;
+        this.forecasted = forecasted;
+    }
+
+    public boolean isForecasted() {
+        return forecasted;
+    }
+
+    public void setForecasted(boolean forecasted) {
+        this.forecasted = forecasted;
     }
 
     public String getProcessor() {
