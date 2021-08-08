@@ -289,7 +289,8 @@ public class ItemServiceImpl implements ItemService {
                 Optional<Item> byItemCode = itemRepository.findByItemCode(v);
                 if (byItemCode.isPresent()) {
                     Item item = byItemCode.get();
-                    item.setItemName(item.getItemName() + " ***");
+//                    item.setItemName(item.getItemName() + " ***");
+                    item.setForecasted(true);
                     items.add(byItemCode.get());
                 }
             }
