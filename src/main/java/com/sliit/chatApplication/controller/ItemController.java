@@ -51,8 +51,8 @@ public class ItemController {
     }
 
     @GetMapping("/getRecommendItems")
-    List<Item> getRecommendItems(@RequestParam("userId") float userId, @RequestParam("sessionId") String sessionId, @RequestParam("advancedSearch") boolean advancedSearch) throws JsonProcessingException {
-        return itemService.getRecommendItems(userId, sessionId, advancedSearch);
+    List<Item> getRecommendItems(@RequestParam("userId") float userId, @RequestParam("sessionId") String sessionId, @RequestParam("advancedSearch") boolean advancedSearch, @RequestParam("sqlSearch") boolean sqlSearch) throws JsonProcessingException {
+        return itemService.getRecommendItems(userId, sessionId, advancedSearch, sqlSearch);
     }
 
 
@@ -73,7 +73,7 @@ public class ItemController {
     List<Item> recommendItemsLoadHomePage(@RequestParam("userId") float userId, @RequestParam("sessionId") String sessionId) throws JsonProcessingException {
         ItemExtractRasa extractRasa = itemService.findByUserIdAndSessionIdPrevious(userId, sessionId);
         if (extractRasa != null) {
-            return itemService.getRecommendItems(userId, extractRasa.getSessionId(), true);
+            return itemService.getRecommendItems(userId, extractRasa.getSessionId(), true, false);
 
         } else {
             return itemService.getRecommendItemsForNewUser(userId);

@@ -66,7 +66,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> getRecommendItems(float userId, String sessionId, boolean advancedSearch) throws JsonProcessingException {
+    public List<Item> getRecommendItems(float userId, String sessionId, boolean advancedSearch, boolean sqlSearch) throws JsonProcessingException {
         Optional<ItemExtractRasa> extractRasa = rasaRepository.findByUserIdAndSessionId(userId, sessionId);
 
         if (extractRasa.isPresent()) {
@@ -96,18 +96,23 @@ public class ItemServiceImpl implements ItemService {
                 screen = Double.parseDouble(rasa.getScreen().trim());
             }
             List<Item> recommendItemsQuery;
-            if (price != 0) {
-                recommendItemsQuery = itemRepository.getRecommendItems(color, brand, category, price, ram, screen,processor);
+            if (sqlSearch) {
+                if (price != 0) {
+                    recommendItemsQuery = itemRepository.getRecommendItems(color, brand, category, price, ram, screen, processor);
 
+                } else {
+                    recommendItemsQuery = itemRepository.getRecommendItemswithoutPrice(color, brand, category, ram, screen, processor);
+
+                }
             } else {
-                recommendItemsQuery = itemRepository.getRecommendItemswithoutPrice(color, brand, category, ram, screen,processor);
-
+                recommendItemsQuery = new ArrayList<>();
             }
 
             if (advancedSearch) {
                 List<Item> forecastedItems = getForecastedItems(userId, sessionId);
+                int limit = recommendItemsQuery.size() + 6;
                 forecastedItems.forEach(i -> {
-                    if (i.getCategory().equals(category)) {
+                    if (i.getCategory().equalsIgnoreCase(rasa.getItemCategory().trim()) && recommendItemsQuery.size() < limit) {
                         recommendItemsQuery.add(i);
                     }
                 });

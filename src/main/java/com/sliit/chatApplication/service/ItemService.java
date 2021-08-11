@@ -17,7 +17,7 @@ public interface ItemService {
 
     List<ItemCategory> getCategoryList();
 
-    List<Item> getRecommendItems(float userId, String sessionId, boolean advancedSearch) throws JsonProcessingException;
+    List<Item> getRecommendItems(float userId, String sessionId, boolean advancedSearch, boolean sqlSearch) throws JsonProcessingException;
 
     List<Item> findAllByBrand(String brand);
 
