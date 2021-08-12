@@ -112,7 +112,7 @@ public class ItemServiceImpl implements ItemService {
                 List<Item> forecastedItems = getForecastedItems(userId, sessionId);
                 int limit = recommendItemsQuery.size() + 6;
                 forecastedItems.forEach(i -> {
-                    if (i.getCategory().equalsIgnoreCase(rasa.getItemCategory().trim()) && recommendItemsQuery.size() < limit) {
+                    if (i.getCategory().equalsIgnoreCase(rasa.getItemCategory().trim()) && recommendItemsQuery.size() < limit && !recommendItemsQuery.contains(i) ) {
                         recommendItemsQuery.add(i);
                     }
                 });

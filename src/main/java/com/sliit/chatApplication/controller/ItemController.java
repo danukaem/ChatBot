@@ -73,7 +73,7 @@ public class ItemController {
     List<Item> recommendItemsLoadHomePage(@RequestParam("userId") float userId, @RequestParam("sessionId") String sessionId) throws JsonProcessingException {
         ItemExtractRasa extractRasa = itemService.findByUserIdAndSessionIdPrevious(userId, sessionId);
         if (extractRasa != null) {
-            return itemService.getRecommendItems(userId, extractRasa.getSessionId(), true, false);
+            return itemService.getRecommendItems(userId, extractRasa.getSessionId(), true, true);
 
         } else {
             return itemService.getRecommendItemsForNewUser(userId);

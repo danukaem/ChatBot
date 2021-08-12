@@ -11,8 +11,8 @@ public class ChatApplication {
 		SpringApplication.run(ChatApplication.class, args);
 		HttpService httpService = new HttpService();
 		String url = "http://localhost:5000/generateChatModel";
-
-		httpService.sendHttpGetUrlConnection(url);
+//
+//		httpService.sendHttpGetUrlConnection(url);
 
 	}
 
